@@ -1,43 +1,55 @@
 languages:
   bash:
-    repository: "serenadeai/tree-sitter-bash"
+    repository: "serenadeai/serenade-tree-sitter-bash"
     commit: 2e7ad02feebac4dc71d5b21213ef46ff8537776f
+    path: "tree-sitter-bash"
   cplusplus:
-    repository: "serenadeai/tree-sitter-cpp"
+    repository: "serenadeai/serenade-tree-sitter-cpp"
     commit: 85485cc06fe312d04470495ba2bed480455ef618
+    path: "tree-sitter-cpp"
   csharp:
-    repository: "serenadeai/tree-sitter-c-sharp"
+    repository: "serenadeai/serenade-tree-sitter-c-sharp"
     commit: 64cde5541d24014f07d241b95db5d7d2e1b0a38e
+    path: "tree-sitter-c-sharp"
   dart:
-    repository: "serenadeai/tree-sitter-dart"
+    repository: "serenadeai/serenade-tree-sitter-dart"
     commit: 701940e201c63281b9b484f548fafe86ee810cde
+    path: "tree-sitter-dart"
   go:
-    repository: "serenadeai/tree-sitter-go"
+    repository: "serenadeai/serenade-tree-sitter-go"
     commit: 3e6b722e74c069dabf0ef0d628bb5721f3b15066
+    path: "tree-sitter-go"
   html:
-    repository: "serenadeai/tree-sitter-html"
+    repository: "serenadeai/serenade-tree-sitter-html"
     commit: c9eaf8faf79a6db740507db5bf92c1a9ad377791
+    path: "tree-sitter-html"
   java:
-    repository: "serenadeai/tree-sitter-java"
+    repository: "serenadeai/serenade-tree-sitter-java"
     commit: caac2adc3d36837b3baee7a389a671b841d0769e
+    path: "tree-sitter-java"
   javascript:
-    repository: "serenadeai/tree-sitter-typescript"
+    repository: "serenadeai/serenade-tree-sitter-typescript"
     commit: 2b87ef36518f55921dfdea36c6db55663a6a0578
     grammar: "tsx"
+    path: "tree-sitter-typescript"
   kotlin:
-    repository: "serenadeai/tree-sitter-kotlin"
+    repository: "serenadeai/serenade-tree-sitter-kotlin"
     commit: 36a853e5bb23f839985b2208b24460f979c768ee
+    path: "tree-sitter-kotlin"
   python:
-    repository: "serenadeai/tree-sitter-python"
+    repository: "serenadeai/serenade-tree-sitter-python"
     commit: a2c734f385d95e334e25b1266207aac83c6f571c
+    path: "tree-sitter-python"
   ruby:
-    repository: "serenadeai/tree-sitter-ruby"
+    repository: "serenadeai/serenade-tree-sitter-ruby"
     commit: 113e8185db4f2485c5c505961bf55ca2c83600ae
+    path: "tree-sitter-ruby"
   rust:
-    repository: "serenadeai/tree-sitter-rust"
+    repository: "serenadeai/serenade-tree-sitter-rust"
     commit: f69961ea7e7eb3ed38325e6caac343fc1eefdc92
+    path: "tree-sitter-rust"
   scss:
-    repository: "serenadeai/tree-sitter-scss-ast"
+    repository: "serenadeai/serenade-tree-sitter-scss"
     commit: aeb80cea64da6c19680831608f99e3de1819c690
     path: "tree-sitter-scss"
 libraries:
