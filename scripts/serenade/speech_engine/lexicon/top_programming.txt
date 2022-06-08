@@ -1,0 +1,11 @@
+cuda  K UW1 D AH0
+gui  JH IY1 Y UW1 AY1
+gui  G UW1 IY0
+protobuf  P R OW1 T OW0 B AH1 F
+mysql  M AY1 S IY1 K W AH0 L
+mysql  M AY1 EH1 S K Y UW1 EH1 L
+regex  R EH1 G EH1 K S
+regex  R EH1 JH EH1 K S
+regexp  R EH1 G EH1 K S P
+regexp  R EH1 JH EH1 K S P
+serif  S ER0 IH1 F

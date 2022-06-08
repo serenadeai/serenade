@@ -1,0 +1,163 @@
+object_types:
+  ALL: "all"
+  ARGUMENT_LIST: ["argument list", "arguments"]
+  ARGUMENT: ["argument"]
+  ASSERT: ["assert", "assertion"]
+  ASSIGNMENT: "assignment"
+  ASSIGNMENT_VAL: "assignment value"
+  ASSIGNMENT_VARIABLE: ["assignment variable", "variable"]
+  ATTRIBUTE: "attribute"
+  ATTRIBUTE_VAL: "attribute value"
+  ATTRIBUTE_NAME: "attribute name"
+  ATTRIBUTE_TEXT: "attribute text"
+  BEGIN: "begin"
+  BLOCK: "block"
+  BODY: "body"
+  BREAK: "break"
+  CALL: "call"
+  CASE: "case"
+  CATCH: "catch"
+  CHARACTER: "character"
+  CLASS: "class"
+  CLOSE_TAG: ["close tag", "close element"]
+  COMMENT: "comment"
+  COMMENT_TEXT: "comment text"
+  CONDITION: "condition"
+  CONSTRUCTOR: "constructor"
+  CONTENT: "content"
+  CONTINUE: "continue"
+  DEBUGGER: "debugger"
+  DECLARATION: "declaration"
+  DECORATOR: ["decorator", "annotation"]
+  DEFAULT: "default"
+  DEFER: "defer"
+  DICTIONARY: "dictionary"
+  DO_WHILE: "do while"
+  ELEMENT: "element"
+  ELSE_IF: ["else if", "elif"]
+  ELSE: "else"
+  ENSURE: "ensure"
+  ENUM: "enum"
+  EXCEPT: "except"
+  EXPORT: "export"
+  FOR: "for"
+  FOREACH: "for each"
+  FILE: "file"
+  FINALLY: "finally"
+  FUNCTION: ["function"]
+  GENERATOR: "generator"
+  GETTER: "getter"
+  HASH: "hash"
+  IF: "if"
+  IMPORT: ["import", "include"]
+  INTERFACE: ["interface", "implements"]
+  INTERFACE_LIST: ["interface list", "implements list", "interfaces"]
+  IMPLEMENTATION: ["impl", "implementation"]
+  KEYWORD_ARGUMENT: ["keyword argument"]
+  KEYWORD_PARAMETER: ["keyword parameter"]
+  KEY: "key"
+  KEY_VALUE_PAIR: ["entry", "pair"]
+  LAMBDA: "lambda"
+  LETTER: "letter"
+  LINE: "line"
+  LIST: "list"
+  LOOP: "loop"
+  METHOD: "method"
+  MIXIN: "mixin"
+  MODIFIER: ["modifier", "access modifier", "access specifier"]
+  MODIFIER_LIST: ["modifier list", "modifiers"]
+  MODULE: "module"
+  NAME: "name"
+  NAMED_PARAMETER: "named parameter"
+  NAMED_PARAMETER_LIST: ["named parameter list", "named parameters"]
+  NAMESPACE: "namespace"
+  NUMBER: "number"
+  OBJECT: "object"
+  OPEN_TAG: ["open tag", "open element"]
+  OPERATOR: "operator"
+  PANIC: "panic"
+  PARAMETER_LIST: ["parameter list", "parameters"]
+  PARAMETER_VAL: ["parameter value"]
+  PARAMETER: ["parameter", "param"]
+  PARENT_LIST: ["parent list", "extends list", "parents"]
+  PARENT: ["parent", "extends", "base class"]
+  PASS: "pass"
+  POSITIONAL_PARAMETER: "positional parameter"
+  POSITIONAL_PARAMETER_LIST: ["positional parameter list", "positional parameters"]
+  PROPERTY: ["field", "member", "property"]
+  PROTOTYPE: ["prototype", "function prototype"]
+  PHRASE: "phrase"
+  RAISE: "raise"
+  RECEIVER_ARGUMENT: "receiver argument"
+  RESCUE: "rescue"
+  RETURN: "return"
+  RETURN_TYPE: "return type"
+  RETURN_VAL: "return value"
+  RETURN_VALUE_NAME: "return value name"
+  RETURN_VALUE_NAME_LIST: ["return value name list", "return value names"]
+  REQUIRE: "require"
+  RULESET: "ruleset"
+  SET: "set"
+  SETTER: "setter"
+  STATEMENT: "statement"
+  STRING: "string"
+  STRING_TEXT: ["string text", "string value"]
+  STRUCT: "struct"
+  SWITCH: "switch"
+  SYMBOL: "symbol"
+  SYNCHRONIZED: "synchronized"
+  TAG: ["tag", "element"]
+  TERM: "term"
+  THROW: "throw"
+  TOP_LEVEL_STATEMENT: "top level statement"
+  TRAIT: "trait"
+  TUPLE: "tuple"
+  TRY: "try"
+  TYPE: "type"
+  TYPE_ALIAS: "type alias"
+  TYPE_ARGUMENT: "type argument"
+  TYPE_ARGUMENT_LIST: "type argument list"
+  TYPE_PARAMETER: "type parameter"
+  TYPE_PARAMETER_LIST: "type parameter list"
+  UNTIL: "until"
+  USING: "using"
+  WITH: "with"
+  WITH_LIST: "with list"
+  WITH_ALIAS: "with alias"
+  WITH_ITEM: "with item"
+  WHILE: "while"
+  WORD: "word"
+  VALUE: "value"
+  VERTICAL: "vertical"
+
+named_objects:
+  - ARGUMENT
+  - ASSIGNMENT_VAL
+  - ASSIGNMENT_VARIABLE
+  - ATTRIBUTE
+  - CALL
+  - CLASS
+  - CLOSE_TAG
+  - COMMENT
+  - DECORATOR
+  - ENUM
+  - FUNCTION
+  - IMPORT
+  - KEYWORD_ARGUMENT
+  - KEYWORD_PARAMETER
+  - METHOD
+  - MODIFIER
+  - OPEN_TAG
+  - NAMED_PARAMETER
+  - PARAMETER
+  - PARENT
+  - PHRASE
+  - POSITIONAL_PARAMETER
+  - PROPERTY
+  - STRING
+  - TAG
+  - VALUE
+  - WORD
+
+excluded_selection_objects:
+  - PHRASE

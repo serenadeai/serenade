@@ -1,0 +1,82 @@
+suite: Descriptions
+tests:
+  testSingle:
+    transcript: down
+    description: down
+  testCut:
+    transcript: cut line
+    description: cut line
+  testChain:
+    filename: test.txt
+    transcript: next line word two
+    description: next line, word 2
+    before: "foo bar\nbar baz"
+  testBrokenChain:
+    transcript: previous tab line one
+    description: previous tab, line one
+  testBrokenChainType:
+    transcript: previous tab type foo plus bar
+    description: previous tab, type foo plus bar
+  testType:
+    transcript: type foo plus bar
+    description: type <code>foo+bar</code>
+  testOpen:
+    transcript: open foo slash bar
+    description: open <code>foo/bar</code>
+  testGoTo:
+    filename: test.txt
+    transcript: go to foo underscore bar
+    description: go to <code>foo_bar</code>
+    before: hello foo_bar
+  testQuantifier:
+    transcript: next character three times
+    description: next character 3 times
+    before: abcde
+  testPressQuantifier:
+    transcript: down two times
+    description: down 2 times
+  testAddFunction:
+    transcript: add function foo bar
+    description: "add function <code>def foo_bar():\n    pass</code>"
+  testAddLambda:
+    filename: test.js
+    transcript: add let foo equals lambda of bar
+    description: "add <code>let foo = bar => {\n};</code>"
+  testChange:
+    transcript: change word to bar
+    description: change word to <code>bar</code>
+    before: foo
+  testChangeMatchesStyle:
+    transcript: change word to bar baz
+    description: change word to <code>BAR_BAZ</code>
+    before: FOO_BAR
+  testChangeNamedObject:
+    transcript: change function foo to bar underscore baz
+    description: change function <code>foo</code> to <code>bar_baz</code>
+    before: "def foo():\n  pass\n"
+  testChangePhrase:
+    transcript: change foo to bar
+    description: change <code>foo</code> to <code>bar</code>
+    before: foo
+  testChangeAll:
+    transcript: change all foo bar to bar foo
+    description: change all <code>fooBar</code> to <code>barFoo</code>
+    before: fooBar
+  testSurroundEnclosures:
+    transcript: surround foo with braces
+    description: surround <code>foo</code> with <code>{}</code>
+    before: foo
+  testSurroundTag:
+    transcript: surround foo with tag p
+    description: surround <code>foo</code> with <code><p></p></code>
+    before: a = "foo"
+  testSurroundTagPostfix:
+    transcript: surround foo with div tag
+    description: surround <code>foo</code> with <code><div></div></code>
+    before: a = "foo"
+  testNewlineWithQuantifier:
+    transcript: newline three times
+    description: newline 3 times
+  testAddNewlineWithQuantifier:
+    transcript: add newline three times
+    description: add newline 3 times

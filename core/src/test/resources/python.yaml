@@ -1,0 +1,1337 @@
+suite: Python
+filename: file.py
+validate: true
+tests:
+  testAddArgument:
+    transcript: add argument first name plus last name
+    before: |
+      print("hello")
+    after: |
+      print("hello", first_name + last_name<>)
+  testAddAssert:
+    transcript: add assert false
+    after: |
+      assert False<>
+  testAddAssignment:
+    transcript: add age equals current age plus one
+    after: |
+      age = current_age + 1<>
+  testAddCatch:
+    transcript: add except
+    before: |
+      try:
+          pass
+      except<>:
+          pass
+    after: |
+      try:
+          pass
+      except:
+          pass
+      except:<>
+          pass
+  testAddCatchWithExpression:
+    transcript: add except value error
+    before: |
+      try:
+          pass
+      except:
+          pass<>
+    after: |
+      try:
+          pass
+      except:
+          pass
+      except ValueError<>:
+          pass
+  testAddClass:
+    transcript: add class download manager
+    after: |
+      class DownloadManager<>:
+          pass
+  testAddComment:
+    skipMappingGeneratorTest: true
+    transcript: add comment fix later
+    after: |
+      # fix later<>
+  testAddElement:
+    transcript: add element baz
+    before: |
+      o = [foo, 3, bar]
+    after: |
+      o = [foo, 3, bar, baz<>]
+  testAddElseIf:
+    transcript: add else if highest score plus one less than three
+    before: |
+      if True:
+          pass
+      else:
+          pass
+    after: |
+      if True:
+          pass
+      elif highest_score + 1 < 3<>:
+          pass
+      else:
+          pass
+  testAddElse:
+    transcript: add else return false
+    before: |
+      if True:
+          pass
+    after: |
+      if True:
+          pass
+      else:
+          return False<>
+  testAddEnum:
+    transcript: add enum category type
+    after: |
+      class CategoryType<>(enum.Enum):
+          pass
+  testAddExtends:
+    transcript: add parent animal
+    before: |
+      class Dog(Pet):
+          pass
+    after: |
+      class Dog(Pet, Animal<>):
+          pass
+  testAddFinally:
+    transcript: add finally
+    before: |
+      try:
+          pass
+      except:
+          pass
+    after: |
+      try:
+          pass
+      except:
+          pass
+      finally:<>
+          pass
+  testAddFor:
+    transcript: add for i in range of five
+    after: |
+      for i in range(5)<>:
+          pass
+  testAddFunction:
+    transcript: add function compute factorial
+    after: |
+      def compute_factorial<>():
+          pass
+  testAddFunctionWithType:
+    transcript: add int function average
+    after: |
+      def average<>() -> int:
+          pass
+  testAddIf:
+    transcript: add if count equals ten
+    after: |
+      if count == 10<>:
+          pass
+  testAddImplements:
+    notSupportedInLanguage: true
+  testAddImport:
+    transcript: add import time
+    before: |
+      import random<>
+    after: |
+      import random
+      import time<>
+  testAddImportAs:
+    transcript: add import numpy as np
+    after: |
+      import numpy as np<>
+  testAddImportFrom:
+    transcript: add from flask import capital flask
+    after: |
+      from flask import Flask<>
+  testAddInterface:
+    notSupportedInLanguage: true
+  testAddKeywordArgument:
+    transcript: add argument b equals one
+    before: |
+      foo(a)
+    after: |
+      foo(a, b=1<>)
+  testAddKeywordParameter:
+    transcript: add parameter foo bar equals quotes baz
+    before: |
+      def foo(a):
+          pass
+    after: |
+      def foo(a, foo_bar="baz"<>):
+          pass
+  testAddLambda:
+    transcript: add f equals lambda of x
+    mappingGeneratorSource: |
+      f = lambda x: x
+    after: |
+      f = lambda x<>:
+  testAddMain:
+    skipMappingGeneratorTest: true
+    transcript: add if name equals main
+    after: |
+      if __name__ == "__main__"<>:
+          pass
+  testAddMethod:
+    transcript: add method players
+    before: |
+      class Game:
+          def score(self):
+              return 5
+    after: |
+      class Game:
+          def players<>(self):
+              pass
+
+          def score(self):
+              return 5
+  testAddMethodWithModifiers:
+    transcript: add int method score
+    before: |
+      class Game:
+          pass
+    after: |
+      class Game:
+          def score<>(self) -> int:
+              pass
+  testAddNamespace:
+    notSupportedInLanguage: true
+  testAddParameter:
+    transcript: add parameter max speed
+    before: |
+      def run(distance):
+          pass
+    after: |
+      def run(distance, max_speed<>):
+          pass
+  testAddParameterWithType:
+    transcript: add parameter a colon str
+    before: |
+      def foo():
+          pass
+    after: |
+      def foo(a: str<>):
+          pass
+  testAddParameterWithTypePrefix:
+    transcript: add string parameter name
+    before: |
+      def say_hello():
+          pass
+    after: |
+      def say_hello(name<>: str):
+          pass
+  testAddPrint:
+    skipMappingGeneratorTest: true
+    transcript: add print value
+    after: |
+      print(value)<>
+  testAddProperty:
+    transcript: add property players equals four
+    before: |
+      class Game:
+          pass
+    after: |
+      class Game:
+          players = 4<>
+  testAddReturn:
+    transcript: add return random dot random parens
+    before: |
+      def get_random():
+          pass
+    after: |
+      def get_random():
+          return random.random()<>
+  testAddReturnValue:
+    transcript: add return value four
+    before: |
+      def get_random():
+          return
+    after: |
+      def get_random():
+          return 4<>
+  testAddStruct:
+    notSupportedInLanguage: true
+  testAddThrow:
+    transcript: add raise e
+    after: |
+      raise e<>
+  testAddTry:
+    transcript: add try write parens
+    after: |
+      try:
+          write()<>
+      except:
+          pass
+  testAddTypeToFunction:
+    transcript: add type str
+    before: |
+      def get_name()<>:
+          pass
+    after: |
+      def get_name() -> str<>:
+          pass
+  testAddTypeToParameter:
+    transcript: add type int
+    before: |
+      def set_limit(limit<>):
+          pass
+    after: |
+      def set_limit(limit: int<>):
+          pass
+  testAddWhile:
+    transcript: add while i less than three
+    after: |
+      while i < 3<>:
+          pass
+  testAddClassAfterClass:
+    transcript: add class bar
+    before: |
+      class Foo:
+          pass<>
+    after: |
+      class Foo:
+          pass
+
+
+      class Bar<>:
+          pass
+  testAddConstructor:
+    skipMappingGeneratorTest: true
+    transcript: add constructor
+    before: |
+      class Example:
+        pass
+    after: |
+      class Example:
+        def __init__<>(self):
+          pass
+  testAddDecorator:
+    transcript: add decorator bar parens
+    before: |
+      def foo():
+          pass
+    after: |
+      @bar()<>
+      def foo():
+          pass
+  testAddElseToFor:
+    transcript: add else
+    before: |
+      for i in list:
+          pass
+    after: |
+      for i in list:
+          pass
+      else:<>
+          pass
+  testAddElseToWhile:
+    transcript: add else
+    before: |
+      while True:
+          pass
+    after: |
+      while True:
+          pass
+      else:<>
+          pass
+  testAddEntry:
+    transcript: add entry string bar colon two
+    before: |
+      foo = {<>
+        'foo': 1
+      }
+    after: |
+      foo = {
+        'bar': 2<>,
+        'foo': 1
+      }
+  testAddExtendsToEmptyList:
+    transcript: add parent bar
+    before: |
+      class Foo:
+          pass
+    after: |
+      class Foo(Bar<>):
+          pass
+  testAddFunctionInline:
+    skipMappingGeneratorTest: true
+    transcript: add inline function foo bar
+    before: |
+      def foo():
+        a = b<>
+    after: |
+      def foo():
+        a = b
+        def foo_bar<>():
+          pass
+  testAddFunctionAfterFunction:
+    transcript: add function bar
+    before: |
+      def foo():
+          pass<>
+    after: |
+      def foo():
+          pass
+
+
+      def bar<>():
+          pass
+  testAddKeywordParameterWithType:
+    transcript: add str parameter foo bar equals quotes baz
+    before: |
+      def foo():
+          pass
+    after: |
+      def foo(foo_bar: str = "baz"<>):
+          pass
+  testAddImportToEmptyList:
+    transcript: add import foo
+    after: |
+      import foo<>
+  testAddMethodToEmptyClass:
+    transcript: add method fly
+    before: |
+      class Bird:
+          pass
+    after: |
+      class Bird:
+          def fly<>(self):
+              pass
+  testAddModifier:
+    transcript: add modifier async
+    before: |
+      def foo():
+        pass
+    after: |
+      async<> def foo():
+        pass
+  testAddRemovesPass:
+    transcript: add return bar
+    before: |
+      def foo()<>:
+          pass
+    after: |
+      def foo():
+          return bar<>
+  testAddReturnType:
+    transcript: add return type int
+    before: |
+      def foo():
+          return
+    after: |
+      def foo() -> int<>:
+          return
+  testAddStatementAtEndOfFile:
+    transcript: add a equals b
+    before: |-
+      def foo():
+          pass
+
+      <>
+    after: |
+      def foo():
+          pass
+
+
+      a = b<>
+  testAddToClass:
+    transcript: add foo equals bar
+    before: |
+      class Foo<>:
+        pass
+    after: |
+      class Foo:
+        foo = bar<>
+  testAddToEmptyFile:
+    transcript: add answer equals forty two
+    after: |
+      answer = 42<>
+  testAddToEnum:
+    notSupportedInLanguage: true
+  testAddToNamespace:
+    notSupportedInLanguage: true
+  testAddToStruct:
+    notSupportedInLanguage: true
+  testAddTypeToAssignment:
+    transcript: add type str
+    before: |
+      a = 'hi'
+    after: |
+      a: str<> = 'hi'
+  testAddWithMissingPass:
+    transcript: add return
+    before: |
+      foo = bar
+      for i in ran<>ge(5):
+
+      foo += 1
+    after: |
+      foo = bar
+      for i in range(5):
+          return<>
+
+      foo += 1
+  testDeleteArgument:
+    transcript: delete argument
+    before: |
+      foo(a)
+    after: |
+      foo(<>)
+  testDeleteAssignment:
+    transcript: delete assignment
+    before: |
+      import module
+
+      x = 5
+      assert x == 5
+      with foo() as f:
+          print(x)
+    after: |
+      import module
+
+      <>assert x == 5
+      with foo() as f:
+          print(x)
+  testDeleteComment:
+    transcript: delete comment
+    before: |
+      # this is a comment
+      def foo():
+        pass
+    after: |
+      <>def foo():
+        pass
+  testDeleteCommentInDictionary:
+    transcript: delete comment
+    before: |
+      my_dict = {
+        # comment
+        foo: bar
+      }
+    after: |
+      my_dict = {
+        <>foo: bar
+      }
+  testDeleteElement:
+    transcript: delete second element
+    before: |
+      o = [foo, 3, bar]
+    after: |
+      o = [foo, <>bar]
+  testDeleteEntry:
+    object: entry
+    before: |
+      foo = {
+        "foo": 1,
+        "bar": 2
+      }
+    after: |
+      foo = {
+        ,
+        "bar": 2
+      }
+  testDeleteExtends:
+    transcript: delete parent
+    before: |
+      class Foo(Bar):
+          pass
+    after: |
+      class Foo<>:
+          pass
+  testDeleteExtendsList:
+    transcript: delete parent List
+    before: |
+      class Foo(Bar, Baz):
+          pass
+    after: |
+      class Foo<>:
+          pass
+  testDeleteInlineComment:
+    transcript: delete comment
+    before: |
+      def foo():
+        pass   # todo
+      def bar():
+        pass
+    after: |
+      def foo():
+        pass<>
+      def bar():
+        pass
+  testDeleteKey:
+    transcript: delete key
+    before: |
+      foo = {
+        <>"foo": 1,
+        "bar": 2
+      }
+    after: |
+      foo = {
+        <>: 1,
+        "bar": 2
+      }
+  testDeleteMethod:
+    transcript: delete method
+    before: |
+      class Bird:
+          def chirp(self):
+              print("chirp")
+
+          def fly(self):
+              # TODO
+              pass
+    after: |
+      class Bird:
+          <>def fly(self):
+              # TODO
+              pass
+  testDeleteParameter:
+    transcript: delete parameter
+    before: |
+      def foo(a):
+          pass
+    after: |
+      def foo(<>):
+          pass
+  testSelectArgument:
+    object: argument
+    before: |
+      x = 5
+      assert x == 5
+      with foo() as f:
+          print(x)
+    after: |
+      x = 5
+      assert x == 5
+      with foo() as f:
+          print(<>x<>)
+  testSelectArgumentList:
+    object: argument list
+    before: |
+      x = 5
+      print(x, y, z)
+    after: |
+      x = 5
+      print(<>x, y, z<>)
+  testSelectAssignment:
+    object: assignment
+    before: |
+      import module
+
+      x = 5
+      assert x == 5
+      with foo() as f:
+          print(x)
+    after: |
+      import module
+
+      <>x = 5<>
+      assert x == 5
+      with foo() as f:
+          print(x)
+  testSelectAssignmentValue:
+    object: assignment value
+    before: |
+      import module
+
+      x = 5
+      assert x == 5
+      with foo() as f:
+          print(x)
+    after: |
+      import module
+
+      x = <>5<>
+      assert x == 5
+      with foo() as f:
+          print(x)
+  testSelectAssignmentVariable:
+    object: assignment variable
+    before: |
+      import module
+
+      x = 5
+      assert x == 5
+      with foo() as f:
+          print(x)
+    after: |
+      import module
+
+      <>x<> = 5
+      assert x == 5
+      with foo() as f:
+          print(x)
+  testSelectBody:
+    object: body
+    before: |
+      import module
+
+      class Foo:
+          def me<>thod(self):
+              return 1
+
+      @a.decorator
+      def foo(a, b):
+          return 4
+    after: |
+      import module
+
+      class Foo:
+          def method(self):
+              <>return 1<>
+
+      @a.decorator
+      def foo(a, b):
+          return 4
+  testSelectCatch:
+    object: except
+    before: |
+      class Foo2:
+          pass
+
+      try:
+          pass
+      except:
+          pass
+      finally:
+          pass
+    after: |
+      class Foo2:
+          pass
+
+      try:
+          pass
+      <>except:
+          pass<>
+      finally:
+          pass
+  testSelectClass:
+    object: class
+    before: |
+      import module
+
+      class Foo:
+          def method(self):
+              return 1
+
+      @a.decorator
+      def foo(a, b):
+          return 4
+    after: |
+      import module
+
+      <>class Foo:
+          def method(self):
+              return 1<>
+
+      @a.decorator
+      def foo(a, b):
+          return 4
+  testSelectComment:
+    object: comment
+    before: |
+      def func():
+        # comment line
+        pass
+    after: |
+      def func():
+        <># comment line<>
+        pass
+  testSelectCondition:
+    object: condition
+    before: |
+      if x > 4:
+          print(x + 1)
+      elif x < 4:
+          print(x + 10)
+      else:
+          print(x + 100)
+    after: |
+      if <>x > 4<>:
+          print(x + 1)
+      elif x < 4:
+          print(x + 10)
+      else:
+          print(x + 100)
+  testSelectConstructor:
+    object: constructor
+    before: |
+      class Example:
+        def __init__():
+          return false
+    after: |
+      class Example:
+        <>def __init__():
+          return false<>
+  testSelectDecorator:
+    object: decorator
+    before: |
+      import module
+
+      class Foo:
+          def method(self):
+              return 1
+
+      @a.decorator
+      def foo(a, b):
+          return 4
+    after: |
+      import module
+
+      class Foo:
+          def method(self):
+              return 1
+
+      <>@a.decorator<>
+      def foo(a, b):
+          return 4
+  testSelectClassDecorator:
+    object: decorator
+    before: |
+      import bar
+
+      @dataclass
+      class Foo:
+          def method(self):
+              return 1
+    after: |
+      import bar
+
+      <>@dataclass<>
+      class Foo:
+          def method(self):
+              return 1
+  testSelectDictionary:
+    object: dictionary
+    before: |
+      string = 'foobar'
+      l = [1, 2, 3]
+      d = {'a': 1, 'b': 2}
+      s = {7, 8}
+      g = (i for i in l)
+      b = lambda e: e
+      t = (4, 5, 6)
+    after: |
+      string = 'foobar'
+      l = [1, 2, 3]
+      d = <>{'a': 1, 'b': 2}<>
+      s = {7, 8}
+      g = (i for i in l)
+      b = lambda e: e
+      t = (4, 5, 6)
+  testSelectElement:
+    object: element
+    before: |
+      foo = [1, 2, 3]
+    after: |
+      foo = [<>1<>, 2, 3]
+  testSelectElse:
+    object: else
+    before: |
+      if x > 4:
+          print(x + 1)
+      elif x < 4:
+          print(x + 10)
+      else:
+          print(x + 100)
+    after: |
+      if x > 4:
+          print(x + 1)
+      elif x < 4:
+          print(x + 10)
+      <>else:
+          print(x + 100)<>
+  testSelectElseIf:
+    object: else if
+    before: |
+      if x > 4:
+          print(x + 1)
+      elif x < 4:
+          print(x + 10)
+      else:
+          print(x + 100)
+    after: |
+      if x > 4:
+          print(x + 1)
+      <>elif x < 4:
+          print(x + 10)<>
+      else:
+          print(x + 100)
+  testSelectEnum:
+    notSupportedInLanguage: true
+  testSelectEntry:
+    object: entry
+    before: |
+      a = b
+      foo = {
+        "foo": "bar"
+      }
+    after: |
+      a = b
+      foo = {
+        <>"foo": "bar"<>
+      }
+  testSelectExtends:
+    object: parent
+    before: |
+      class Foo:
+          def method(self):
+              return 1
+
+      class Foo2(Bar, Object):
+          pass
+    after: |
+      class Foo:
+          def method(self):
+              return 1
+
+      class Foo2(<>Bar<>, Object):
+          pass
+  testSelectExtendsList:
+    object: parent list
+    before: |
+      class Foo:
+          def method(self):
+              return 1
+
+      class Foo2(Bar, Object):
+          pass
+    after: |
+      class Foo:
+          def method(self):
+              return 1
+
+      class Foo2(<>Bar, Object<>):
+          pass
+  testSelectFinally:
+    object: finally
+    before: |
+      try:
+          pass
+      except:
+          pass
+      finally:
+          pass
+    after: |
+      try:
+          pass
+      except:
+          pass
+      <>finally:
+          pass<>
+  testSelectFor:
+    object: for
+    before: |
+      if x > 4:
+          print(x + 1)
+      elif x < 4:
+          print(x + 10)
+      else:
+          print(x + 100)
+
+      for i in x:
+          print(x + 2)
+    after: |
+      if x > 4:
+          print(x + 1)
+      elif x < 4:
+          print(x + 10)
+      else:
+          print(x + 100)
+
+      <>for i in x:
+          print(x + 2)<>
+  testSelectForEach:
+    notSupportedInLanguage: true
+  testSelectFunction:
+    object: function
+    before: |
+      import module
+
+      class Foo:
+          def method(self):
+              return 1
+
+      def foo(a, b):
+          return 4
+    after: |
+      import module
+
+      class Foo:
+          def method(self):
+              return 1
+
+      <>def foo(a, b):
+          return 4<>
+  testSelectGenerator:
+    object: generator
+    before: |
+      string = 'foobar'
+      l = [1, 2, 3]
+      d = {'a': 1, 'b': 2}
+      s = {7, 8}
+      g = (i for i in l)
+      b = lambda e: e
+      t = (4, 5, 6)
+    after: |
+      string = 'foobar'
+      l = [1, 2, 3]
+      d = {'a': 1, 'b': 2}
+      s = {7, 8}
+      g = <>(i for i in l)<>
+      b = lambda e: e
+      t = (4, 5, 6)
+  testSelectIf:
+    object: if
+    before: |
+      x = 5
+      if x > 4:
+          print(x + 1)
+      elif x < 4:
+          print(x + 10)
+      else:
+          print(x + 100)
+    after: |
+      x = 5
+      <>if x > 4:
+          print(x + 1)<>
+      elif x < 4:
+          print(x + 10)
+      else:
+          print(x + 100)
+  testSelectImplements:
+    notSupportedInLanguage: true
+  testSelectImport:
+    object: import
+    before: |
+      x = 1
+      import module
+    after: |
+      x = 1
+      <>import module<>
+  testSelectInterface:
+    notSupportedInLanguage: true
+  testSelectKey:
+    object: key
+    before: |
+      foo = {
+        "foo": 1,
+        "bar": 2
+      }
+    after: |
+      foo = {
+        <>"foo"<>: 1,
+        "bar": 2
+      }
+  testSelectLambda:
+    object: lambda
+    before: |
+      string = 'foobar'
+      l = [1, 2, 3]
+      d = {'a': 1, 'b': 2}
+      s = {7, 8}
+      g = (i for i in l)
+      b = lambda e: e
+      t = (4, 5, 6)
+    after: |
+      string = 'foobar'
+      l = [1, 2, 3]
+      d = {'a': 1, 'b': 2}
+      s = {7, 8}
+      g = (i for i in l)
+      b = <>lambda e: e<>
+      t = (4, 5, 6)
+  testSelectList:
+    object: list
+    before: |
+      string = 'foobar'
+      l = [1, 2, 3]
+      d = {'a': 1, 'b': 2}
+      s = {7, 8}
+      g = (i for i in l)
+      b = lambda e: e
+      t = (4, 5, 6)
+    after: |
+      string = 'foobar'
+      l = <>[1, 2, 3]<>
+      d = {'a': 1, 'b': 2}
+      s = {7, 8}
+      g = (i for i in l)
+      b = lambda e: e
+      t = (4, 5, 6)
+  testSelectMethod:
+    object: method
+    before: |
+      import module
+
+      class Foo:
+          def method(self):
+              return 1
+    after: |
+      import module
+
+      class Foo:
+          <>def method(self):
+              return 1<>
+  testSelectModifier:
+    object: modifier
+    before: |
+      async def foo():
+        pa<>ss
+    after: |
+      <>async<> def foo():
+        pass
+  testSelectNamespace:
+    notSupportedInLanguage: true
+  testSelectParameter:
+    object: parameter
+    before: |
+      import module
+
+      class Foo:
+          def method(self):
+              return 1
+    after: |
+      import module
+
+      class Foo:
+          def method(<>self<>):
+              return 1
+  testSelectParameterList:
+    object: parameter list
+    before: |
+      import module
+
+      class Foo:
+          def method(self, a, b):
+              return 1
+    after: |
+      import module
+
+      class Foo:
+          def method(<>self, a, b<>):
+              return 1
+  testSelectPass:
+    object: pass
+    before: |
+      a = b
+      while True:
+          pass
+    after: |
+      a = b
+      while True:
+          <>pass<>
+  testSelectProperty:
+    object: property
+    before: |
+      class Foo:
+          a = b
+          def foo():
+              a = 0<>
+    after: |
+      class Foo:
+          <>a = b<>
+          def foo():
+              a = 0
+  testSelectReturn:
+    object: return
+    before: |
+      import module
+
+      class Foo:
+          def method(self):
+              return 1
+    after: |
+      import module
+
+      class Foo:
+          def method(self):
+              <>return 1<>
+  testSelectReturnType:
+    object: return type
+    before: |
+      def foo() -> str:
+          pass
+    after: |
+      def foo() -> <>str<>:
+          pass
+  testSelectReturnValue:
+    object: return value
+    before: |
+      import module
+
+      class Foo:
+          def method(self):
+              return 1
+    after: |
+      import module
+
+      class Foo:
+          def method(self):
+              return <>1<>
+  testSelectSet:
+    object: set
+    before: |
+      string = 'foobar'
+      l = [1, 2, 3]
+      d = {'a': 1, 'b': 2}
+      s = {7, 8}
+      g = (i for i in l)
+      b = lambda e: e
+      t = (4, 5, 6)
+    after: |
+      string = 'foobar'
+      l = [1, 2, 3]
+      d = {'a': 1, 'b': 2}
+      s = <>{7, 8}<>
+      g = (i for i in l)
+      b = lambda e: e
+      t = (4, 5, 6)
+  testSelectString:
+    object: string
+    before: |
+      l = [1, 2, 3]
+      string = 'foobar'
+    after: |
+      l = [1, 2, 3]
+      string = <>'foobar'<>
+  testSelectStringText:
+    object: string text
+    before: |
+      l = [1, 2, 3]
+      string = 'foobar'
+    after: |
+      l = [1, 2, 3]
+      string = '<>foobar<>'
+  testSelectStruct:
+    notSupportedInLanguage: true
+  testSelectThrow:
+    object: throw
+    before: |
+      x = 3
+      raise e
+    after: |
+      x = 3
+      <>raise e<>
+  testSelectTry:
+    object: try
+    before: |
+      import module
+
+      try:
+          pass
+      except:
+          pass
+      finally:
+          pass
+    after: |
+      import module
+
+      <>try:
+          pass<>
+      except:
+          pass
+      finally:
+          pass
+  testSelectTuple:
+    object: tuple
+    before: |
+      string = 'foobar'
+      l = [1, 2, 3]
+      d = {'a': 1, 'b': 2}
+      s = {7, 8}
+      g = (i for i in l)
+      b = lambda e: e
+      t = (4, 5, 6)
+    after: |
+      string = 'foobar'
+      l = [1, 2, 3]
+      d = {'a': 1, 'b': 2}
+      s = {7, 8}
+      g = (i for i in l)
+      b = lambda e: e
+      t = <>(4, 5, 6)<>
+  testSelectTypeArgument:
+    notSupportedInLanguage: true
+  testSelectTypeFromAssignment:
+    object: type
+    before: |
+      a: str = 'hi'
+      b, c = 1, 2
+    after: |
+      a: <>str<> = 'hi'
+      b, c = 1, 2
+  testSelectTypeFromFunction:
+    object: type
+    before: |
+      def foo(a) -> str:
+          pass
+    after: |
+      def foo(a) -> <>str<>:
+          pass
+  testSelectTypeFromParameter:
+    object: type
+    before: |
+      def foo(a: str, b):
+          pass
+    after: |
+      def foo(a: <>str<>, b):
+          pass
+  testSelectTypeParameter:
+    notSupportedInLanguage: true
+  testSelectWhile:
+    object: while
+    before: |
+      if x > 4:
+          print(x + 1)
+      elif x < 4:
+          print(x + 10)
+      else:
+          print(x + 100)
+
+      while True:
+          print(x)
+    after: |
+      if x > 4:
+          print(x + 1)
+      elif x < 4:
+          print(x + 10)
+      else:
+          print(x + 100)
+
+      <>while True:
+          print(x)<>
+  testSelectWith:
+    object: with
+    before: |
+      x = 5
+      with foo() as f:
+          print(x)
+    after: |
+      x = 5
+      <>with foo() as f:
+          print(x)<>
+  testSelectWithAlias:
+    object: with alias
+    before: |
+      x = 5
+      with foo() as f:
+          print(x)
+    after: |
+      x = 5
+      with foo() as <>f<>:
+          print(x)
+  testSelectWithItem:
+    object: with item
+    before: |
+      x = 5
+      with foo() as f:
+          print(x)
+    after: |
+      x = 5
+      with <>foo() as f<>:
+          print(x)

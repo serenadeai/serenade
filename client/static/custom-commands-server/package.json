@@ -1,0 +1,10 @@
+{
+  "license": "UNLICENSED",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "chokidar": "^3.5.1",
+    "glob": "^7.1.6",
+    "serenade-driver": "1.1.9",
+    "ws": "^7.4.3"
+  }
+}

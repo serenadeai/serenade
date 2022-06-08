@@ -1,0 +1,879 @@
+filename: file.kt
+suite: Kotlin
+skipAllMappingGeneratorTests: true
+tests:
+  testAddArgument:
+    transcript: add argument first name plus last name
+    before: |
+      fun main(args: Array<String>) {
+          say("hello")
+      }
+    after: |
+      fun main(args: Array<String>) {
+          say("hello", firstName + lastName<>)
+      }
+  testAddAssert:
+    transcript: add assert bar double equals one
+    before: |
+      fun main(args: Array<String>) {
+      }
+    after: |
+      fun main(args: Array<String>) {
+        assert(bar == 1<>)
+      }
+  testAddAssignment:
+    transcript: add var age colon int equals current age plus one
+    before: |
+      fun main() {
+      }
+    after: |
+      fun main() {
+        var age: Int = currentAge + 1<>
+      }
+  testAddCatch:
+    transcript: add catch runtime exception
+    before: |
+      fun main() {
+        try {
+          foo()
+        } catch (e: I<>OException) {
+          bar()
+        }
+      }
+    after: |
+      fun main() {
+        try {
+          foo()
+        } catch (e: IOException) {
+          bar()
+        } catch (e: RuntimeException<>) {
+        }
+      }
+  testAddClass:
+    transcript: add class download manager
+    after: |
+      class DownloadManager<> {
+      }
+  testAddComment:
+    skipMappingGeneratorTest: true
+    transcript: add comment fix later
+    before: |
+      fun main() {
+        fo<>o()
+      }
+    after: |
+      fun main() {
+        foo()
+        // fix later<>
+      }
+  testAddDecorator:
+    notSupportedInLanguage: true
+  testAddElseIf:
+    transcript: add else if true
+    before: |
+      fun main() {
+        if (true) {
+        }
+      }
+    after: |
+      fun main() {
+        if (true) {
+        } else if (true<>) {
+        }
+      }
+  # kotlin doesn't use ML snippets, so cursor placement is different
+  testAddElse:
+    transcript: add else return number times factorial of number minus one
+    before: |
+      fun main() {
+        if (true) {
+        }
+      }
+    after: |
+      fun main() {
+        if (true) {
+        } else<> {
+          return number * factorial(number - 1)
+        }
+      }
+  testAddEnum:
+    transcript: add enum category type
+    after: |
+      enum class CategoryType<> {
+      }
+  testAddExtends:
+    transcript: add extends vehicle
+    before: |
+      class<> Car {
+      }
+    after: |
+      class Car : Vehicle<> {
+      }
+  testAddFinally:
+    transcript: add finally
+    before: |
+      fun main() {
+        try {
+          write()
+        } catch (e: SomeException) {
+        }
+      }
+    after: |
+      fun main() {
+        try {
+          write()
+        } catch (e: SomeException) {
+        } finally<> {
+        }
+      }
+  testAddFor:
+    transcript: add for item in items
+    before: |
+      fun main() {
+      }
+    after: |
+      fun main() {
+        for (item in items<>) {
+        }
+      }
+  testAddFunction:
+    transcript: add function average
+    before: |
+      import math
+    after: |
+      import math
+      fun average<>() {
+      }
+  testAddFunctionAlternateTranscript:
+    transcript: add fun average
+    before: |
+      import math
+    after: |
+      import math
+      fun average<>() {
+      }
+  testAddFunctionWithType:
+    transcript: add int function compute factorial
+    before: |
+      import math
+    after: |
+      import math
+      fun computeFactorial<>(): Int {
+      }
+  testAddIf:
+    transcript: add if
+    before: |
+      fun main() {
+      }
+    after: |
+      fun main() {
+        if (true<>) {
+        }
+      }
+  testAddIfWithCondition:
+    transcript: add if false
+    before: |
+      fun main() {
+      }
+    after: |
+      fun main() {
+        if (false<>) {
+        }
+      }
+  testAddImplements:
+    transcript: add implements vehicle
+    before: |
+      class<> Car {
+      }
+    after: |
+      class Car : Vehicle<> {
+      }
+  testAddImport:
+    transcript: add import com dot example
+    before: |
+      import foo.bar<>
+    after: |
+      import foo.bar
+      import com.example<>
+  testAddInterface:
+    transcript: add interface bar
+    before: |
+      import foo
+    after: |
+      import foo
+      interface Bar<> {
+      }
+  testAddLambda:
+    notSupportedInLanguage: true
+  testAddMethod:
+    transcript: add method fly
+    before: |
+      class Bird {
+        fun chirp() {
+        }<>
+      }
+    after: |
+      class Bird {
+        fun chirp() {
+        }
+
+        fun fly<>() {
+        }
+      }
+  testAddMethodToInterface:
+    transcript: add int method get wings
+    before: |
+      interface Bird {<>
+        fun chirp(): String
+      }
+    after: |
+      interface Bird {
+        fun getWings<>(): Int
+        fun chirp(): String
+      }
+  testAddMethodWithModifiers:
+    transcript: add private unit method fly
+    before: |
+      class Bird {
+        fun chirp() {
+        }<>
+      }
+    after: |
+      class Bird {
+        fun chirp() {
+        }
+
+        private fun fly<>(): Unit {
+        }
+      }
+  testAddParameter:
+    transcript: add parameter end location
+    before: |
+      fun run(speed: Int) {
+      }
+    after: |
+      fun run(speed: Int, endLocation<>) {
+      }
+  testAddParameterWithType:
+    transcript: add string parameter name
+    before: |
+      fun sayHello() {
+      }
+    after: |
+      fun sayHello(name<>: String) {
+      }
+  testAddPrint:
+    transcript: add print value
+    before: |
+      fun main() {
+      }
+    after: |
+      fun main() {
+        print(value<>)
+      }
+  testAddProperty:
+    transcript: add var int property players equals four
+    before: |
+      class Game {
+      }
+    after: |
+      class Game {
+        var players<>: Int = 4
+      }
+  testAddReturn:
+    transcript: add return value
+    before: |
+      fun main() {
+      }
+    after: |
+      fun main() {
+        return value<>
+      }
+  testAddReturnValue:
+    transcript: add return value four
+    before: |
+      fun random() {
+        return
+      }
+    after: |
+      fun random() {
+        return 4<>
+      }
+  testAddThrow:
+    transcript: add throw e
+    before: |
+      fun main() {
+      }
+    after: |
+      fun main() {
+        throw e<>
+      }
+  testAddToEmptyFile:
+    transcript: add function main
+    after: |
+      fun main<>() {
+      }
+  testAddTry:
+    transcript: add try write parens
+    before: |
+      fun main() {
+      }
+    after: |
+      fun main() {
+        try<> {
+          write()
+        } catch (e) {
+        }
+      }
+  testAddWhile:
+    transcript: add while false
+    before: |
+      fun main() {
+      }
+    after: |
+      fun main() {
+        while (false<>) {
+        }
+      }
+  testDeleteMethod:
+    transcript: delete method
+    before: |
+      <>class Bird {
+        fun chirp() {
+          print("chirp")
+        }
+
+        fun fly() {
+          // TODO
+        }
+      }
+    after: |
+      class Bird {
+        <>fun fly() {
+          // TODO
+        }
+      }
+  testAddClassAfterClass:
+    transcript: add class bar
+    before: |
+      class Foo {
+      }<>
+    after: |
+      class Foo {
+      }
+      class Bar<> {
+      }
+  testAddElseIfWithElse:
+    transcript: add else if false
+    before: |
+      fun main() {
+        if (true) {
+        } else {
+        }
+      }
+    after: |
+      fun main() {
+        if (true) {
+        } else if (false<>) {
+        } else {
+        }
+      }
+  testAddMethodToEmptyClass:
+    transcript: add int method bar
+    before: |
+      import foo
+      class Foo {<>
+      }
+    after: |
+      import foo
+      class Foo {
+        fun bar<>(): Int {
+        }
+      }
+  testAddModifier:
+    notSupportedInLanguage: true
+  testDeleteArgument:
+    transcript: delete second argument
+    before: |
+      fun main() {
+        foo(bar, baz)
+      }
+    after: |
+      fun main() {
+        foo(bar<>)
+      }
+  testDeleteBody:
+    transcript: delete body
+    before: |
+      fun main() {
+        v<>ar a = b
+      }
+    after: |
+      fun main() {
+      <>}
+  testDeleteCondition:
+    transcript: delete condition
+    before: |
+      fun main() {
+        if (true) {
+        }
+      }
+    after: |
+      fun main() {
+        if (<>) {
+        }
+      }
+  testDeleteExtends:
+    notSupportedInLanguage: true
+  testDeleteParameter:
+    transcript: delete parameter
+    before: |
+      fun foo(x: Int) {
+      }
+    after: |
+      fun foo(<>) {
+      }
+  testDeleteReturnValue:
+    transcript: delete return value
+    before: |
+      fun foo() {
+        return 3
+      }
+    after: |
+      fun foo() {
+        return<>
+      }
+  testDeleteTypeFromAssignment:
+    transcript: delete type
+    before: |
+      fun main() {
+        var f<>oo: String = "foo";
+      }
+    after: |
+      fun main() {
+        var foo<> = "foo";
+      }
+  testDeleteTypeFromFunction:
+    transcript: delete type
+    before: |
+      fun f<>oo(): Int {
+      }
+    after: |
+      fun foo()<> {
+      }
+  testDeleteTypeFromParameter:
+    transcript: delete type
+    before: |
+      fun foo(n<>: Int): Int {
+      }
+    after: |
+      fun foo(n<>): Int {
+      }
+  testSelectArgument:
+    object: argument
+    before: |
+      fun main(args: Array<String>) {
+          foo(bar, baz)
+      }
+    after: |
+      fun main(args: Array<String>) {
+          foo(<>bar<>, baz)
+      }
+  testSelectArgumentList:
+    object: argument list
+    before: |
+      fun main(args: Array<String>) {
+        foo(bar, baz)
+      }
+    after: |
+      fun main(args: Array<String>) {
+        foo(<>bar, baz<>)
+      }
+  testSelectAssert:
+    object: assert
+    before: |
+      fun main(args: Array<String>) {
+        assert(bar == 1)
+      }
+    after: |
+      fun main(args: Array<String>) {
+        <>assert(bar == 1)<>
+      }
+  testSelectAssignment:
+    object: assignment
+    before: |
+      fun main() {
+        var a = b
+      }
+    after: |
+      fun main() {
+        var <>a = b<>
+      }
+  testSelectAssignmentValue:
+    object: assignment value
+    before: |
+      fun main() {
+        var a = b
+      }
+    after: |
+      fun main() {
+        var a = <>b<>
+      }
+  testSelectAssignmentVariable:
+    object: assignment variable
+    before: |
+      fun main() {
+        var a = b
+      }
+    after: |
+      fun main() {
+        var <>a<> = b
+      }
+  testSelectBody:
+    object: body
+    before: |
+      fun foo(n: Int) {
+        re<>turn 1
+      }
+    after: |
+      fun foo(n: Int) {
+        <>return 1<>
+      }
+  testSelectCatch:
+    object: catch
+    before: |
+      fun main() {
+        try {
+          foo()
+        } catch (e: IOException) {
+          bar()
+        }
+      }
+    after: |
+      fun main() {
+        try {
+          foo()
+        } <>catch (e: IOException) {
+          bar()
+        }<>
+      }
+  testSelectClass:
+    object: class
+    before: |
+      import foo
+      class Foo {
+      }
+    after: |
+      import foo
+      <>class Foo {
+      }<>
+  testSelectCondition:
+    object: condition
+    before: |
+      fun main() {
+        if (true) {
+        } else {
+        }
+      }
+    after: |
+      fun main() {
+        if (<>true<>) {
+        } else {
+        }
+      }
+  testSelectConstructor:
+    notSupportedInLanguage: true
+  testSelectDecorator:
+    notSupportedInLanguage: true
+  testSelectElse:
+    object: else
+    before: |
+      fun main() {
+        if (true) {
+        } else {
+        }
+      }
+    after: |
+      fun main() {
+        if (true) {
+        } <>else {
+        }<>
+      }
+  testSelectElseIf:
+    object: else if
+    before: |
+      fun main() {
+        if (true) {
+        } else if (false) {
+        }
+      }
+    after: |
+      fun main() {
+        if (true) {
+        } <>else if (false) {
+        }<>
+      }
+  testSelectEnum:
+    object: enum
+    before: |
+      import foo
+      enum class Color {
+        RED,
+        GREEN,
+        BLUE
+      }
+    after: |
+      import foo
+      <>enum class Color {
+        RED,
+        GREEN,
+        BLUE
+      }<>
+  testSelectExtends:
+    object: parent
+    before: |
+      class Dog : Animal {
+      }
+    after: |
+      class Dog : <>Animal<> {
+      }
+  testSelectFinally:
+    object: finally
+    before: |
+      fun main() {
+        try {
+          foo()
+        } catch (e: SomeException) {
+          bar()
+        } finally {
+          baz()
+        }
+      }
+    after: |
+      fun main() {
+        try {
+          foo()
+        } catch (e: SomeException) {
+          bar()
+        } <>finally {
+          baz()
+        }<>
+      }
+  testSelectFor:
+    object: for
+    before: |
+      fun main() {
+        for (i in 1..2) {
+        }
+      }
+    after: |
+      fun main() {
+        <>for (i in 1..2) {
+        }<>
+      }
+  testSelectFunction:
+    object: function
+    before: |
+      fun fo<>o(): Int {
+      }
+    after: |
+      <>fun foo(): Int {
+      }<>
+  testSelectIf:
+    object: if
+    before: |
+      fun main() {
+        if (true) {
+        }
+      }
+    after: |
+      fun main() {
+        <>if (true) {
+        }<>
+      }
+  testSelectImplements:
+    object: implements
+    before: |
+      class Foo : Bar {
+      }
+    after: |
+      class Foo : <>Bar<> {
+      }
+  testSelectImplementsList:
+    object: implements list
+    before: |
+      class Foo : Bar, Baz {
+      }
+    after: |
+      class Foo : <>Bar, Baz<> {
+      }
+  testSelectImport:
+    object: import
+    before: |
+      import foo
+      fun m<>ain() {}
+    after: |
+      <>import foo<>
+      fun main() {}
+  testSelectInterface:
+    object: interface
+    before: |
+      import foo
+      interface Foo {
+      }
+    after: |
+      import foo
+      <>interface Foo {
+      }<>
+  testSelectLambda:
+    notSupportedInLanguage: true
+  testSelectList:
+    notSupportedInLanguage: true
+  testSelectMethod:
+    object: method
+    before: |
+      class Foo {
+        fun bar() {
+          baz()
+        }
+      }
+    after: |
+      class Foo {
+        <>fun bar() {
+          baz()
+        }<>
+      }
+  testSelectModifier:
+    notSupportedInLanguage: true
+  testSelectParameter:
+    object: parameter
+    before: |
+      fun foo(x: Int) {
+      }
+    after: |
+      fun foo(<>x: Int<>) {
+      }
+  testSelectParameterList:
+    transcript: select parameter list
+    before: |
+      fun foo(x: Int, bar: Int) {
+      }
+    after: |
+      fun foo(<>x: Int, bar: Int<>) {
+      }
+  testSelectProperty:
+    object: property
+    before: |
+      class Foo {
+        var a: Int = b
+      }
+    after: |
+      class Foo {
+        <>var a: Int = b<>
+      }
+  testSelectReturn:
+    object: return
+    before: |
+      fun foo() {
+        return 3
+      }
+    after: |
+      fun foo() {
+        <>return 3<>
+      }
+  testSelectReturnType:
+    object: return type
+    before: |
+      fun foo(): Int {
+        return 3
+      }
+    after: |
+      fun foo(): <>Int<> {
+        return 3
+      }
+  testSelectReturnValue:
+    object: return value
+    before: |
+      fun foo() {
+        return 3
+      }
+    after: |
+      fun foo() {
+        return <>3<>
+      }
+  testSelectString:
+    object: string
+    before: |
+      fun main() {
+        var foo = "foo"
+      }
+    after: |
+      fun main() {
+        var foo = <>"foo"<>
+      }
+  testSelectThrow:
+    object: throw
+    before: |
+      fun main() {
+        throw Error()
+      }
+    after: |
+      fun main() {
+        <>throw Error()<>
+      }
+  testSelectTry:
+    object: try
+    before: |
+      fun main() {
+        try {
+          foo()
+        } catch (e: IOException) {
+          bar()
+        }
+      }
+    after: |
+      fun main() {
+        <>try {
+          foo()
+        }<> catch (e: IOException) {
+          bar()
+        }
+      }
+  testSelectTypeFromAssignment:
+    object: type
+    before: |
+      fun main() {
+        var f<>oo: String = "foo";
+      }
+    after: |
+      fun main() {
+        var foo: <>String<> = "foo";
+      }
+  testSelectTypeFromFunction:
+    object: type
+    before: |
+      fun f<>oo(): Int {
+      }
+    after: |
+      fun foo(): <>Int<> {
+      }
+  testSelectTypeFromParameter:
+    object: type
+    before: |
+      fun foo(n<>: Int): Int {
+      }
+    after: |
+      fun foo(n: <>Int<>): Int {
+      }
+  testSelectWhile:
+    object: while
+    before: |
+      fun main() {
+        while (true) {
+        }
+      }
+    after: |
+      fun main() {
+        <>while (true) {
+        }<>
+      }

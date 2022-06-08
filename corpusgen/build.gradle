@@ -1,0 +1,109 @@
+import ai.serenade.AntlrGenerateTask
+
+apply plugin: "application"
+
+sourceCompatibility = 14
+mainClassName = "corpusgen.CorpusGen"
+distZip.enabled = false
+distTar.enabled = false
+
+dependencies {
+    implementation project(":toolbelt")
+    implementation project(":core")
+
+    implementation rootProject.antlrRuntime
+    implementation rootProject.s3
+}
+
+task generateAcronyms(type: Exec) {
+    inputs.files([
+        "../scripts/serenade/speech_engine/spelling/acronyms/bash.txt",
+        "../scripts/serenade/speech_engine/spelling/acronyms/html_tags.txt",
+        "../scripts/serenade/speech_engine/spelling/acronyms/misc.txt",
+        "../scripts/serenade/speech_engine/spelling/acronyms/top_100_java.txt",
+        "../scripts/serenade/speech_engine/spelling/acronyms/top_100_javascript.txt",
+        "../scripts/serenade/speech_engine/spelling/acronyms/top_100_python.txt",
+        "../scripts/serenade/speech_engine/spelling/abbreviations/html_tags.txt",
+        "../scripts/serenade/speech_engine/spelling/abbreviations/top_100_java.txt",
+        "../scripts/serenade/speech_engine/spelling/abbreviations/top_100_javascript.txt",
+        "../scripts/serenade/speech_engine/spelling/abbreviations/top_100_python.txt",
+        "../scripts/serenade/speech_engine/spelling/abbreviations/top_100_rust.txt"
+    ])
+
+    outputs.file "src/main/resources/acronyms.txt"
+
+    commandLine "bash", "-c", "cat ../scripts/serenade/speech_engine/spelling/acronyms/* ../scripts/serenade/speech_engine/spelling/abbreviations/* | sort | uniq | grep -v foreignkey | grep -v dataset > src/main/resources/acronyms.txt"
+}
+
+task generateTests(type: Exec) {
+    inputs.files([
+        "bin/generate-tests.py",
+        "../core/src/test/resources/base.yaml",
+        "../core/src/test/resources/bash.yaml",
+        "../core/src/test/resources/change.yaml",
+        "../core/src/test/resources/csharp.yaml",
+        "../core/src/test/resources/cplusplus.yaml",
+        "../core/src/test/resources/dart.yaml",
+        "../core/src/test/resources/descriptions.yaml",
+        "../core/src/test/resources/default.yaml",
+        "../core/src/test/resources/errors.yaml",
+        "../core/src/test/resources/formatting.yaml",
+        "../core/src/test/resources/go.yaml",
+        "../core/src/test/resources/html.yaml",
+        "../core/src/test/resources/java.yaml",
+        "../core/src/test/resources/javascript.yaml",
+        "../core/src/test/resources/kotlin.yaml",
+        "../core/src/test/resources/python.yaml",
+        "../core/src/test/resources/required.yaml",
+        "../core/src/test/resources/ruby.yaml",
+        "../core/src/test/resources/rust.yaml",
+        "../core/src/test/resources/scss.yaml",
+        "../core/src/test/resources/system.yaml",
+        "../core/src/test/resources/type.yaml",
+        "src/test/resources/multi-part.yaml",
+        "src/test/resources/partial.yaml"
+    ])
+
+    outputs.files([
+        "src/test/java/corpusgen/gen/BaseTest.java",
+        "src/test/java/corpusgen/gen/ChangeTest.java",
+        "src/test/java/corpusgen/gen/BashTest.java",
+        "src/test/java/corpusgen/gen/CPlusPlusTest.java",
+        "src/test/java/corpusgen/gen/CSharpTest.java",
+        "src/test/java/corpusgen/gen/DartTest.java",
+        "src/test/java/corpusgen/gen/DescriptionTest.java",
+        "src/test/java/corpusgen/gen/ErrorTest.java",
+        "src/test/java/corpusgen/gen/FormattingTest.java",
+        "src/test/java/corpusgen/gen/GoTest.java",
+        "src/test/java/corpusgen/gen/HtmlTest.java",
+        "src/test/java/corpusgen/gen/JavaTest.java",
+        "src/test/java/corpusgen/gen/JavascriptTest.java",
+        "src/test/java/corpusgen/gen/KotlinTest.java",
+        "src/test/java/corpusgen/gen/PythonTest.java",
+        "src/test/java/corpusgen/gen/RubyTest.java",
+        "src/test/java/corpusgen/gen/RustTest.java",
+        "src/test/java/corpusgen/gen/ScssTest.java",
+        "src/test/java/corpusgen/gen/SystemTest.java",
+        "src/test/java/corpusgen/gen/TypeTest.java",
+        "src/test/java/corpusgen/gen/MultiPartTest.java",
+        "src/test/java/corpusgen/gen/PartialTest.java"
+    ])
+
+    commandLine "./bin/generate-tests.py"
+}
+
+compileJava {
+    dependsOn generateAcronyms
+}
+
+compileTestJava {
+    dependsOn generateTests
+}
+
+processResources {
+    dependsOn generateAcronyms
+}
+
+test {
+    maxParallelForks = 2
+}

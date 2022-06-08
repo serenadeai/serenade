@@ -1,0 +1,49 @@
+plugins {
+    id "base"
+}
+
+buildDir = "dist"
+
+task installCodeEngine(type: Copy, dependsOn: [":code-engine:distTar"]) {
+    from tarTree("../code-engine/build/distributions/code-engine.tar.gz")
+    into "static/local"
+}
+
+task installCodeEngineModels(type: Copy, dependsOn: [":code-engine:packageModels"]) {
+    from tarTree("../code-engine/build/distributions/code-engine-models.tar.gz")
+    into "static/local"
+}
+
+task installCore(type: Copy, dependsOn: [":core:distTar"]) {
+    from tarTree("../core/build/distributions/core.tar.gz")
+    into "static/local"
+    rename '^core$', 'serenade-core'
+}
+
+task installJdk(type: Copy, dependsOn: [":packageJdk"]) {
+    from tarTree("../build/distributions/jdk.tar.gz")
+    into "static/local"
+}
+
+task installSpeechEngine(type: Copy, dependsOn: [":speech-engine:distTar"]) {
+    from tarTree("../speech-engine/build/distributions/speech-engine.tar.gz")
+    into "static/local"
+}
+
+task installSpeechEngineModels(type: Copy, dependsOn: [":speech-engine:packageModels"]) {
+    from tarTree("../speech-engine/build/distributions/speech-engine-models.tar.gz")
+    into "static/local"
+}
+
+task installServer(dependsOn: [
+    installCodeEngine,
+    installCodeEngineModels,
+    installCore,
+    installJdk,
+    installSpeechEngine,
+    installSpeechEngineModels
+]) {}
+
+clean {
+    delete "static/local"
+}

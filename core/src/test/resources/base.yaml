@@ -1,0 +1,1537 @@
+# this suite should be used for language-agnostic, non-formatting commands. this happens to use
+# python, but shouldn't test anything python-specific.
+suite: Base
+tests:
+  testAddArgumentToEmptyList:
+    transcript: add argument a
+    before: |
+      foo()
+    after: |
+      foo(a<>)
+  testAddArgumentToNested:
+    transcript: add argument c
+    before: |
+      foo(a, bar<>(b))
+    after: |
+      foo(a, bar(b, c<>))
+  testAddArgumentSymbol:
+    transcript: add argument none
+    before: |
+      foo(a)
+    after: |
+      foo(a, None<>)
+  testAddParameterToEmptyList:
+    transcript: add parameter a
+    before: |
+      def foo():
+          pass
+    after: |
+      def foo(a<>):
+          pass
+  testAddWithSyntaxError:
+    # Unclear if this makes sense for corpsugen tests.
+    skipMappingGeneratorTest: true
+    transcript: add foo equals baz
+    before: |
+      o = [foo, 3, bar<>
+    after: |
+      o = [foo, 3, bar
+      foo = baz<>
+  testSelectWithSyntaxError:
+    filename: file.java
+    transcript: select third method
+    before: |
+      class Test {
+        public static void main() {
+            System.out.println("test");
+        }
+
+        public void tooManyParens()) {}
+
+        public void notEnoughParens( {}
+
+        public void missingSemicolon() {
+            System.out.println(nothingToSee)<>
+        }
+    after: |
+      class Test {
+        public static void main() {
+            System.out.println("test");
+        }
+
+        public void tooManyParens()) {}
+
+        <>public void notEnoughParens( {}<>
+
+        public void missingSemicolon() {
+            System.out.println(nothingToSee)
+        }
+  testAddFunction:
+    transcript: add function foo bar
+    description: "add function <code>def foo_bar():\\n    pass</code>"
+    after: |
+      def foo_bar<>():
+          pass
+  testAddToMultilineListAdjacentToSingleLineList:
+    transcript: add bar equals one
+    before: |
+      def foo():
+          a <>= []
+    after: |
+      def foo():
+          a = []
+          bar = 1<>
+  testAddToMultilineListWithBraceOnOwnLine:
+    filename: file.cs
+    transcript: add a equals b
+    before: |
+      class Foo
+      {
+        public void bar() {
+          if (condition)<>
+          {
+            return;
+          }
+          baz(a);
+        }
+      }
+    after: |
+      class Foo
+      {
+        public void bar() {
+          if (condition)
+          {
+            a = b<>;
+            return;
+          }
+          baz(a);
+        }
+      }
+  testAddToMultilineListViaInnerIndentation:
+    transcript: add a equals b
+    before: |
+      def foo():
+          foo
+          <>
+    after: |
+      def foo():
+          foo
+          a = b<>
+
+  testAddToMultilineListViaOuterIndentation:
+    transcript: add a equals b
+    before: |-
+      def foo():
+          foo
+      <>
+
+    after: |
+      def foo():
+          foo
+
+
+      a = b<>
+  testAddToClassWithoutSelector:
+    skipMappingGeneratorTest: true
+    filename: file.java
+    transcript: add private int foo equals one
+    before: |
+      package foo;
+
+      public class Foo<> {
+        public void bar() {
+          baz(a);
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        private int foo = 1<>;
+
+        public void bar() {
+          baz(a);
+        }
+      }
+  testAddToList:
+    skipMappingGeneratorTest: true
+    filename: file.js
+    transcript: add three in quotes
+    before: |
+      const numbers = ["one", "two"<>];
+    after: |
+      const numbers = ["one", "two", "three"<>];
+  testAddToSingleLineListAdjacentMultilineList:
+    skipMappingGeneratorTest: true # This is still using insert, and not the add snippet.
+    transcript: add banana
+    before: |
+      def foo():
+          a = [app<>le]
+    after: |
+      def foo():
+          a = [apple, banana<>]
+  testAddParameterWithImplicitIntegerType:
+    filename: file.java
+    transcript: add parameter count
+    before: |
+      class Foo {
+        public void foo() {
+        }
+      }
+    after: |
+      class Foo {
+        public void foo(int count<>) {
+        }
+      }
+  testAddParameterWithImplicitStringType:
+    filename: file.java
+    transcript: add parameter name
+    before: |
+      class Employee {
+        public int getSalary() {
+        }
+      }
+    after: |
+      class Employee {
+        public int getSalary(String name<>) {
+        }
+      }
+  testAddWithStopWords:
+    filename: file.java
+    transcript: add an int method add students
+    before: |
+      class Classroom {
+      }
+    after: |
+      class Classroom {
+        int addStudents<>() {
+        }
+      }
+  testDedent:
+    transcript: dedent
+    before: |
+      if True:
+          print(a)
+          p<>rint(b)
+    after: |
+      if True:
+          print(a)
+      <>print(b)
+  testCommentLineNoSelector:
+    transcript: comment
+    before: |
+      def check(x):
+          i<>f x < 3:
+              return True
+          return False
+    after: |
+      def check(x):
+          # if x < 3:<>
+              return True
+          return False
+  testDedentTwoTimes:
+    transcript: dedent two times
+    before: |
+      if True:
+          if False:
+              <>print(a)
+    after: |
+      if True:
+          if False:
+      <>print(a)
+  testDedentNextTwoTwoTimes:
+    transcript: dedent next two lines two times
+    before: |
+      if True:
+          if Fa<>lse:
+              print(a)
+              print(b)
+    after: |
+      if True:
+          if False:
+      <>print(a)
+      print(b)
+  testDeleteWord:
+    transcript: delete word
+    before: |
+      foo <>bar baz
+    after: |
+      foo <>baz
+  testDeletePhrase:
+    transcript: delete phrase print
+    before: |
+      foo print bar
+    after: |
+      foo <> bar
+  testDeletePhraseWithChainingAmbiguity:
+    transcript: delete space
+    before: |
+      foo print bar
+    after: |
+      foo<>print bar
+  testDeleteCharacter:
+    transcript: delete character
+    before: |
+      f<>oo
+    after: |
+      f<>o
+  testDeleteSingular:
+    transcript: delete one character
+    before: |
+      f<>oo
+    after: |
+      f<>o
+  testDeletePlural:
+    transcript: delete two characters
+    before: |
+      f<>oo
+    after: |
+      f<>
+  testDeleteLine:
+    transcript: delete line
+    before: |
+      foo
+      bar
+    after: |
+      <>bar
+  testDeleteEmptyLine:
+    transcript: delete line
+    before: |
+      foo
+      <>
+    after: "foo\n<>"
+  testDeleteTerm:
+    transcript: delete term
+    before: |
+      def <>foo(a, b):
+    after: |
+      def <>b):
+  testDeleteToEndOfAst:
+    transcript: delete to end of assignment value
+    before: |
+      foo = b<>ar
+    after: |
+      foo = b<>
+  testDeleteElseIfWithWrap:
+    filename: file.java
+    transcript: delete else if
+    before: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+          if (true) {
+          } else if (false) {
+          } <>else if (condition) {
+          } else if (true) {
+          }
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+          if (true) {
+          } else if (false) {
+          } <>else if (true) {
+          }
+        }
+      }
+  testDuplicateAbove:
+    transcript: duplicate if above
+    before: |
+      def foo():
+          foo = 1
+          if True:<>
+              print(a)
+              print(b)
+    after: |
+      def foo():
+          foo = 1
+          if True:
+              print(a)
+              print(b)<>
+          if True:
+              print(a)
+              print(b)
+  testDuplicateIncludingIndentation:
+    transcript: duplicate line below
+    before: |
+      def foo():
+          <>foo = 1
+          if True:
+              print(a)
+              print(b)
+    after: |
+      def foo():
+          foo = 1
+          foo = 1<>
+          if True:
+              print(a)
+              print(b)
+  testDuplicateAboveWithoutPrecedingLine:
+    transcript: duplicate assignment above
+    before: |
+      foo = 1<>
+    after: |
+      foo = 1<>
+      foo = 1
+  testDuplicateBelow:
+    transcript: duplicate function below
+    before: |
+      def foo():
+          foo = 1
+          if True:<>
+              print(a)
+              print(b)
+    after: |
+      def foo():
+          foo = 1
+          if True:
+              print(a)
+              print(b)
+      def foo():
+          foo = 1
+          if True:
+              print(a)
+              print(b)<>
+  testDuplicateBelowWithoutSucceedingLine:
+    transcript: duplicate assignment below
+    before: |
+      foo = 1<>
+    after: |
+      foo = 1
+      foo = 1<>
+  testDuplicateBelowWithoutPostfix:
+    transcript: duplicate assignment
+    before: |
+      foo = 1<>
+    after: |
+      foo = 1
+      foo = 1<>
+  testGoToNextWord:
+    transcript: go to next word
+    before: |
+      f<>oo bar baz
+    after: |
+      foo <>bar baz
+  testGoToPhrase:
+    transcript: go to phrase foo
+    before: |
+      bar foo baz
+    after: |
+      bar <>foo baz
+  testGoToPhraseSymbols:
+    transcript: go to phrase hello underscore world two
+    before: |
+      one two hello_world hello_world2 three
+    after: |
+      one two hello_world <>hello_world2 three
+  testsGoToPhraseStyle:
+    transcript: go to phrase camel case hello world
+    before: |
+      one two hello_world helloWorld three
+    after: |
+      one two hello_world <>helloWorld three
+  testsGoToPhraseSymbolName:
+    transcript: go to phrase or two
+    before: |
+      one two hello_world Or2 three
+    after: |
+      one two hello_world <>Or2 three
+  testGoToPhraseWithoutGoTo:
+    transcript: phrase foo
+    before: |
+      bar foo baz
+    after: |
+      bar <>foo baz
+  testGoToNextPhraseWithoutGoTo:
+    transcript: next phrase foo
+    before: |
+      <>buffer foo foo foo
+    after: |
+      buffer <>foo foo foo
+  testGoToNextStartingAtStart:
+    transcript: go to next foo
+    before: |
+      beginning <>foo middle blah foo end foo
+    after: |
+      beginning foo middle blah <>foo end foo
+  testGoToNextStartingAtEnd:
+    transcript: go to next foo
+    before: |
+      beginning foo<> middle blah foo end foo
+    after: |
+      beginning foo middle blah <>foo end foo
+  testGoToNextStartingInBetween:
+    transcript: go to next foo
+    before: |
+      beginning foo mi<>ddle blah foo end foo
+    after: |
+      beginning foo middle blah <>foo end foo
+  testGoToPreviousStartingAtStart:
+    transcript: go to previous foo
+    before: |
+      beginning foo middle blah <>foo end foo
+    after: |
+      beginning <>foo middle blah foo end foo
+  testGoToPreviousStartingAtEnd:
+    transcript: go to previous foo
+    before: |
+      beginning foo middle blah foo<> end foo
+    after: |
+      beginning <>foo middle blah foo end foo
+  testGoToPreviousStartingInBetween:
+    transcript: go to previous foo
+    before: |
+      beginning foo middle blah foo <>end foo
+    after: |
+      beginning foo middle blah <>foo end foo
+  testGoToSecondPhrase:
+    transcript: go to second phrase foo
+    before: |
+      foo foo foo
+    after: |
+      foo <>foo foo
+  testGoToPrioritizeExactMatch:
+    transcript: go to function object build
+    before: |
+      # Prioritize exact match<>
+      def other_func():
+          print("irrelevant")
+
+      def object_builder():
+          print("wrong func")
+
+      def object_build():
+          print("right func")
+    after: |
+      # Prioritize exact match
+      def other_func():
+          print("irrelevant")
+
+      def object_builder():
+          print("wrong func")
+
+      <>def object_build():
+          print("right func")
+  testGoToPhraseCaseInsensitive:
+    # make sure we don't break implicit phrase / aren't case sensitive.
+    transcript: go to cursor
+    before: |
+      # Prioritize exact match<>
+      def getCursor():
+          print("irrelevant")
+
+      cursor = 1
+    after: |
+      # Prioritize exact match
+      def get<>Cursor():
+          print("irrelevant")
+
+      cursor = 1
+  testGoToWord:
+    transcript: go to word foo
+    before: |
+      foo bar<> baz
+    after: |
+      <>foo bar baz
+  testGoToImplicitPhrase:
+    transcript: go to bar
+    before: |
+      foo bar baz
+    after: |
+      foo <>bar baz
+  testGoToLine:
+    transcript: go to line two
+    before: |
+      foo
+      bar
+      baz
+    after: |
+      foo
+      <>bar
+      baz
+  testGoToLastLine:
+    transcript: go to last line
+    before: |
+      foo
+      ba<>r
+      baz
+      qux
+    after: |
+      foo
+      bar
+      baz
+      qux
+  testGoToSecondToLast:
+    transcript: go to second to last character
+    before: |
+      f<>oobar
+    after: |
+      foob<>ar
+  testGoToStart:
+    transcript: go to start of word
+    before: |
+      foo<>bar
+    after: |
+      <>foobar
+  testGoToEnd:
+    transcript: go to end of word
+    before: |
+      foo<>bar
+    after: |
+      foobar<>
+  testGoToCommandWord:
+    transcript: go to end of delete
+    before: |
+      foo<>bar delete something
+    after: |
+      foobar delete<> something
+  testGoToSyntaxError:
+    transcript: go to syntax error
+    before: |
+      def foo():
+        else pass
+    after: |
+      def foo():
+        <>else pass
+  testGoForward:
+    transcript: go forward one word
+    before: |
+      foo<>bar delete something
+    after: |
+      foobar <>delete something
+  testGoForwardManyWords:
+    transcript: go forward ten words
+    before: |
+      word1<> word2 word3 word4 w5 w6 w7 w8 w9 w10 w11 w12
+    after: |
+      word1 word2 word3 word4 w5 w6 w7 w8 w9 w10 <>w11 w12
+  testGoBack:
+    transcript: go back three words
+    before: |
+      word1 word2 word3 word4 w5 w6 w7<> w8 w9 w10 w11 w12
+    after: |
+      word1 word2 word3 <>word4 w5 w6 w7 w8 w9 w10 w11 w12
+  testGoDownLines:
+    transcript: go down two lines
+    before: |
+      lin<>e1
+      line2
+      line3
+      line4
+    after: |
+      line1
+      line2
+      <>line3
+      line4
+  testAfterFunction:
+    transcript: after function bar
+    before: |
+      def foo<>():
+          pass
+      def bar():
+          pass
+    after: |
+      def foo():
+          pass
+      def bar():
+          pass<>
+  testBeforeFunction:
+    transcript: before function foo
+    before: |
+      def foo<>():
+          pass
+      def bar():
+          pass
+    after: |
+      <>def foo():
+          pass
+      def bar():
+          pass
+  testAfterPhrase:
+    transcript: after foo
+    before: |
+      foo bar <>baz
+    after: |
+      foo<> bar baz
+  testAfterAdd:
+    skipMappingGeneratorTest: true
+    transcript: add function bar after function foo
+    before: |
+      def foo():
+        pass
+    after: |
+      def foo():
+        pass
+
+
+      def bar<>():
+        pass
+  testIndent:
+    transcript: indent
+    before: |
+      if True:
+          print(a)
+          p<>rint(b)
+    after: |
+      if True:
+          print(a)
+              p<>rint(b)
+  testIndentTwoTimes:
+    transcript: indent two times
+    before: |
+      if True:
+          if False:
+              <>print(a)
+    after: |
+      if True:
+          if False:
+                      <>print(a)
+  testIndentNextTwoTwoTimes:
+    transcript: indent next two lines two times
+    before: |
+      if True:
+          if Fa<>lse:
+              print(a)
+              print(b)
+    after: |
+      if True:
+          if False:
+         <>             print(a)
+                      print(b)
+  testJoinLinesNoQuantity:
+    transcript: join lines
+    before: |
+      foo<>
+      bar
+    after: |
+      foo<>bar
+  testJoinLinesQuantity:
+    transcript: join two lines
+    before: |
+      foo<>
+      bar
+      baz
+    after: |
+      foo<>barbaz
+  testDictate:
+    transcript: dictate function of a thing at a point of input
+    after: function of a thing at a point of input
+  testNewline:
+    transcript: newline
+    before: |
+      fo<>o
+      bar
+    after: |
+      fo
+      <>o
+      bar
+  testNewlineAbove:
+    transcript: newline above
+    before: |
+      foo
+      b<>ar
+    after: |
+      foo
+      <>
+      bar
+  testNewlineBelow:
+    transcript: newline below
+    before: |
+      f<>oo
+      bar
+    after: |
+      foo
+      <>
+      bar
+  testAddNewline:
+    skipMappingGeneratorTest: true
+    transcript: add newline
+    before: |
+      f<>oo
+      bar
+    after: |
+      foo
+      <>
+      bar
+  testAddNewlineAtStart:
+    skipMappingGeneratorTest: true
+    transcript: add newline
+    before: |
+      <>foo
+      bar
+    after: |
+      foo
+      <>
+      bar
+  testInsertNewline:
+    skipMappingGeneratorTest: true
+    transcript: insert newline above
+    before: |
+      foo
+      b<>ar
+    after: |
+      foo
+      <>
+      bar
+  testNewlineWithQuantifier:
+    transcript: newline three times
+    before: |
+      f<>oo
+      bar
+    after: |
+      f
+
+
+      <>oo
+      bar
+  testNewlineIndent:
+    transcript: newline
+    before: "firstline\n    <>foo\nbar"
+    after: "firstline\n    \n    <>foo\nbar"
+  testNewlinePartialIndent:
+    transcript: newline
+    before: "firstline\n  <>  foo\nbar"
+    after: "firstline\n  \n  <>  foo\nbar"
+  testNewlineBeginningIndent:
+    transcript: newline
+    before: "firstline\n<>    foo\nbar"
+    after: "firstline\n\n<>    foo\nbar"
+  testPluralListAmbiguity:
+    transcript: delete arguments
+    before: |
+      foo(a, b)
+    after: |
+      foo(<>)
+  testSelectBlock:
+    object: block
+    before: |
+      pri<>nt(a)
+      print(c)
+    after: |
+      <>print(a)
+      print(c)<>
+  testSelectCommentText:
+    object: comment text
+    before: |
+      # foo bar
+      x = 1
+    after: |
+      # <>foo bar<>
+      x = 1
+  testSelectCharacter:
+    transcript: select character
+    before: |
+      fo<>o bar
+    after: |
+      fo<>o<> bar
+  testSelectFunctionUsingName:
+    transcript: select function bar baz
+    before: |
+      def foo():
+          pass
+      def bar_baz():
+          pass
+    after: |
+      def foo():
+          pass
+      <>def bar_baz():
+          pass<>
+  testSelectEntry:
+    object: entry
+    before: |
+      foo = {
+        "foo": 1,
+        "bar": 2
+      }
+    after: |
+      foo = {
+        <>"foo": 1<>,
+        "bar": 2
+      }
+  testSelectMethodUsingName:
+    transcript: select method foo
+    before: |
+      class Foo:
+          def bar(self):
+              pass
+          def foo(self):
+              pass
+    after: |
+      class Foo:
+          def bar(self):
+              pass
+          <>def foo(self):
+              pass<>
+  testSelectWord:
+    object: word two
+    before: |
+      foo bar baz
+    after: |
+      foo <>bar<> baz
+  testSelectStringText:
+    object: string text
+    before: |
+      a = "b c d"
+    after: |
+      a = "<>b c d<>"
+  testWordOneWithOneWord:
+    object: word one
+    before: |
+      foo
+    after: |
+      <>foo<>
+  testSelectLineTwo:
+    transcript: select line two
+    before: |
+      foo
+      bar
+      baz
+    after: |
+      foo
+      <>bar<>
+      baz
+  testSelectFile:
+    object: file
+    before: |
+      foo bar
+      baz
+    after: |
+      <>foo bar
+      baz
+  testSelectLine:
+    transcript: select line
+    before: |
+      foo
+      <>bar baz
+      qux
+    after: |
+      foo
+      <>bar baz<>
+      qux
+  testSelectParameterUsingName:
+    transcript: select parameter bar
+    before: |
+      def foo(a, bar, c):
+          pass
+    after: |
+      def foo(a, <>bar<>, c):
+          pass
+  testSelectTerm:
+    object: term
+    before: |
+      foo pr<>int(a)
+    after: |
+      foo <>print(a)<>
+  testSelectNextTerm:
+    object: next term
+    before: |
+      pri<>nt(a) + print(b)
+    after: |
+      print(a) <>+<> print(b)
+  testSelectNumber:
+    object: number
+    before: |
+      value = 245.31
+    after: |
+      value = <>245.31<>
+  testSelectNumberInString:
+    object: number
+    before: |
+      ip = "127.123.111.1"
+    after: |
+      ip = "<>127<>.123.111.1"
+  testSelectPhrase:
+    object: phrase bar
+    before: |
+      f<>oo bar baz
+    after: |
+      foo <>bar<> baz
+  testSelectImplicitPhrase:
+    transcript: select baz
+    before: |
+      f<>oo bar baz
+    after: |
+      foo bar <>baz<>
+  testSelectPhraseWithFormatting:
+    object: phrase a and b
+    before: |
+      foo a_and_b bar
+    after: |
+      foo <>a_and_b<> bar
+  testSelectToStartOfLine:
+    transcript: select to start of line
+    before: |
+      foo bar b<>az
+    after: |
+      <>foo bar b<>az
+  testSelectToEndOfLine:
+    transcript: select to end of line
+    before: |
+      foo b<>ar baz
+    after: |
+      foo b<>ar baz<>
+  testSelectToStartOfWord:
+    transcript: select to start of word
+    before: |
+      fooba<>r
+    after: |
+      <>fooba<>r
+  testSelectToEndOfWord:
+    transcript: select to end of word
+    before: |
+      f<>oobar
+    after: |
+      f<>oobar<>
+  testSelectToImplicitPhrase:
+    transcript: select to bar
+    before: |
+      f<>oobar
+    after: |
+      f<>oo<>bar
+  testSelectLineRange:
+    transcript: select lines two through four
+    before: |
+      one
+      two
+      three
+      four
+      five
+    after: |
+      one
+      <>two
+      three
+      four<>
+      five
+  testSelectLineRangeVerbose:
+    transcript: select line two to line four
+    before: |
+      one
+      two
+      three
+      four
+      five
+    after: |
+      one
+      <>two
+      three
+      four<>
+      five
+  testShiftLineDown:
+    transcript: shift line down
+    before: |
+      <>a, b, c, d
+      e, f, g, h
+    after: |
+      e, f, g, h
+      a, b, c, d<>
+  testShiftLinesDown:
+    transcript: shift three lines down
+    before: |
+      <>a, b, c, d
+      e, f, g, h
+      i, j, k, l
+      m, n, o, p
+    after: |
+      m, n, o, p
+      a, b, c, d
+      e, f, g, h
+      i, j, k, l<>
+  testShiftLineUp:
+    transcript: shift line up
+    before: |
+      a, b, c, d
+      <>e, f, g, h
+    after: |
+      e, f, g, h<>
+      a, b, c, d
+  testShiftLineUpTwice:
+    transcript: shift line up twice
+    before: |
+      a, b, c, d
+      e, f, g, h
+      <>i, j, k, l
+      m, n, o, p
+    after: |
+      i, j, k, l<>
+      a, b, c, d
+      e, f, g, h
+      m, n, o, p
+  testShiftLinesDownTwice:
+    transcript: shift two lines down two times
+    before: |
+      <>a, b, c, d
+      e, f, g, h
+      i, j, k, l
+      m, n, o, p
+    after: |
+      i, j, k, l
+      m, n, o, p
+      a, b, c, d
+      e, f, g, h<>
+  testShiftLinesUp:
+    transcript: shift three lines up
+    before: |
+      a, b, c, d
+      <>e, f, g, h
+      i, j, k, l
+      m, n, o, p
+    after: |
+      e, f, g, h
+      i, j, k, l
+      m, n, o, p<>
+      a, b, c, d
+  testShiftNextLinesDown:
+    transcript: shift next two lines down
+    before: |
+      <>a, b, c, d
+      e, f, g, h
+      i, j, k, l
+      m, n, o, p
+    after: |
+      a, b, c, d
+      m, n, o, p
+      e, f, g, h
+      i, j, k, l<>
+  testShiftPreviousLinesDown:
+    transcript: shift previous two lines down
+    before: |
+      a, b, c, d
+      e, f, g, h
+      <>i, j, k, l
+      m, n, o, p
+    after: |
+      i, j, k, l
+      a, b, c, d
+      e, f, g, h<>
+      m, n, o, p
+  testShiftParameterLeft:
+    transcript: shift parameter left
+    before: |
+      def foo(a, foo_bar<>):
+          pass
+    after: |
+      def foo(foo_bar<>, a):
+          pass
+  testShiftParameterRight:
+    transcript: shift parameter a right
+    before: |
+      def foo(a<>, foo_bar):
+          pass
+    after: |
+      def foo(foo_bar, a<>):
+          pass
+  testShiftParametersRight:
+    transcript: shift next two parameters left
+    before: |
+      def foo(a<>, b, foo_bar):
+          pass
+    after: |
+      def foo(b, foo_bar<>, a):
+          pass
+  testShiftFunctionDown:
+    transcript: shift function foo down
+    before: |
+      def foo(a<>, foo_bar):
+          pass
+
+
+      def bar():
+        pass
+    after: |
+      def bar():
+        pass
+
+
+      def foo(a, foo_bar):
+          pass<>
+  testShiftFunctionUp:
+    transcript: shift function up
+    before: |
+      def foo(a, foo_bar):
+          pass
+
+
+      def bar()<>:
+        pass
+    after: |
+      def bar():
+        pass<>
+
+
+      def foo(a, foo_bar):
+          pass
+  testShiftFunctionDownLines:
+    transcript: shift function down three lines
+    before: |
+      def foo(bar)<>:
+          pass
+      print("This is not a function")
+      a = 0
+      a += 1
+    after: |
+      print("This is not a function")
+      a = 0
+      a += 1
+      def foo(bar):
+          pass<>
+  testShiftFunctionUpLines:
+    transcript: shift function up by two lines
+    before: |
+      print("This is not a function")
+      a = 0
+      a += 1
+      def foo(bar)<>:
+          pass
+    after: |
+      print("This is not a function")
+      def foo(bar):
+          pass<>
+      a = 0
+      a += 1
+  testSortBlock:
+    transcript: sort lines one to three
+    before: |
+      <>import .foo
+      import .bar
+      import .foobar
+    after: |
+      <>import .bar
+      import .foo
+      import .foobar
+  testSortImports:
+    transcript: sort imports
+    before: |
+      import foo
+      import bar<>
+    after: |
+      import bar
+      import foo<>
+  testSortFunctions:
+    filename: foo.cpp
+    transcript: sort functions
+    before: |
+      void foo() {}
+
+      // bar
+      void bar() {}
+
+      // abc
+      void abc() {}
+    after: |
+      <>// abc
+      void abc() {}
+
+      // bar
+      void bar() {}
+
+      void foo() {}
+  testSortLines:
+    transcript: sort two lines
+    before: |
+      impor<>t .foo
+      import .bar
+      import .abc
+    after: |
+      impor<>t .bar
+      import .foo
+      import .abc
+  testSortMethods:
+    filename: foo.java
+    transcript: sort methods
+    before: |
+      <>package foo;
+
+      public class Foo {
+        public Foo() {}
+
+        // bar
+        public void bar() {}
+
+        // abc
+        public void abc() {}
+
+      }
+    after: |
+      <>package foo;
+
+      public class Foo {
+        public Foo() {}
+
+        // abc
+        public void abc() {}
+
+        // bar
+        public void bar() {}
+
+      }
+  testSurroundWithEnclosureSymbols:
+    transcript: surround bar with parentheses
+    before: foo bar baz
+    after: foo (bar<>) baz
+  testSurroundWithSymbol:
+    transcript: surround body with asterisk
+    before: |
+      if True:
+          <>print(a)
+          print(b)
+    after: |
+      if True:
+          *print(a)
+          print(b)<>*
+  testSurroundWithTag:
+    transcript: surround foo with tag p
+    before: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr /><>
+            foo
+          <hr />
+        </body>
+      </html>
+    after: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+            <p>foo<></p>
+          <hr />
+        </body>
+      </html>
+  testSurroundWithText:
+    transcript: surround body with foo
+    before: |
+      if True:
+          <>print(a)
+          print(b)
+    after: |
+      if True:
+          fooprint(a)
+          print(b)<>foo
+  testSurroundEndOfLine:
+    transcript: wrap end of line with brackets
+    before: |
+      a = <>0
+    after: |
+      a = [0<>]
+  testUpLines:
+    transcript: up two lines
+    before: |
+      one
+      two
+      three
+      four<>
+    after: |
+      one
+      <>two
+      three
+      four
+  testDownLines:
+    transcript: down two lines
+    before: |
+      one<>
+      two
+      three
+      four
+    after: |
+      one
+      two
+      <>three
+      four
+  testRightCharacters:
+    transcript: right two characters
+    before: |
+      o<>ne two three four
+    after: |
+      one<> two three four
+  testRightWords:
+    transcript: right two words
+    before: |
+      o<>ne two three four
+    after: |
+      one two <>three four
+  testLeftCharacters:
+    transcript: left two characters
+    before: |
+      one two thre<>e four
+    after: |
+      one two th<>ree four
+  testLeftWords:
+    transcript: left two words
+    before: |
+      one two three fo<>ur
+    after: |
+      one <>two three four
+  testStyleDetectIndentation:
+    filename: file.js
+    transcript: style file
+    before: |
+      if (true) {
+          console.log('foo'); }
+    after: |
+      <>if (true) {
+          console.log("foo");
+      }
+  testStyleDetectLineWidthDeferToMaximum:
+    filename: file.js
+    transcript: style file
+    before: |
+      if (true && false && true && false && true && false && true && false && true && false) { console.log('foo'); }
+    after: |
+      <>if (true && false && true && false && true && false && true && false && true && false) {
+        console.log("foo");
+      }
+  testStyleDetectLineWidthDeferToDefault:
+    filename: file.js
+    transcript: style file
+    before: |
+      if (true && false && true && false && true && false && true && false && true && false) { console.log('foo'); }
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+    after: |
+      <>if (
+        true &&
+        false &&
+        true &&
+        false &&
+        true &&
+        false &&
+        true &&
+        false &&
+        true &&
+        false
+      ) {
+        console.log("foo");
+      }
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+      let bar = 1;
+  testStyleDetectIndentationAlternateTranscript:
+    filename: file.js
+    transcript: style
+    before: |
+      if (true) {
+          console.log('foo'); }
+    after: |
+      <>if (true) {
+          console.log("foo");
+      }
+  testStyleSelectionAllCaps:
+    transcript: all caps next two words
+    before: |
+      foo<> bar baz
+    after: |
+      foo BAR_BAZ<>
+  testStyleSelectionCamel:
+    transcript: camel case next two words
+    before: |
+      foo<> bar baz
+    after: |
+      foo barBaz<>
+  testStyleSelectionCapitalize:
+    transcript: capitalize next two words
+    before: |
+      foo<> bar baz
+    after: |
+      foo Bar baz<>
+  testStyleSelectionDashes:
+    transcript: dashes next two words
+    before: |
+      foo<> bar baz
+    after: |
+      foo bar-baz<>
+  testStyleSelectionLowercase:
+    transcript: lowercase next two words
+    before: |
+      foo<> BAR BAZ
+    after: |
+      foo bar baz<>
+  testStyleSelectionPascal:
+    transcript: pascal case next two words
+    before: |
+      foo<> bar baz
+    after: |
+      foo BarBaz<>
+  testStyleSelectionTitleCase:
+    transcript: title case next two words
+    before: |
+      foo<> bar baz
+    after: |
+      foo Bar Baz<>
+  testStyleSelectionUnderscores:
+    transcript: underscores next two words
+    before: |
+      foo<> bar baz
+    after: |
+      foo bar_baz<>
+  testStylePhrase:
+    transcript: capitalize phrase bar
+    before: |
+      Foo bar
+    after: |
+      Foo Bar<>
+  testStylePhraseMultipleWords:
+    transcript: lowercase foo bar
+    before: |
+      FOO BAR
+    after: |
+      foo bar<>
+  testDeleteReasonableRangeNotFound:
+    transcript: delete object
+    before: |
+      foo = Object.keys(bar);
+    after: |
+      foo = <>.keys(bar);
+  testGoToReasonableRangeNotFound:
+    transcript: go to object
+    before: |
+      foo = Object.keys(bar);
+    after: |
+      foo = <>Object.keys(bar);
+  testDeleteInvalidRange:
+    transcript: delete lines two to one
+    description: "Invalid range: delete lines two to one"
+    before: |
+      foo
+      bar

@@ -1,0 +1,945 @@
+suite: Rust
+filename: test.rs
+validate: true
+tests:
+  testAddArgument:
+    transcript: add argument first name plus last name
+    before: |
+      fn greet() {
+        say("hello"<>);
+      }
+    after: |
+      fn greet() {
+        say("hello", first_name + last_name<>);
+      }
+  testAddArgumentToMacro:
+    skipMappingGeneratorTest: true
+    transcript: add argument name
+    before: |
+      fn say_hello(name: &str) {
+        println!("hello {}")<>;
+      }
+    after: |
+      fn say_hello(name: &str) {
+        println!("hello {}", name<>);
+      }
+  testAddAssignment:
+    transcript: add let age equals current age plus one
+    before: |
+      fn main() {<>
+      }
+    after: |
+      fn main() {
+        let age = current_age + 1<>;
+      }
+  testAddCatch:
+    notSupportedInLanguage: true
+  testAddClass:
+    notSupportedInLanguage: true
+  testAddComment:
+    skipMappingGeneratorTest: true
+    transcript: add comment fix later
+    before: |
+      struct User {
+        username: String,
+        email: String,<>
+      }
+    after: |
+      struct User {
+        username: String,
+        email: String,
+        // fix later<>
+      }
+  testAddDecorator:
+    notSupportedInLanguage: true
+  testAddElement:
+    notSupportedInLanguage: true
+  testAddElse:
+    transcript: add else return number times factorial of number minus one
+    before: |
+      fn main() {
+        if x == 2 {
+          return 1;
+        }
+      }
+    after: |
+      fn main() {
+        if x == 2 {
+          return 1;
+        } else {
+          return number * factorial(number - 1)<>;
+        }
+      }
+  testAddElseIf:
+    transcript: add else if highest score plus one less than three
+    before: |
+      fn main() {
+        if x == 2 {
+        } else {
+        }
+      }
+    after: |
+      fn main() {
+        if x == 2 {
+        } else if highest_score + 1 < 3<> {
+        } else {
+        }
+      }
+  testAddEntry:
+    notSupportedInLanguage: true
+  testAddEnum:
+    transcript: add enum category type
+    after: |
+      enum CategoryType<> {
+      }
+  testAddExtends:
+    notSupportedInLanguage: true
+  testAddFinally:
+    notSupportedInLanguage: true
+  testAddFor:
+    transcript: add for item in items
+    before: |
+      fn main() {<>
+      }
+    after: |
+      fn main() {
+        for item in items<> {
+        }
+      }
+  testAddFunction:
+    transcript: add function generate data
+    after: |
+      fn generate_data<>() {
+      }
+  testAddFunctionWithType:
+    transcript: add i thirty two function get random
+    after: |
+      fn get_random<>() -> i32 {
+      }
+  testAddIf:
+    transcript: add if count equals ten
+    before: |
+      fn main() {<>
+      }
+    after: |
+      fn main() {
+        if count == 10<> {
+        }
+      }
+  testAddImplementation:
+    transcript: add impl vehicle
+    after: |
+      impl Vehicle<> {
+      }
+  testAddImplementationGeneration:
+    transcript: add impl requests colon colon patterns
+    after: |
+      impl requests::Patterns<> {
+      }
+    mappingGeneratorSource: |
+      impl Source for requests::Patterns {
+        fn source(g) -> Self {
+        }
+      }
+  testAddImplements:
+    transcript: add implements drive
+    before: |
+      struct Vehicle {
+        name: String
+      }
+
+      impl Vehicle {
+        fn drive() {
+          // do something
+        }
+      }
+    after: |
+      struct Vehicle {
+        name: String
+      }
+
+      impl Drive<> for Vehicle {
+        fn drive() {
+          // do something
+        }
+      }
+  testAddImport:
+    transcript: add use crate colon colon package
+    before: |
+      use std::{
+        env<>
+      };
+    after: |
+      use std::{
+        env
+      };
+      use crate::package<>;
+  testAddImportToEmptyList:
+    transcript: add use self colon colon front house
+    after: |
+      use self::front_house<>;
+  testAddInterface:
+    notSupportedInLanguage: true
+  testAddLambda:
+    transcript: add lambda of e
+    before: |
+      fn test() {<>
+      }
+    after: |
+      fn test() {
+        |e<>| {
+        }
+      }
+  testAddLetIf:
+    transcript: add let x equals if x
+    before: |
+      fn test() {<>
+      }
+    after: |
+      fn test() {
+        let x = if x<> {
+        };
+      }
+  testAddLoop:
+    transcript: add loop
+    after: |
+      loop {<>
+      }
+  testAddMethod:
+    transcript: add method fly
+    allowSecondAlternative: true
+    before: |
+      impl Bird {<>
+        pub fn chirp() {
+        }
+      }
+    after: |
+      impl Bird {
+        fn fly<>() {
+        }
+
+        pub fn chirp() {
+        }
+      }
+  testAddNamespace:
+    notSupportedInLanguage: true
+  testAddPrint:
+    skipMappingGeneratorTest: true
+    transcript: add print value
+    before: |
+      fn main() {
+      }
+    after: |
+      fn main() {
+        println!(value<>);
+      }
+  testAddProperty:
+    transcript: add string property players
+    before: |
+      struct Game {
+      }
+    after: |
+      struct Game {
+        players<>: String
+      }
+  testAddPropertyMultiple:
+    transcript: add property string names
+    before: |
+      struct Game {
+        players: String<>
+      }
+    after: |
+      struct Game {
+        players: String,
+        names<>: String
+      }
+  testAddReturn:
+    transcript: add return get random number parens
+    before: |
+      fn random() {
+      }
+    after: |
+      fn random() {
+        return get_random_number()<>;
+      }
+  testAddReturnValue:
+    transcript: add return value four
+    before: |
+      fn random() {
+        return;
+      }
+    after: |
+      fn random() {
+        return 4<>;
+      }
+  testAddThrow:
+    notSupportedInLanguage: true
+  testAddTrait:
+    allowSecondAlternative: true
+    transcript: add trait bar
+    after: |
+      trait Bar<> {
+      }
+  testAddTraitWithModifier:
+    transcript: add pub trait bar
+    after: |
+      pub trait Bar<> {
+      }
+  testAddPanic:
+    skipMappingGeneratorTest: true
+    transcript: add panic something is wrong
+    before: |
+      fn main() {<>
+      }
+    after: |
+      fn main() {
+        panic!("something is wrong")<>;
+      }
+  testAddToClass:
+    notSupportedInLanguage: true
+  testAddToEmptyFile:
+    transcript: add let mut x equals two plus three
+    after: |
+      let mut x = 2 + 3<>;
+  testAddToEnum:
+    transcript: add bar
+    before: |
+      #[non_exhaustive]
+      pub enum Foo<> {
+      }
+    after: |
+      #[non_exhaustive]
+      pub enum Foo {
+        Bar<>
+      }
+  testAddToNamespace:
+    notSupportedInLanguage: true
+  testAddToStruct:
+    transcript: add name colon string
+    before: |
+      struct User<> {
+      }
+    after: |
+      struct User {
+        name: String<>
+      }
+  testAddToUse:
+    transcript: add deserialize
+    before: |
+      use serde::{
+        de::{Deserializer, Error as DeError, Visitor}<>
+      };
+    after: |
+      use serde::{
+        de::{Deserializer, Error as DeError, Visitor}, Deserialize<>
+      };
+  testAddTry:
+    notSupportedInLanguage: true
+  testAddWhile:
+    transcript: add while bar is greater than one
+    before: |
+      fn main() {
+      }
+    after: |
+      fn main() {
+        while bar > 1<> {
+        }
+      }
+  testAddConstructor:
+    notSupportedInLanguage: true
+  testAddModifier:
+    transcript: add modifier pub
+    before: |
+      fn inputs() {
+        println!("test");
+      }
+    after: |
+      pub<> fn inputs() {
+        println!("test");
+      }
+  testAddParameter:
+    transcript: add parameter foo bar colon string
+    before: |
+      fn foo(a: i32) {
+      }
+    after: |
+      fn foo(a: i32, foo_bar: String<>) {
+      }
+  testAddParameterAlternativeOrdering:
+    transcript: add string parameter foo bar
+    before: |
+      fn foo(a: i32) {
+      }
+    after: |
+      fn foo(a: i32, foo_bar<>: String) {
+      }
+  testAddStruct:
+    transcript: add struct foo
+    after: |
+      struct Foo<> {
+      }
+  testDeleteArgument:
+    transcript: delete argument
+    before: |
+      fn bar() {
+        baz(a);
+      }
+    after: |
+      fn bar() {
+        baz(<>);
+      }
+  testDeleteExtends:
+    notSupportedInLanguage: true
+  testDeleteImplements:
+    transcript: delete implements
+    before: |
+      struct Vehicle {
+        name: String
+      }
+
+      impl Drive for Vehicle {
+        fn drive () {
+          // do something
+        }
+      }
+    after: |
+      struct Vehicle {
+        name: String
+      }
+
+      impl <>Vehicle {
+        fn drive () {
+          // do something
+        }
+      }
+  testDeleteMethod:
+    transcript: delete method
+    before: |
+      impl Foo {
+        fn test() {<>
+          let x = |y| -> y + 2;
+        }
+      }
+    after: |
+      impl Foo {
+      <>}
+  testDeleteParameter:
+    transcript: delete parameter
+    before: |
+      fn foo(a: String) {
+      }
+    after: |
+      fn foo(<>) {
+      }
+  testSelectArgument:
+    object: argument
+    before: |
+      fn bar() {
+        baz(a);
+      }
+    after: |
+      fn bar() {
+        baz(<>a<>);
+      }
+  testSelectArgumentList:
+    object: argument list
+    before: |
+      fn bar() {
+        baz(a, b, c);
+      }
+    after: |
+      fn bar() {
+        baz(<>a, b, c<>);
+      }
+  testSelectAssignment:
+    object: assignment
+    before: |
+      fn bar() {
+        baz(a);<>
+        let x = 3;
+      }
+    after: |
+      fn bar() {
+        baz(a);
+        <>let x = 3<>;
+      }
+  testSelectAssignmentValue:
+    object: assignment value
+    before: |
+      fn bar() {
+        baz(a);
+        let x = 3;
+      }
+    after: |
+      fn bar() {
+        baz(a);
+        let x = 3;
+      }
+  testSelectAssignmentVariable:
+    object: assignment variable
+    before: |
+      fn bar() {
+        baz(a);
+        let x = 3;
+      }
+    after: |
+      fn bar() {
+        baz(a);
+        let <>x<> = 3;
+      }
+  testSelectBody:
+    object: body
+    before: |
+      impl User {
+        fn bar() {
+          baz(a);<>
+          let x = 3;
+        }
+      }
+    after: |
+      impl User {
+        fn bar() {
+          <>baz(a);
+          let x = 3;<>
+        }
+      }
+  testSelectCatch:
+    notSupportedInLanguage: true
+  testSelectClass:
+    notSupportedInLanguage: true
+  testSelectComment:
+    transcript: select comment
+    before: |
+      fn bar() {
+        baz(a);
+        // fix later
+        let x = 3;
+      }
+    after: |
+      fn bar() {
+        baz(a);
+        <>// fix later<>
+        let x = 3;
+      }
+  testSelectCondition:
+    object: condition
+    before: |
+      fn bar() {
+        let x = 3;
+        if x == 4 {
+          return true;
+        }
+      }
+    after: |
+      fn bar() {
+        let x = 3;
+        if <>x == 4<> {
+          return true;
+        }
+      }
+  testSelectConstructor:
+    notSupportedInLanguage: true
+  testSelectDecorator:
+    notSupportedInLanguage: true
+  testSelectDictionary:
+    notSupportedInLanguage: true
+  testSelectElement:
+    notSupportedInLanguage: true
+  testSelectElse:
+    object: else
+    before: |
+      if x == 4 {
+        return "four";
+      } else if x == 5 {
+        return "five";
+      } else {
+        return "none";
+      }
+    after: |
+      if x == 4 {
+        return "four";
+      } else if x == 5 {
+        return "five";
+      } <>else {
+        return "none";
+      }<>
+  testSelectElseIf:
+    object: else if
+    before: |
+      if x == 4 {
+        return "four";
+      } else if x == 5 {
+        return "five";
+      } else {
+        return "none";
+      }
+    after: |
+      if x == 4 {
+        return "four";
+      } <>else if x == 5 {
+        return "five";
+      }<> else {
+        return "none";
+      }
+  testSelectEntry:
+    notSupportedInLanguage: true
+  testSelectEnum:
+    object: enum
+    before: |
+      use crate::front_of_house::hosting;
+      enum AnimalType {
+        Mammal,
+        Insect,
+        Other,
+      }
+    after: |
+      use crate::front_of_house::hosting;
+      <>enum AnimalType {
+        Mammal,
+        Insect,
+        Other,
+      }<>
+  testSelectExtends:
+    notSupportedInLanguage: true
+  testSelectFinally:
+    notSupportedInLanguage: true
+  testSelectFor:
+    object: for
+    before: |
+      fn main() {
+        for i in items {
+          println!("test" + i);
+        }
+      }
+    after: |
+      fn main() {
+        <>for i in items {
+          println!("test" + i);
+        }<>
+      }
+  testSelectForEach:
+    notSupportedInLanguage: true
+  testSelectFunction:
+    object: function
+    before: |
+      use crate::front_of_house::hosting;
+
+      fn generate_data() {
+      }
+
+      struct User {
+        username: String
+      }
+    after: |
+      use crate::front_of_house::hosting;
+
+      <>fn generate_data() {
+      }<>
+
+      struct User {
+        username: String
+      }
+  testSelectIf:
+    object: if
+    before: |
+      let x = 3;
+      if x == 4 {
+        return "four";
+      } else if x == 5 {
+        return "five";
+      } else {
+        return "none";
+      }
+    after: |
+      let x = 3;
+      <>if x == 4 {
+        return "four";
+      }<> else if x == 5 {
+        return "five";
+      } else {
+        return "none";
+      }
+  testSelectImplements:
+    object: implements
+    before: |
+      impl Drive for Vehicle {
+        fn drive () {
+        }
+      }
+    after: |
+      impl <>Drive<> for Vehicle {
+        fn drive () {
+        }
+      }
+  testSelectImport:
+    object: using
+    before: |
+      use crate::front_of_house::hosting;
+
+      st<>ruct User {
+        username: String
+      }
+    after: |
+      <>use crate::front_of_house::hosting<>;
+
+      struct User {
+        username: String
+      }
+  testSelectInterface:
+    notSupportedInLanguage: true
+  testSelectLambda:
+    transcript: select lambda
+    before: |
+      impl Foo {
+        fn test() {<>
+          let x = |y| -> y + 2;
+        }
+      }
+    after: |
+      impl Foo {
+        fn test() {
+          let x = <>|y| -> y + 2<>;
+        }
+      }
+  testSelectLambdaParameter:
+    object: parameter
+    before: |
+      impl Foo {
+        fn test() {
+          let <>x = |y| -> y + 2;
+        }
+      }
+    after: |
+      impl Foo {
+        fn test() {
+          let x = |<>y<>| -> y + 2;
+        }
+      }
+  testSelectList:
+    notSupportedInLanguage: true
+  testSelectMethod:
+    object: method
+    before: |
+      fn main() {
+        println!("test");
+      }
+
+      impl User {
+        fn bar(a: String, b: i32) -> String {
+          return "blah";
+        }
+      }
+    after: |
+      fn main() {
+        println!("test");
+      }
+
+      impl User {
+        <>fn bar(a: String, b: i32) -> String {
+          return "blah";
+        }<>
+      }
+  testSelectImplementation:
+    transcript: select implementation
+    before: |
+      use crate::front_of_house::hosting;
+
+      impl User {
+        fn bar(a: String, b: i32) -> String {
+          return "blah";
+        }
+      }
+    after: |
+      use crate::front_of_house::hosting;
+
+      <>impl User {
+        fn bar(a: String, b: i32) -> String {
+          return "blah";
+        }
+      }<>
+  testSelectModifier:
+    object: modifier
+    before: |
+      impl User {
+        pub fn bar(a: String, b: i32) -> String {
+          return "blah";
+        }
+      }
+    after: |
+      impl User {
+        <>pub<> fn bar(a: String, b: i32) -> String {
+          return "blah";
+        }
+      }
+  testSelectNamespace:
+    notSupportedInLanguage: true
+  testSelectParameter:
+    object: parameter
+    before: |
+      fn <>bar(a: String, b: i32) -> String {
+        return "blah";
+      }
+    after: |
+      fn bar(<>a: String<>, b: i32) -> String {
+        return "blah";
+      }
+  testSelectParameterList:
+    object: parameter list
+    before: |
+      fn bar(a: String, b: i32) -> String {
+        return "blah";
+      }
+    after: |
+      fn bar(<>a: String, b: i32<>) -> String {
+        return "blah";
+      }
+  testSelectProperty:
+    object: property
+    before: |
+      struct User {
+        username: String
+      }
+    after: |
+      struct User {
+        <>username: String<>
+      }
+  testSelectReturn:
+    object: return
+    before: |
+      fn bar(b: String) -> String {
+        return "blah";
+      }
+    after: |
+      fn bar(b: String) -> String {
+        <>return "blah"<>;
+      }
+  testSelectReturnType:
+    object: return type
+    before: |
+      fn bar(b: String) -> String {
+        return "blah";
+      }
+    after: |
+      fn bar(b: String) -> <>String<> {
+        return "blah";
+      }
+  testSelectReturnTypeUsingType:
+    object: type
+    before: |
+      fn foo() -> i32 {
+      }
+    after: |
+      fn foo() -> <>i32<> {
+      }
+  testSelectReturnValue:
+    object: return value
+    before: |
+      fn bar(b: String) -> String {
+        return "blah";
+      }
+    after: |
+      fn bar(b: String) -> String {
+        return <>"blah"<>;
+      }
+  testSelectString:
+    object: string
+    before: |
+      fn bar(b: String) -> String {
+        return "blah";<>
+      }
+    after: |
+      fn bar(b: String) -> String {
+        return <>"blah"<>;
+      }
+  testSelectStringText:
+    object: string text
+    before: |
+      fn bar(b: String) -> String {
+        return "blah";
+      }
+    after: |
+      fn bar(b: String) -> String {
+        return "<>blah<>";
+      }
+  testSelectStruct:
+    object: struct
+    before: |
+      let a = b;
+      struct User {
+        username: String
+      }
+    after: |
+      let a = b;
+      <>struct User {
+        username: String
+      }<>
+  testSelectThrow:
+    notSupportedInLanguage: true
+  testSelectTrait:
+    object: trait
+    before: |
+      use crate::front_of_house::hosting;
+
+      trait Bar {
+      }
+    after: |
+      use crate::front_of_house::hosting;
+
+      <>trait Bar {
+      }<>
+  testSelectTry:
+    notSupportedInLanguage: true
+  testSelectTypeFromAssignment:
+    object: type
+    before: |
+      let x: i32 = 0;
+    after: |
+      let x: <>i32<> = 0;
+  testSelectTypeFromFunction:
+    object: type
+    before: |
+      fn bar(b: String) -> String<> {
+      }
+    after: |
+      fn bar(b: String) -> <>String<> {
+      }
+  testSelectTypeFromParameter:
+    object: type
+    before: |
+      fn bar(b<>: String) -> String {
+      }
+    after: |
+      fn bar(b: <>String<>) -> String {
+      }
+  testSelectTypeArgument:
+    object: type argument
+    before: |
+      let s = pack_item::<ContainerType>(ItemType);
+    after: |
+      let s = pack_item::<<>ContainerType<>>(ItemType);
+  testSelectTypeParameter:
+    object: type parameter
+    before: |
+      struct Foo<T> {
+        bar: T
+      }
+    after: |
+      struct Foo<<>T<>> {
+        bar: T
+      }
+  testSelectWhile:
+    object: while
+    before: |
+      fn bar() {
+        let x = 0;
+        while x < 10 {
+          let x = x + 1;
+        }
+      }
+    after: |
+      fn bar() {
+        let x = 0;
+        <>while x < 10 {
+          let x = x + 1;
+        }<>
+      }

@@ -1,0 +1,144 @@
+suite: Type
+tests:
+  testCapitalAfterWord:
+    transcript: type foo capital bar baz
+    after: foo Bar baz<>
+  testNumeralInvalid:
+    transcript: type numeral thing
+    after: numeral thing<>
+  testEquals:
+    transcript: type foo equals bar
+    after: foo=bar<>
+  testGreaterThan:
+    transcript: type foo greater than bar
+    after: foo>bar<>
+  testEqualsMinus:
+    transcript: type foo equals minus bar
+    after: foo=-bar<>
+  testMinusEquals:
+    transcript: type foo minus equals bar
+    after: foo-=bar<>
+  testModEquals:
+    transcript: type bar mod equals one
+    after: bar%=1<>
+  testBrackets:
+    transcript: type left bracket one comma two right bracket
+    after: "[1,2]<>"
+  testBraceSymbols:
+    transcript: type brace paren bracket
+    after: "{([<>"
+  testEnclosures:
+    transcript: type braces parens brackets double quotes
+    after: '{}()[]""<>'
+  testPlus:
+    transcript: type x plus one
+    after: x+1<>
+  testShift:
+    transcript: type x right shift one
+    after: x>>1<>
+  testInBraces:
+    transcript: type bar in braces brack
+    after: bar{brack}<>
+  testInComparators:
+    transcript: type bar in comparators brack
+    after: bar<brack>
+  testMiddleOfWord:
+    transcript: type bar
+    before: f<>oo
+    after: fbar<>oo
+  testEqualsNull:
+    transcript: "type equals null"
+    after: "=null<>"
+  testReturnSpace:
+    transcript: type return space
+    after: "return "
+  testOpenParenCommaCloseParen:
+    transcript: type foo paren bar comma baz comma qux right paren
+    after: foo(bar,baz,qux)<>
+  testEqualsQuotes:
+    transcript: type app dot secret underscore key equals in double quotes secret
+    after: app.secret_key="secret"<>
+  testEqualsCall:
+    transcript: type a equals bar of c
+    after: a=bar(c)<>
+  testPrioritizedOverSelector:
+    transcript: type import
+    before: |
+      f<>oo
+    after: |
+      fimport<>oo
+  testAddTag:
+    transcript: type tag baz
+    after: <baz><></baz>
+  testAddOpenTag:
+    transcript: type open tag baz
+    after: <baz>
+  testAddCloseTag:
+    transcript: type close tag baz
+    after: </baz>
+  testAddEmptyTag:
+    transcript: type empty tag baz
+    after: <baz />
+  testAbove:
+    transcript: type above foo
+    before: |
+      bar
+      ba<>z
+    after: |
+      bar
+      foo<>
+      baz
+  testAboveFirstLine:
+    transcript: type above foo
+    before: |
+      ba<>r
+      baz
+    after: |
+      foo<>
+      bar
+      baz
+  testBelow:
+    transcript: type below foo
+    before: |
+      ba<>r
+      baz
+    after: |
+      bar
+      foo<>
+      baz
+  testBelowWithIndentation:
+    transcript: type below foo
+    before: |
+      if True:
+          a =<> b
+    after: |
+      if True:
+          a = b
+          foo<>
+  testNewline:
+    transcript: type newline
+    before: |
+      fo<>o
+      bar
+    after: |
+      fo
+      <>o
+      bar
+  testAboveNewline:
+    transcript: type above newline
+    before: |
+      foo
+      b<>ar
+    after: |
+      foo
+      <>
+      bar
+  testBelowNewline:
+    transcript: type below newline
+    before: |
+      f<>oo
+      bar
+    after: |
+      foo
+      <>
+      bar

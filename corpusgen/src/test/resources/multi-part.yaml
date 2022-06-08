@@ -1,0 +1,16 @@
+suite: MultiPart
+tests:
+  testAddMultiPartIf:
+    filename: test.java
+    transcript: add an if i less than one return one
+    after: |
+      if (i < 1) {
+        return 1<>;
+      }
+  testAddMultiPartFor:
+    skipMappingGeneratorTest: true
+    filename: test.java
+    transcript: add for let i equals zero i less than three i plus plus
+    after: |
+      for (let i = 0<>; i < 3; i++) {
+      }

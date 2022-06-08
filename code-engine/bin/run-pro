@@ -1,0 +1,4 @@
+#!/bin/bash
+
+trap 'kill $(jobs -p) > /dev/null 2>&1' EXIT
+ENV="local" CODE_ENGINE_MODELS="$1" ./serenade-code-engine

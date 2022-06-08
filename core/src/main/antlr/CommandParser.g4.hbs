@@ -1,0 +1,751 @@
+parser grammar CommandParser ;
+
+options { tokenVocab=CommandLexer; }
+
+main : commandChain EOF ;
+mainWithoutPrepositions : commandChainWithoutPrepositions EOF ;
+
+commandChain :
+    metaCommand |
+    unchainableCommand |
+    repeat |
+    command+ (prepositionSelection | repeat)?
+;
+
+commandChainWithoutPrepositions :
+    metaCommand |
+    unchainableCommand |
+    repeat |
+    command+ repeat?
+;
+
+metaCommand :
+    cancel |
+    use
+;
+
+unchainableCommand :
+    next |
+    back |
+    tryCommand
+;
+
+// prioritization order for commands like cut, copy, select, etc:
+// 1. commands with no text component ("delete line", since "line" is a raw selector)
+// 2. commands with a text component ("delete foo", since "foo" is an implicit phrase)
+// 3. short commands that are prefixes of longer commands
+//    * "copy phrase foo" should not be "copy, phrase foo" ("copy" is a command, "phrase foo" is an implicit go to)
+//    * "delete space" should not be "delete, space" ("delete" is a command, "space" is a press command)
+//    * "type parameter" should not be "type, parameter" ("type" is an implicit go to, "parameter" is an implicit go to)
+command :
+    // special case: newline contains type, etc.
+    newline quantifier? |
+
+    // special case: prioritize "type parameter" over "type, parameter"
+    type |
+
+    // rule #1: commands without a text component
+    comment |
+    indent |
+    sort |
+    goTo |
+    goToSyntaxError |
+    copy |
+    select |
+    changeAll |
+    change |
+    joinLines |
+
+    debug |
+    edit |
+    showDictationBox |
+    dictateStart |
+    dictateStop |
+    goToDefinition |
+    languageMode |
+    pause |
+    send |
+    show |
+    (
+        changeWindow |
+        close |
+        cut |
+        inspect |
+        delete |
+        goTo |
+        paste |
+        redo |
+        reload |
+        save |
+        scroll |
+        select |
+        style |
+        setTextStyle |
+        switchWindow |
+        tabs |
+        undoCloseTab |
+        undo
+    ) quantifier? |
+    arrowKeyWithQuantifier |
+
+    // rule #2: commands with a text component
+    apply |
+    autocomplete |
+    changeAll |
+    change |
+    click |
+    duplicate |
+    goToPhrase |
+    run |
+    scrollPhrase |
+    focus |
+    launch |
+    add |
+    openFile |
+    rename |
+    shift |
+    surroundWith |
+    systemInsert |
+    dictate |
+    insert |
+    click |
+
+    // rule #3: short commands that are prefixes of longer commands
+    bareCopy |
+    bareCut |
+    bareInspect |
+    press quantifier? | // press includes rules like "delete"
+
+    // de-prioritize "forward, delete" below the "forward delete" key in press.
+    forward quantifier?
+;
+
+quantifier :
+    ONCE |
+    TWICE |
+    THRICE |
+    numberRange1To99 (TIME | TIMES)
+;
+
+numbers : number+ ;
+formattedText : .+ ;
+
+validLanguage :
+    AUTO |
+    BASH |
+    C |
+    (C PLUS PLUS) |
+    (C SHARP) |
+    CSS |
+    DART |
+    GO |
+    HTML |
+    JAVA |
+    JAVASCRIPT |
+    KOTLIN |
+    PYTHON |
+    RUBY |
+    RUST |
+    SCSS |
+    TYPESCRIPT
+;
+
+allDeterminers: (THE | AN | A)? ;
+the: THE? ;
+called: (CALLED | NAMED)? ;
+endpoint : (the (START | END | BOTTOM | TOP | BEGINNING) OF)? ;
+count : number ;
+searchDirection : (the (NEXT | PREVIOUS | LEFT | RIGHT))? ;
+movementDirection : (NEXT | PREVIOUS | FORWARD | BACK | LEFT | RIGHT | UP | DOWN) ;
+vertical : UP | DOWN ;
+
+selection : unnamedSelection | namedSelection ;
+selectionWithImplicitPhrase : selection | phraseSelection ;
+
+namedSelection :
+    TO? endpoint (searchDirection | positional | allDeterminers) namedSelectionObject called formattedText
+;
+namedPositionSelection :
+   endpoint (searchDirection | positional | allDeterminers) namedSelectionObject called formattedText
+;
+
+unnamedSelection :
+    // same as unnamedPositionSelection, but with TO? prefix.
+    TO? endpoint selectionObjectSingular number |
+    TO? endpoint positional selectionObjectSingular |
+    TO? endpoint searchDirection selectionObjectSingular |
+
+    // additional absolute range
+    FROM? selectionObjectSingular number (TO | THROUGH | UNTIL) selectionObjectSingular? number |
+    selectionObjectPlural number (TO | THROUGH | UNTIL) number |
+    the (FIRST | LAST) count selectionObjectPlural |
+
+    // additional relative range
+    searchDirection (ONE selectionObjectSingular | count selectionObjectPlural)
+;
+
+unnamedPositionSelection :
+    // absolute range
+    endpoint selectionObjectSingular number |
+    endpoint positional selectionObjectSingular |
+
+    // relative range
+    endpoint searchDirection selectionObjectSingular
+;
+
+phraseSelectionPrefixSingular :
+    // absolute range (the alternatives that end in with an object)
+    TO? endpoint positional |
+
+    // relative range
+    TO? endpoint searchDirection |
+    searchDirection ONE
+;
+
+phraseSelectionPrefixPlural :
+    // absolute range (the alternatives that end in with an object)
+    LAST count formattedText |
+
+    // relative range
+    searchDirection count formattedText
+;
+
+phraseSelection :
+    phraseSelectionPrefixSingular formattedText |
+    phraseSelectionPrefixPlural formattedText
+;
+
+// position selection exists separate from selection for accuracy reasons (even though it's fairly redundant)
+// e.g., we want "go to three words" to be invalid
+positionSelection : unnamedPositionSelection | namedPositionSelection  ;
+positionSelectionWithImplicitPhrase : positionSelection | positionPhraseSelection ;
+
+navigationPositionSelection:
+    movementDirection ONE selectionObjectSingular |
+    movementDirection count selectionObjectPlural
+;
+
+positionPhraseSelectionPrefix :
+    // absolute range (the alternatives that end in with an object)
+    endpoint positional |
+
+    // relative range
+    endpoint searchDirection
+;
+
+positionPhraseSelection : positionPhraseSelectionPrefix formattedText ;
+positionPhraseRequiredSelection : positionPhraseSelectionPrefix PHRASE formattedText ;
+
+preposition :
+    AFTER |
+    BEFORE
+;
+
+prepositionSelection : preposition positionSelectionWithImplicitPhrase ;
+
+syntaxError : (SYNTAX)? ERROR;
+
+selectionObjectSingular
+    : {{{selection_objects_singular}}} ;
+
+selectionObjectPlural
+    : {{{selection_objects_plural}}} ;
+
+namedSelectionObject
+    : {{{named_selection_object}}} ;
+
+{{{selection_object_singular_rules}}}
+
+{{{selection_object_plural_rules}}}
+
+{{{selection_object_named_rules}}}
+
+
+addPrefix : ADD | CREATE | MAKE ;
+add : addPrefix formattedText ;
+
+apply : APPLY formattedText TO selectionWithImplicitPhrase ;
+arrowKeyDirection : UP | RIGHT | DOWN | LEFT ;
+autocomplete : (AUTOCOMPLETE | COMPLETE) selection? ;
+back : GO? BACK ;
+bareCopy : COPY (the SELECTION)?;
+bareCut : CUT (the SELECTION)? ;
+bareInspect : SHOW (HOVER | VALUE) | INSPECT SELECTION? ;
+cancel : CANCEL | CLEAR ;
+change :
+    (CHANGE | SET) selectionWithImplicitPhrase TO formattedText |
+    REPLACE selectionWithImplicitPhrase WITH formattedText
+;
+
+changeWindow : ((CHANGE | SWITCH | GO) TO the)? arrowKeyDirection (WINDOW | PANE) ;
+click : (LEFT | MIDDLE | RIGHT)? CLICK formattedText? ;
+close : CLOSE (TAB | FILE | WINDOW | PANE | formattedText)? ;
+comment : (COMMENT | UNCOMMENT) selection? ;
+copy : COPY selectionWithImplicitPhrase ;
+cut : CUT selectionWithImplicitPhrase ;
+debug :
+  debugContinue |
+  debugBreakpoint |
+  debugPause |
+  debugStep |
+  debugStartStop
+;
+dictateStart :
+    START? (INSERT | DICTATE | DICTATION) MODE |
+    (INSERT | DICTATE) MODE ON |
+    START (INSERTING | DICTATING)
+;
+dictateStop :
+    STOP (INSERT | DICTATE | DICTATION) MODE |
+    (INSERT | DICTATE | DICTATION) MODE OFF |
+    STOP (INSERTING | DICTATING) |
+    COMMAND MODE |
+    NORMAL MODE
+;
+edit : (EDIT | REVISE) (ALL | CLIPBOARD | SELECTION | THIS | THAT)?;
+inspect : (SHOW (HOVER | the VALUE) (FOR | OF) | INSPECT) selectionWithImplicitPhrase ;
+delete : (DELETE | REMOVE) selectionWithImplicitPhrase ;
+duplicate : DUPLICATE (selection (ABOVE | BELOW)? | (ABOVE | BELOW) selection) ;
+dictate : DICTATE formattedText ;
+focus : FOCUS formattedText ;
+launch : LAUNCH formattedText ;
+forward : GO? (FORWARD | FORWARDS) ;
+goToDefinition : GO TO the DEFINITION ;
+goTo :
+    goToPrefix positionSelection |
+    preposition positionSelection |
+    GO? navigationPositionSelection
+;
+goToSyntaxError: goToPrefix the (CLOSEST | NEAREST)? syntaxError ;
+goToPrefix : (FIND | SEARCH FOR? | GO TO)? ;
+goToRequiredPrefix : FIND | SEARCH FOR? | GO TO ;
+goToPhrase :
+    positionPhraseRequiredSelection |
+    (goToRequiredPrefix | preposition) positionPhraseSelection
+;
+indent : (
+    (INDENT | DEDENT | UNINDENT | DEINDENT | OUTDENT) selection? |
+    (REMOVE | DELETE) INDENTATION LEVEL? FROM selection |
+    (INCREASE | DECREASE | REDUCE) INDENTATION LEVEL? OF selection
+  ) quantifier?
+;
+insert : (INSERT | APPEND) (ABOVE | BELOW)? formattedText ;
+joinLines : JOIN (NEXT? number)? LINES ;
+languageMode : ((SET | CHANGE)? THE? LANGUAGE MODE? TO? validLanguage) |
+    (validLanguage MODE);
+newline :
+    (addPrefix | INSERT | DICTATE | TYPE) (ABOVE | BELOW)? (NEW LINE | NEWLINE) |
+    ((addPrefix | INSERT | DICTATE | TYPE) A?)? (NEW LINE | NEWLINE) (ABOVE | BELOW)?
+;
+next : NEXT ;
+openFile : OPEN ((A | THE)? FILE called)? formattedText ;
+paste : PASTE (ABOVE | BELOW | HERE | INLINE)? ;
+pause : PAUSE | (STOP LISTENING) ;
+press :
+    PRESS modifierKey* key+ |
+    PRESS modifierKey+ |
+    implicitKey
+;
+redo : REDO ;
+reload : (RELOAD | REFRESH) PAGE? ;
+rename : (RENAME | CHANGE the NAME OF) selection TO formattedText ;
+repeat : (REPEAT formattedText? | AGAIN) quantifier? ;
+showDictationBox : ((OPEN | SHOW) the)? (DICTATE | DICTATION | REVISE | REVISION) BOX ;
+changeAll :
+    CHANGE (ALL | EVERY) formattedText TO formattedText |
+    REPLACE (ALL | EVERY) formattedText WITH formattedText
+;
+run : RUN formattedText ;
+save : SAVE (the FILE)? ;
+scroll : SCROLL arrowKeyDirection? ;
+scrollPhrase : SCROLL TO formattedText ;
+select : SELECT selectionWithImplicitPhrase ;
+send : SEND ;
+shift : (SHIFT | MOVE) selection (LEFT | RIGHT | UP | DOWN) (quantifier | (BY? (ONE selectionObjectSingular | count selectionObjectPlural)))? ;
+show : SHOW? (
+    LINKS FOR? formattedText? |
+    INPUTS |
+    CODE
+) ;
+sort : SORT (selection | IMPORTS | METHODS | FUNCTIONS);
+surroundWith : (ENCLOSE | WRAP | SURROUND) selectionWithImplicitPhrase WITH formattedText ;
+style : (FORMAT | STYLE) (the FILE)? ;
+setTextStyle : textStyle selectionWithImplicitPhrase | (SET | CHANGE) STYLE OF selectionWithImplicitPhrase TO textStyle;
+systemInsert : SYSTEM (INSERT | TYPE | APPEND | DICTATE | ) formattedText ;
+switchWindow : SWITCH (WINDOW | PANE | WINDOWS) ;
+tabs :
+    ((SWITCH | GO | CHANGE) TO)? (
+        positional TAB |
+        TAB number |
+        TAB LEFT |
+        the (LEFT | PREVIOUS) TAB |
+        TAB RIGHT |
+        the (NEXT | RIGHT) TAB
+    ) |
+    (NEW | CREATE A? NEW? | DUPLICATE the) TAB |
+    (NEW | CREATE A? NEW?) FILE
+;
+tryCommand : TRY formattedText ;
+type : TYPE (ABOVE | BELOW)? formattedText ;
+undo : UNDO ;
+undoCloseTab : (UNDO CLOSE | REOPEN | OPEN CLOSED) TAB ;
+use : (CHOOSE | USE)? number ;
+window : WINDOW | PANE ;
+
+debugContinue : CONTINUE debugger?;
+debugBreakpoint : ADD (AN? INLINE)? BREAKPOINT | (REMOVE | TOGGLE) the INLINE? BREAKPOINT ;
+debugPause : PAUSE debugger ; // don't overlap with pause command.
+debugStep : STEP (INTO | OUT | OVER) ;
+debugStartStop : (START | STOP) debugger ;
+debugger : the (DEBUGGING | DEBUGGER | DEBUG) ;
+
+positional : the (
+    FIRST |
+    SECOND |
+    THIRD |
+    FOURTH |
+    FIFTH |
+    SIXTH |
+    SEVENTH |
+    EIGHTH |
+    NINTH |
+    TENTH |
+    LAST
+) (TO LAST)? ;
+
+// Note that for all of these numbers subrules, the rules are in descending order.
+// This to make them greedy. This matters a bit less now, but still functions during
+// debugging.
+
+// We also minimize nesting here since the ML parsing should not require it, since
+// number validity is checked using NumberConverter.
+number :
+    ZERO |
+    numberRange1To10 |
+    numberRange1To20 |
+    numberRange1To99 |
+    numberDigitSequence |
+    numberPair |
+    numberComposite |
+    DIGITS
+;
+
+numberRange1To20:
+    TWENTY |
+    numberWords10To19 |
+    numberWords1To9
+;
+
+numberRange1To10 :
+    TEN |
+    numberWords1To9
+;
+
+numberWords1To9 :
+    NINE |
+    EIGHT |
+    SEVEN |
+    SIX |
+    FIVE |
+    FOUR |
+    THREE |
+    TWO |
+    ONE
+;
+
+numberWordsDigits :
+    NINE |
+    EIGHT |
+    SEVEN |
+    SIX |
+    FIVE |
+    FOUR |
+    THREE |
+    TWO |
+    ONE |
+    ZERO |
+    O
+;
+
+numberWords10To19 :
+    NINETEEN |
+    EIGHTEEN |
+    SEVENTEEN |
+    SIXTEEN |
+    FIFTEEN |
+    FOURTEEN |
+    THIRTEEN |
+    TWELVE |
+    ELEVEN |
+    TEN
+;
+
+numberRange1To99 :
+    numberWords20To99 |
+    numberWords10To19 |
+    numberWords1To9
+;
+
+numberWords20To99 : numberWordsTens numberWords1To9? ;
+
+numberWordsTens :
+    NINETY |
+    EIGHTY |
+    SEVENTY |
+    SIXTY |
+    FIFTY |
+    FORTY |
+    THIRTY |
+    TWENTY
+;
+
+numberWords10To99 :
+    numberWords20To99 |
+    numberWords10To19
+;
+
+numberDigitSequence :
+    numberWords1To9 numberWordsDigits+
+;
+
+numberPair :
+    numberRange1To99 numberRange1To99 |
+    numberRange1To99 numberWordsDigits numberWordsDigits
+;
+
+// This covers other numbers
+numberComposite :
+    ((A | numberRange1To99) HUNDRED (AND? numberRange1To99)?) |
+    ((A | numberWords1To9) MILLION )?
+        (A | numberWords1To9)? THOUSAND
+        ((A | numberWords1To9) HUNDRED (AND? numberRange1To99)?)? |
+    ((A | numberWords1To9) MILLION )
+;
+
+implicitKey :
+    FORWARD DELETE |
+    DELETE |
+    ESCAPE |
+    ENTER |
+    TAB |
+    BACKSPACE |
+    PAGEUP |
+    PAGEDOWN |
+    PAGE UP |
+    PAGE DOWN |
+    SPACE
+;
+
+// it's common for people to say things like "up two" or "right three", so support directions without needing
+// to say "times" for a limited number of quantifiers
+arrowKeyWithQuantifier :
+    GO? arrowKeyDirection (
+        quantifier |
+        numberRange1To10
+    )?
+;
+
+modifierKey :
+    CONTROL |
+    CTRL |
+    COMMAND |
+    ALT |
+    OPTION |
+    SHIFT |
+    FUNCTION |
+    WINDOWS |
+    WIN |
+    META
+;
+
+key :
+    implicitKey |
+    SEMICOLON |
+    COLON |
+    QUOTE |
+    RIGHT BRACKET |
+    LEFT? BRACKET |
+    RIGHT BRACE |
+    LEFT? BRACE |
+    FORWARD SLASH |
+    PIPE |
+    COMMA |
+    PERIOD |
+    DOT |
+    SLASH |
+    QUESTION MARK? |
+    ESCAPE |
+    DASH |
+    MINUS |
+    UNDERSCORE |
+    EQUAL |
+    EQUALS |
+    PLUS |
+    TICK |
+    BACKTICK |
+    TILDE |
+    RETURN |
+    BANG |
+    EXCLAMATION (POINT | MARK)? |
+    AT |
+    HASH |
+    POUND |
+    DOLLAR SIGN? |
+    PERCENT SIGN? |
+    CARET |
+    AMPERSAND |
+    STAR |
+    RIGHT (PAREN | PARENTHESIS | PARENTHESES) |
+    LEFT? (PAREN | PARENTHESIS | PARENTHESES) |
+    UP |
+    DOWN |
+    LEFT |
+    RIGHT |
+    HOME |
+    END |
+    F ONE |
+    F TWO |
+    F THREE |
+    F FOUR |
+    F FIVE |
+    F SIX |
+    F SEVEN |
+    F EIGHT |
+    F NINE |
+    F TEN |
+    F ELEVEN |
+    F TWELVE |
+    ONE |
+    TWO |
+    THREE |
+    FOUR |
+    FIVE |
+    SIX |
+    SEVEN |
+    EIGHT |
+    NINE |
+    ZERO |
+    A |
+    B |
+    C |
+    D |
+    E |
+    F |
+    G |
+    H |
+    I |
+    J |
+    K |
+    L |
+    M |
+    N |
+    O |
+    P |
+    Q |
+    R |
+    S |
+    T |
+    U |
+    V |
+    W |
+    X |
+    Y |
+    Z
+;
+
+textStyle :
+    allCaps |
+    camelCase |
+    capitalize |
+    dashes |
+    lowercase |
+    pascalCase |
+    titleCase |
+    underscores
+;
+
+allCaps: ALL CAPS ;
+camelCase: CAMELCASE | CAMEL CASE | CAMEL ;
+capitalize: CAPITAL | CAPITALIZE ;
+dashes: DASHES ;
+lowercase: LOWERCASE | LOWER CASE ;
+pascalCase: PASCALCASE | PASCAL CASE | PASCAL ;
+titleCase: TITLECASE | TITLE CASE ;
+underscores: UNDERSCORES | SNAKE CASE ;
+
+addModifierProd : ASYNC |
+    ABSTRACT |
+    DEFAULT |
+    EXPORT |
+    PRIVATE |
+    PROTECTED |
+    PUBLIC |
+    STATIC
+;
+
+// Everything after this line is a dummy rule used only by the ML pipeline.
+
+tagName : formattedText ;
+closeTagDeclaration : CLOSE tag tagName;
+emptyTagDeclaration : EMPTY tag tagName;
+openTagDeclaration : OPEN tag tagName;
+openAndCloseTagDeclaration : tag tagName;
+tagDeclaration :
+    closeTagDeclaration |
+    emptyTagDeclaration |
+    openTagDeclaration |
+    openAndCloseTagDeclaration
+;
+tag : TAG | ELEMENT ;
+
+addOld : addPrefix addObject ;
+
+addModifier :
+    ASYNC |
+    ABSTRACT |
+    DEFAULT |
+    EXPORT |
+    PRIVATE |
+    PROTECTED |
+    PUBLIC |
+    STATIC
+;
+
+addObject :
+    ARGUMENT formattedText (EQUALS formattedText)? |
+    ASSERT formattedText |
+    ATTRIBUTE formattedText |
+    (CATCH | EXCEPT) formattedText |
+    CLASS formattedText |
+    COMMENT formattedText? |
+    DECORATOR formattedText |
+    (ELIF | ELSE IF) formattedText |
+    ELSE formattedText? |
+    EMPTY TAG formattedText |
+    addModifier* ENUM formattedText |
+    (EXTENDS | SUPERCLASS | PARENT) formattedText |
+    FINALLY formattedText? |
+    formattedText (COLON | IS | EQUALS | EQUAL TO) formattedText |
+    FOR LOOP? ((LET | CONST | VAR)? formattedText (IN | OF) formattedText)? |
+    addModifier* FUNCTION formattedText |
+    IF formattedText? |
+    IMPLEMENTS formattedText |
+    INTERFACE formattedText |
+    FROM formattedText IMPORT formattedText |
+    IMPORT DEFAULT? formattedText (AS formattedText)? |
+    IMPORT DEFAULT? formattedText (FROM formattedText)? |
+    addModifier* METHOD formattedText |
+    addModifier* PARAMETER formattedText (EQUALS formattedText)? |
+    (PRINT | CONSOLE DOT LOG) OF? formattedText |
+    formattedText? (MEMBER | PROPERTY | FIELD) formattedText (EQUALS formattedText)? |
+    (RAISE | THROW) formattedText |
+    RETURN VALUE formattedText |
+    RETURN formattedText |
+    RULESET formattedText |
+    TAG formattedText |
+    TRY formattedText?
+    TYPE formattedText
+    WHILE LOOP? formattedText |
+    WITH formattedText |
+    formattedText
+;

@@ -1,0 +1,18 @@
+{
+  "exclude": ["bin/**", "build/**", "dist/**", "static/**"],
+  "compilerOptions": {
+    "target": "es2021",
+    "module": "commonjs",
+    "lib": ["es5", "es6", "dom", "dom.iterable"],
+    "outDir": "./out",
+    "jsx": "react",
+    "sourceMap": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true
+  }
+}

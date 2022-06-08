@@ -1,0 +1,144 @@
+@import url("https://use.typekit.net/rwt5gge.css");
+@import "~codemirror-minified/lib/codemirror.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .primary-button {
+    @apply rounded-full text-center text-white bg-blue-500 hover:bg-blue-600 shadow-blue-500/50 dark:bg-blue-700 dark:hover:bg-blue-800 dark:shadow-blue-700/50 shadow-md transition-colors;
+    padding: 0.5em 1.5em;
+  }
+
+  .secondary-button {
+    @apply rounded-full text-white bg-violet-600 hover:bg-violet-700 shadow-violet-600/50 dark:bg-violet-800 dark:hover:bg-violet-900 dark:shadow-violet-800/50 shadow-md transition-colors;
+    padding: 0.5em 1.5em;
+  }
+
+  .input {
+    @apply text-slate-600 border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-violet-600 shadow dark:bg-gray-700 dark:text-slate-200;
+  }
+}
+
+.app {
+  background: white;
+  color: #475569;
+}
+
+.app.dark {
+  background: #1e293b;
+  color: #e5e5e5;
+}
+
+.app.mini-mode-window {
+  background: transparent;
+}
+
+.draggable {
+  -webkit-app-region: drag;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.rainbow {
+  background: linear-gradient(#a46dff 3.88%, #ff8388 40.34%, #eec14d 70.02%, #82c0ff 100%);
+}
+
+#nux p {
+  margin-bottom: 0.375rem;
+}
+
+html,
+body,
+input,
+textarea {
+  font-family: aktiv-grotesk, sans-serif;
+  color: #475569;
+}
+
+html,
+body,
+main,
+.app,
+#app {
+  min-height: 100vh;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  opacity: 1;
+}
+
+*::-webkit-scrollbar-track,
+*::-webkit-scrollbar,
+*::-webkit-scrollbar-thumb {
+  height: 6px;
+  width: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #e2e8f0;
+  border-radius: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #c4b5fd;
+  border-radius: 5px;
+}
+
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 12px;
+  height: 12px;
+}
+
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 2px solid #4b5879;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #4b5879 transparent transparent transparent;
+}
+
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+
+.dark .lds-ring {
+  border-color: #c5d1e7 transparent transparent transparent;
+}
+
+.primary-button .lds-ring,
+.secondary-button .lds-ring {
+  border-color: white transparent transparent transparent;
+}
+
+.CodeMirror {
+  height: 100%;
+}

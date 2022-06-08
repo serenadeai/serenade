@@ -1,0 +1,7 @@
+errorf  EH1 R ER0 EH1 F
+filepath  F AY1 L P AE1 TH
+omitempty  OW0 M IH1 T EH1 M P T IY0
+sprintf  EH1 S P R IH1 N T EH1 F
+strconv  S T ER1 K AH0 N V
+syscall  S IH1 S K AO1 L
+unmarshal  AH2 N M AA1 R SH AH0 L

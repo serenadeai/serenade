@@ -1,0 +1,339 @@
+syntax = "proto3";
+
+package core;
+option java_package = "core.gen.rpc";
+option java_multiple_files = true;
+
+enum CallbackType {
+    CALLBACK_TYPE_NONE = 0;
+    CALLBACK_TYPE_CHAIN = 1;
+    CALLBACK_TYPE_OPEN_FILE = 2;
+    CALLBACK_TYPE_PASTE = 3;
+    CALLBACK_TYPE_ADD_TO_HISTORY = 4;
+}
+
+enum CommandType {
+    COMMAND_TYPE_NONE = 0;
+    COMMAND_TYPE_INVALID = 1;
+    COMMAND_TYPE_CANCEL = 2;
+    COMMAND_TYPE_CLOSE_TAB = 3;
+    COMMAND_TYPE_CLOSE_WINDOW = 4;
+    COMMAND_TYPE_COPY = 5;
+    COMMAND_TYPE_CREATE_TAB = 6;
+    COMMAND_TYPE_DIFF = 7;
+    COMMAND_TYPE_NEXT_TAB = 8;
+    COMMAND_TYPE_OPEN_FILE = 9;
+    COMMAND_TYPE_PASTE = 10;
+    COMMAND_TYPE_PREVIOUS_TAB = 11;
+    COMMAND_TYPE_REDO = 12;
+    COMMAND_TYPE_SAVE = 13;
+    COMMAND_TYPE_SEARCH = 14;
+    COMMAND_TYPE_SPLIT = 15;
+    COMMAND_TYPE_SWITCH_TAB = 16;
+    COMMAND_TYPE_UNDO = 17;
+    COMMAND_TYPE_USE = 18;
+    COMMAND_TYPE_WINDOW = 19;
+    COMMAND_TYPE_GET_EDITOR_STATE = 20;
+    COMMAND_TYPE_NO_OP = 22;
+    COMMAND_TYPE_REPEAT = 23;
+    COMMAND_TYPE_PAUSE = 24;
+    COMMAND_TYPE_GO_TO_DEFINITION = 25;
+    COMMAND_TYPE_SNIPPET = 26;
+    COMMAND_TYPE_SNIPPET_EXECUTED = 27;
+    COMMAND_TYPE_PING = 29;
+    COMMAND_TYPE_LOGOUT = 30;
+    COMMAND_TYPE_CUSTOM = 32;
+    COMMAND_TYPE_FOCUS = 33;
+    COMMAND_TYPE_PRESS = 34;
+    COMMAND_TYPE_OPEN_FILE_LIST = 35;
+    COMMAND_TYPE_SELECT = 37;
+    COMMAND_TYPE_INSERT = 38;
+    COMMAND_TYPE_CLICK = 39;
+    COMMAND_TYPE_BACK = 40;
+    COMMAND_TYPE_FORWARD = 41;
+    COMMAND_TYPE_RELOAD = 42;
+    COMMAND_TYPE_SHOW = 43;
+    COMMAND_TYPE_SCROLL = 44;
+    COMMAND_TYPE_NEXT = 45;
+    COMMAND_TYPE_QUIT = 46;
+    COMMAND_TYPE_DEBUGGER_CONTINUE = 47;
+    COMMAND_TYPE_DEBUGGER_INLINE_BREAKPOINT = 48;
+    COMMAND_TYPE_DEBUGGER_PAUSE = 49;
+    COMMAND_TYPE_DEBUGGER_SHOW_HOVER = 50;
+    COMMAND_TYPE_DEBUGGER_START = 51;
+    COMMAND_TYPE_DEBUGGER_STEP_INTO = 52;
+    COMMAND_TYPE_DEBUGGER_STEP_OUT = 53;
+    COMMAND_TYPE_DEBUGGER_STEP_OVER = 54;
+    COMMAND_TYPE_DEBUGGER_STOP = 55;
+    COMMAND_TYPE_DEBUGGER_TOGGLE_BREAKPOINT = 56;
+    COMMAND_TYPE_LAUNCH = 57;
+    COMMAND_TYPE_CLIPBOARD = 58;
+    COMMAND_TYPE_STYLE = 59;
+    COMMAND_TYPE_EVALUATE_IN_PLUGIN = 60;
+    COMMAND_TYPE_CLICKABLE = 61;
+    COMMAND_TYPE_START_DICTATE = 62;
+    COMMAND_TYPE_STOP_DICTATE = 63;
+    COMMAND_TYPE_DUPLICATE_TAB = 64;
+    COMMAND_TYPE_SHOW_REVISION_BOX = 65;
+    COMMAND_TYPE_HIDE_REVISION_BOX = 66;
+    COMMAND_TYPE_LANGUAGE_MODE = 67;
+    COMMAND_TYPE_RUN = 68;
+    COMMAND_TYPE_OPEN_IN_BROWSER = 70;
+    COMMAND_TYPE_DOM_CLICK = 71;
+    COMMAND_TYPE_DOM_FOCUS = 72;
+    COMMAND_TYPE_DOM_BLUR = 73;
+    COMMAND_TYPE_CALLBACK = 74;
+    COMMAND_TYPE_DOM_COPY = 75;
+    COMMAND_TYPE_DOM_SCROLL = 76;
+}
+
+enum CustomCommandChainable {
+    CUSTOM_COMMAND_CHAINABLE_NONE = 0;
+    CUSTOM_COMMAND_CHAINABLE_ANY = 1;
+    CUSTOM_COMMAND_CHAINABLE_FIRST_ONLY = 2;
+    CUSTOM_COMMAND_CHAINABLE_LAST_ONLY = 3;
+}
+
+enum ErrorCode {
+  ERROR_CODE_NONE = 0;
+  ERROR_CODE_REQUIRES_PLUGIN = 1;
+  ERROR_CODE_REQUIRES_SOURCE = 2;
+}
+
+enum Language {
+    LANGUAGE_NONE = 0;
+    LANGUAGE_JAVA = 1;
+    LANGUAGE_PYTHON = 2;
+    LANGUAGE_JAVASCRIPT = 3;
+    LANGUAGE_SCSS = 4;
+    LANGUAGE_HTML = 5;
+    LANGUAGE_DART = 8;
+    LANGUAGE_KOTLIN = 9;
+    LANGUAGE_CPLUSPLUS = 10;
+    LANGUAGE_BASH = 11;
+    LANGUAGE_DEFAULT = 12;
+    LANGUAGE_CSHARP = 13;
+    LANGUAGE_GO = 14;
+    LANGUAGE_RUST = 15;
+    LANGUAGE_RUBY = 16;
+}
+
+enum StylerType {
+    STYLER_TYPE_NONE = 0;
+    STYLER_TYPE_EDITOR = 1;
+    STYLER_TYPE_PRETTIER = 2;
+    STYLER_TYPE_BLACK = 3;
+    STYLER_TYPE_KTLINT = 5;
+    STYLER_TYPE_GOOGLE_JAVA_FORMAT = 6;
+    STYLER_TYPE_AUTOPEP8 = 7;
+    STYLER_TYPE_YAPF = 8;
+    STYLER_TYPE_STANDARD = 9;
+    STYLER_TYPE_CLANG_GOOGLE = 10;
+    STYLER_TYPE_CLANG_LLVM = 11;
+    STYLER_TYPE_CLANG_WEBKIT = 12;
+    STYLER_TYPE_CLANG_MICROSOFT = 13;
+    STYLER_TYPE_GOFMT = 14;
+    STYLER_TYPE_RUSTFMT = 15;
+}
+
+message Change {
+    int32 start = 1;
+    int32 stop = 2;
+    string substitution = 3;
+}
+
+message AppendToPreviousRequest {
+}
+
+message CallbackRequest {
+    CallbackType type = 1;
+    string text = 2;
+}
+
+message Command {
+    CommandType type = 1;
+    string source = 2;
+    int32 cursor = 3;
+    string direction = 4;
+    string text = 5;
+    string path = 6;
+    int32 index = 7;
+    int32 cursor_end = 11;
+    string custom_command_id = 12;
+    map<string, string> replacements = 13;
+    ErrorCode error_code = 14;
+    repeated string modifiers = 15;
+    string insert_diff = 16;
+    bool limited = 19;
+    repeated Change changes = 20;
+    Language language = 21;
+    Range range = 22;
+    CallbackType callback_type = 23;
+}
+
+message CommandsResponse {
+    repeated CommandsResponseAlternative alternatives = 1;
+    CommandsResponseAlternative execute = 2;
+    string chunk_id = 3;
+    bool text_response = 4;
+    string suggestion = 6;
+    bool final = 7;
+    string endpoint_id = 8;
+    repeated string chunk_ids = 9;
+    int32 silence_threshold = 10;
+}
+
+message CommandsResponseAlternative {
+    string remaining = 3;
+    string description = 4;
+    string transcript = 5;
+    repeated Command commands = 6;
+    string alternative_id = 7;
+    ErrorCode error_code = 8;
+}
+
+message CustomCommand {
+    string id = 1;
+    string templated = 2;
+    repeated string applications = 3;
+    repeated string languages = 4;
+    string generated = 5;
+    string snippet_type = 6;
+    repeated CustomCommandOption options = 8;
+    repeated string extensions = 9;
+    repeated string urls = 10;
+    CustomCommandChainable chainable = 11;
+}
+
+message CustomCommandOption {
+    string slot = 1;
+    repeated string options = 2;
+}
+
+message DisableRequest {
+}
+
+message EditorState {
+    bytes source = 1;
+    int32 cursor = 2;
+    string filename = 3;
+    string client_identifier = 4;
+    string application = 5;
+    repeated CustomCommand custom_commands = 6;
+    repeated string files = 7;
+    // can be removed after 1.10 propagates
+    repeated string roots = 8;
+    bool plugin_installed = 9;
+    repeated string tabs = 10;
+    bool nux = 12;
+    map<string, string> custom_words = 13;
+    string clipboard = 14;
+    map<int32, StylerType> styler = 15;
+    bool autocomplete = 16;
+    Language language = 17;
+    bool dictate_mode = 18;
+    bool can_set_state = 19;
+    Range selection_range = 20;
+    string url = 21;
+    repeated string custom_hints = 22;
+    bool can_get_state = 23;
+    bool log_audio = 24;
+    bool log_source = 25;
+    string token = 26;
+}
+
+message EditorStateRequest {
+    EditorState editor_state = 1;
+}
+
+message EmptyResponse {
+}
+
+message EndpointRequest {
+    string chunk_id = 1;
+    bool finalize = 2;
+    string endpoint_id = 3;
+}
+
+message EvaluateAudioRequest {
+    bytes audio = 1;
+    string chunk_id = 3;
+}
+
+message EvaluateRequest {
+    string user_id = 1;
+
+    oneof request {
+        EvaluateAudioRequest audio_request = 2;
+        EvaluateTextRequest text_request = 3;
+        DisableRequest disable_request = 4;
+        EditorStateRequest editor_state_request = 5;
+        AuthenticateRequest authenticate_request = 7;
+        InitializeRequest initialize_request = 8;
+        AppendToPreviousRequest append_to_previous_request = 9;
+        EndpointRequest endpoint_request = 11;
+        CallbackRequest callback_request = 12;
+        KeepAliveRequest keep_alive_request = 13;
+    }
+}
+
+message EvaluateResponse {
+    oneof response {
+        CommandsResponse commands_response = 2;
+        AuthenticateResponse authenticate_response = 3;
+        KeepAliveResponse keep_alive_response = 5;
+    }
+}
+
+message EvaluateTextRequest {
+    string text = 1;
+    bool include_alternatives = 2;
+    bool rerank = 3;
+}
+
+message InitializeRequest {
+    EditorState editor_state = 1;
+}
+
+message KeepAliveRequest {
+}
+
+message KeepAliveResponse {
+    int64 dt = 1;
+}
+
+message LogAudioRequest {
+    string token = 1;
+    bytes audio = 2;
+    string chunk_id = 3;
+}
+
+message LogEventRequest {
+    string log = 1;
+    string token = 2;
+    string client_identifier = 3;
+    string event = 4;
+    string data = 5;
+    int64 dt = 6;
+}
+
+message LogResponseRequest {
+    CommandsResponse response = 1;
+    EditorState editor_state = 2;
+}
+
+message Range {
+    int32 start = 1;
+    int32 stop = 2;
+}
+
+
+// remove once 1.10 is deprecated
+
+message AuthenticateRequest {
+    string token = 1;
+}
+
+message AuthenticateResponse {
+    bool success = 1;
+}

@@ -1,0 +1,17 @@
+argc  AA1 R G S IY1
+cout  S IY1 AW2 T
+constexpr  K AA1 N S T EH1 K S P ER0
+constexpr  K AA1 N S T IY1 EH1 K S P IY1 AA1 R
+endif  EH1 N D IH1 F
+endl  EH1 N D AH1 L
+endl  EH1 N D EH1 L
+ifdef  IH1 F D EH1 F
+ifndef  IH1 F EH1 N D EH1 F
+iostream  AY1 OW1 S T R IY1 M
+memcpy  M EH1 M K AH0 P IY0
+noexcept  N OW1 IH0 K S EH1 P T
+nullptr  N AH1 L P OY1 N T ER0
+nullptr  N AH1 L P IY1 T IY1 AA1 R
+sizeof  S AY2 Z AH0 V
+typedef  T AY1 P D EH1 F
+typename  T AY1 P N EY1 M

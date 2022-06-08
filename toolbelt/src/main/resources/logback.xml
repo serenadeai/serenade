@@ -1,0 +1,17 @@
+<configuration>
+  <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
+  <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+    <resetJUL>true</resetJUL>
+  </contextListener>
+  <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} %msg%n</pattern>
+    </encoder>
+  </appender>
+  <logger name="core" level="${LOG_LEVEL}" />
+  <logger name="toolbelt" level="${LOG_LEVEL}" />
+  <logger name="org.eclipse" level="off" />
+  <root level="error">
+    <appender-ref ref="stdout" />
+  </root>
+</configuration>

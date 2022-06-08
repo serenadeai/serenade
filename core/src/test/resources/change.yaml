@@ -1,0 +1,151 @@
+suite: Change
+tests:
+  testChangeWordToSingle:
+    transcript: change word to moop
+    before: |
+      <>foo bar
+    after: |
+      moop<> bar
+  testChangeWordToMultiple:
+    transcript: change word to foo bar
+    before: |
+      class B<>az
+    after: |
+      class FooBar<>
+  testChangeWordToUnderscore:
+    transcript: change word to foo underscore bar
+    before: |
+      class B<>az
+    after: |
+      class foo_bar<>
+  testChangeLowercaseWordToMultiple:
+    transcript: change word to foo bar
+    before: |
+      class b<>az
+    after: |
+      class FooBar<>
+  testChangeMultipleWordsToSingle:
+    transcript: change three words to condition
+    before: |
+      if <>foo bar baz qux
+    after: |
+      if condition<> qux
+  testChangeMultipleWordsToExpression:
+    transcript: change three words to camel case is present plus one
+    before: |
+      value = <>foo + bar
+    after: |
+      value = isPresent + 1<>
+  testChangeWordToWordsWithSpaces:
+    transcript: change word to a space plus space b
+    before: |
+      foo_bar
+    after: |
+      a + b<>
+  testChangeWordPreservingUnderscores:
+    transcript: change word to bar baz
+    before: |
+      _foo_bar
+    after: |
+      bar_baz<>
+  testChangeWordToUnderscoresWithLeadingUnderscore:
+    transcript: change word to underscore bar baz
+    before: |
+      _foo
+    after: |
+      _bar_baz<>
+  testChangeEndOfWord:
+    transcript: change end of word to ast
+    before: |
+      def f<>oo():
+    after: |
+      def fast<>():
+  testChangePhrase:
+    transcript: change phrase foo to moop
+    before: |
+      def foo():
+    after: |
+      def moop<>():
+  testChangePhraseImplicit:
+    transcript: change foo to moop
+    before: |
+      def foo():
+    after: |
+      def moop<>():
+  testChangePhraseMultipleWords:
+    transcript: change foo bar to baz
+    before: |
+      one foo bar two
+    after: |
+      one baz<> two
+  testChangePhraseFormatting:
+    transcript: change foo bar to baz
+    before: |
+      FOO_BAR yay
+    after: |
+      BAZ<> yay
+  testChangePhraseSymbol:
+    transcript: change foo plus bar to bar plus foo
+    before: |
+      value = foo + bar + 1
+    after: |
+      value = bar + foo<> + 1
+  testChangePhraseRegexSymbol:
+    transcript: change dot to dash
+    before: |
+      <>value = "a.php"
+    after: |
+      value = "a-<>php"
+  testChangePhraseMultiwordSymbol:
+    transcript: change foo open paren to foo bracket
+    before: |
+      foo(bar]
+    after: |
+      foo[<>bar]
+  testChangeAll:
+    transcript: replace all foo bar with bar
+    before: |
+      def foo_bar():
+        foo_bar<> = 5
+        foo_bar += 4
+    after: |
+      def bar():
+        bar<> = 5
+        bar += 4
+  testChangeAllSymbol:
+    transcript: change all or to of
+    before: |
+      or text or
+    after: |
+      ()<> text ()
+  testChangeToLambda:
+    allowSecondAlternative: true
+    filename: test.js
+    transcript: change baz to lambda of b
+    before: |
+      function fo<>o() {
+        let bar = baz;
+      }
+    after: |
+      function foo() {
+        let bar = (b<>) => {
+        };
+      }
+  testChangeReasonableRangeNotFound:
+    transcript: change object to other
+    before: |
+      foo = Object.keys(bar);
+    after: |
+      foo = Other<>.keys(bar);
+  testChangeEnclosures:
+    transcript: change parentheses to angle brackets
+    before: |
+      foo = <>"()" + Object.keys(bar);
+    after: |
+      foo = "()" + Object.keys<bar><>;
+  testChangeEnclosuresQuotes:
+    transcript: change quotes to single quotes
+    before: |
+      foo = bar["color"];
+    after: |
+      foo = bar['color'<>];

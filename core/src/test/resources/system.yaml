@@ -1,0 +1,123 @@
+suite: System
+tests:
+  testCaseInsensitive:
+    transcript: CLOSE TAB
+    type: CommandType.COMMAND_TYPE_CLOSE_TAB
+  testCloseTab:
+    transcript: close tab
+    type: CommandType.COMMAND_TYPE_CLOSE_TAB
+  testCloseWindow:
+    transcript: close window
+    type: CommandType.COMMAND_TYPE_CLOSE_WINDOW
+  testClear:
+    transcript: clear
+    type: CommandType.COMMAND_TYPE_CANCEL
+  testDebuggerContinue:
+    transcript: continue
+    type: CommandType.COMMAND_TYPE_DEBUGGER_CONTINUE
+  testDebuggerInlineBreakpoint:
+    transcript: toggle inline breakpoint
+    type: CommandType.COMMAND_TYPE_DEBUGGER_INLINE_BREAKPOINT
+  testDebuggerBreakpoint:
+    transcript: toggle breakpoint
+    type: CommandType.COMMAND_TYPE_DEBUGGER_TOGGLE_BREAKPOINT
+  testDebuggerBreakpoint:
+    transcript: pause debugger
+    type: CommandType.COMMAND_TYPE_DEBUGGER_PAUSE
+  testDebuggerStepInto:
+    transcript: step into
+    type: CommandType.COMMAND_TYPE_DEBUGGER_STEP_INTO
+  testDebuggerStepOut:
+    transcript: step out
+    type: CommandType.COMMAND_TYPE_DEBUGGER_STEP_OUT
+  testDebuggerStepOver:
+    transcript: step over
+    type: CommandType.COMMAND_TYPE_DEBUGGER_STEP_OVER
+  testDebuggerStartDebugger:
+    transcript: start debugger
+    type: CommandType.COMMAND_TYPE_DEBUGGER_START
+  testDebuggerStartDebugger:
+    transcript: stop debugger
+    type: CommandType.COMMAND_TYPE_DEBUGGER_STOP
+  testGoToDefinition:
+    transcript: go to definition
+    type: CommandType.COMMAND_TYPE_GO_TO_DEFINITION
+  testInvalid:
+    transcript: invalid
+    type: CommandType.COMMAND_TYPE_INVALID
+  testInvalidToWord:
+    transcript: to word
+    type: CommandType.COMMAND_TYPE_INVALID
+  testInvalidTwoWords:
+    transcript: two words
+    type: CommandType.COMMAND_TYPE_INVALID
+  testCutMissingPhrase:
+    transcript: cut phrase
+    type: CommandType.COMMAND_TYPE_INVALID
+  testDeleteMissingPhrase:
+    transcript: delete phrase
+    type: CommandType.COMMAND_TYPE_INVALID
+  testGoToMissingPhrase:
+    transcript: go to phrase
+    type: CommandType.COMMAND_TYPE_INVALID
+  testGoToMissingLine:
+    transcript: line 100
+    type: CommandType.COMMAND_TYPE_INVALID
+  testGoToInvalidLine:
+    transcript: line foo
+    type: CommandType.COMMAND_TYPE_INVALID
+  testInvalidPrefix:
+    transcript: nine copy phrase
+    type: CommandType.COMMAND_TYPE_INVALID
+  testNewTab:
+    transcript: new tab
+    type: CommandType.COMMAND_TYPE_CREATE_TAB
+  testNextTab:
+    transcript: next tab
+    type: CommandType.COMMAND_TYPE_NEXT_TAB
+  testPasteWithSource:
+    transcript: paste
+    type: CommandType.COMMAND_TYPE_CLIPBOARD
+    before: foo
+  testPreviousTab:
+    transcript: previous tab
+    type: CommandType.COMMAND_TYPE_PREVIOUS_TAB
+  testPress:
+    transcript: press up
+    type: CommandType.COMMAND_TYPE_PRESS
+  testPressImplicitKeyExplicitly:
+    transcript: press enter
+    type: CommandType.COMMAND_TYPE_PRESS
+  testPressModifierKey:
+    transcript: press control
+    type: CommandType.COMMAND_TYPE_PRESS
+  testImplicitPress:
+    transcript: delete
+    type: CommandType.COMMAND_TYPE_PRESS
+  testRedo:
+    transcript: redo
+    type: CommandType.COMMAND_TYPE_REDO
+  testSystemInsert:
+    transcript: system insert foo
+    type: CommandType.COMMAND_TYPE_INSERT
+  testSystemType:
+    transcript: system type foo
+    type: CommandType.COMMAND_TYPE_INSERT
+  testSystemInsert:
+    transcript: system dictate foo
+    type: CommandType.COMMAND_TYPE_INSERT
+  testSystemType:
+    transcript: system foo
+    type: CommandType.COMMAND_TYPE_INSERT
+  testSave:
+    transcript: save
+    type: CommandType.COMMAND_TYPE_SAVE
+  testScroll:
+    transcript: scroll
+    type: CommandType.COMMAND_TYPE_PRESS
+  testScrollUp:
+    transcript: scroll up
+    type: CommandType.COMMAND_TYPE_PRESS
+  testUndo:
+    transcript: undo
+    type: CommandType.COMMAND_TYPE_UNDO

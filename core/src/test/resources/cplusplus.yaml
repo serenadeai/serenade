@@ -1,0 +1,1087 @@
+suite: CPlusPlus
+filename: test.cpp
+validate: true
+tests:
+  testAddArgument:
+    transcript: add argument first name plus last name
+    before: |
+      say("hello");
+    after: |
+      say("hello", first_name + last_name<>);
+  testAddAssignment:
+    transcript: add age equals current age plus one
+    after: |
+      age = current_age + 1<>;
+  testAddCatch:
+    transcript: add catch int e
+    before: |
+      try {
+        write();
+      } catch (const std::overflow_error& e)<> {
+      }
+    after: |
+      try {
+        write();
+      } catch (const std::overflow_error& e) {
+      } catch (int e<>) {
+      }
+  testAddClass:
+    transcript: add class download manager
+    before: |
+      using namespace std;
+    after: |
+      using namespace std;
+
+      class DownloadManager<> {
+      };
+  testAddComment:
+    skipMappingGeneratorTest: true
+    transcript: add comment fix later
+    after: |
+      // fix later<>
+  testAddConstructor:
+    transcript: add constructor
+    before: |
+      class Foo {
+      }
+    after: |
+      class Foo {
+        Foo<>() {
+        }
+      }
+  testAddDecorator:
+    notSupportedInLanguage: true
+  testAddElement:
+    notSupportedInLanguage: true
+  testAddElse:
+    transcript: add else return number times factorial of number minus one
+    before: |
+      if (number == 0) {
+      }
+    after: |
+      if (number == 0) {
+      } else {
+        return number * factorial(number - 1)<>;
+      }
+  testAddElseIf:
+    transcript: add else if highest score plus one greater than three
+    before: |
+      if (true) {
+      } else {
+      }
+    after: |
+      if (true) {
+      } else if (highest_score + 1 > 3<>) {
+      } else {
+      }
+  testAddEntry:
+    notSupportedInLanguage: true
+  testAddEnum:
+    allowSecondAlternative: true
+    transcript: add enum category type
+    after: |
+      enum CategoryType<> {
+      };
+  testAddExtends:
+    transcript: add extends private animal
+    before: |
+      class Dog {
+      };
+    after: |
+      class Dog: private Animal<> {
+      };
+  testAddFinally:
+    notSupportedInLanguage: true
+  testAddFor:
+    transcript: add for char c in list
+    after: |
+      for (char c : list<>) {
+      }
+  testAddFunction:
+    transcript: add int function compute factorial
+    before: |
+      void computeCumulativeSum() {
+      }<>
+    after: |
+      void computeCumulativeSum() {
+      }
+
+      int computeFactorial<>() {
+      }
+  testAddIf:
+    transcript: add if count equals ten
+    before: |
+      int main() {<>
+      }
+    after: |
+      int main() {
+        if (count == 10<>) {
+        }
+      }
+  testAddImplements:
+    notSupportedInLanguage: true
+  testAddImport:
+    allowSecondAlternative: true
+    transcript: add include algorithm
+    before: |
+      #include <iostream><>
+      using namespace std;
+    after: |
+      #include <iostream>
+      #include <algorithm><>
+      using namespace std;
+  testAddInterface:
+    notSupportedInLanguage: true
+  testAddLambda:
+    transcript: add auto x equals lambda int y
+    after: |
+      auto x = [](int y<>) {
+      };
+  testAddMethod:
+    transcript: add void method get legs
+    before: |
+      class Bird {
+        void GetWings() {
+        }<>
+      };
+    after: |
+      class Bird {
+        void GetWings() {
+        }
+
+        void GetLegs<>() {
+        }
+      };
+  testAddParameter:
+    transcript: add int parameter max speed
+    before: |
+      void run(int distance) {
+      }
+    after: |
+      void run(int distance, int max_speed<>) {
+      }
+  testAddParameterUsingSecondModifierList:
+    transcript: add parameter int const star max speed
+    before: |
+      void run(int distance) {
+      }
+    after: |
+      void run(int distance, int const *max_speed<>) {
+      }
+  testAddPrint:
+    skipMappingGeneratorTest: true
+    transcript: add print value
+    after: |
+      std::cout << value<> << std::endl;
+  testAddProperty:
+    transcript: add int property players equals four
+    before: |
+      class Game<> {
+      };
+    after: |
+      class Game {
+        int players = 4<>;
+      };
+  testAddPrototype:
+    transcript: add int prototype bar
+    before: |
+      namespace Foo {<>
+      }
+    after: |
+      namespace Foo {
+        int bar<>();
+      }
+  testAddReturn:
+    allowSecondAlternative: true
+    transcript: add return get random number parens
+    before: |
+      int random() {
+      }
+    after: |
+      int random() {
+        return get_random_number()<>;
+      }
+  testAddReturnValue:
+    transcript: add return value four
+    before: |
+      int random() {
+        return;
+      }
+    after: |
+      int random() {
+        return 4<>;
+      }
+  testAddToClass:
+    transcript: add int foo equals one
+    before: |
+      class Foo<> {
+      };
+    after: |
+      class Foo {
+        int foo = 1<>;
+      };
+  testAddToEmptyFile:
+    transcript: add answer equals forty two
+    after: |
+      answer = 42<>;
+  testAddToEnum:
+    transcript: add blue
+    before: |
+      enum Colors {
+        red,
+        green<>
+      };
+    after: |
+      enum Colors {
+        red,
+        green,
+        blue<>
+      };
+  testAddToInitializer:
+    transcript: add string craig
+    before: |
+      Student student{"craig"<>};
+    after: |
+      Student student{"craig", "craig"<>};
+  testAddToNamespace:
+    transcript: add void function bar
+    before: |
+      namespace Foo<> {
+      }
+    after: |
+      namespace Foo {
+        void bar<>() {
+        }
+      }
+  testAddToStruct:
+    transcript: add int foo
+    before: |
+      struct Foo<> {
+      };
+    after: |
+      struct Foo {
+        int foo<>;
+      };
+  testAddThrow:
+    transcript: add throw e
+    after: |
+      throw e<>;
+  testAddTry:
+    transcript: add try write parens
+    before: |
+      int main() {<>
+      }
+    after: |
+      int main() {
+        try {
+          write()<>;
+        } catch (const std::exception& e) {
+        }
+      }
+  testAddWhile:
+    transcript: add while false
+    before: |
+      int main() {<>
+      }
+    after: |
+      int main() {
+        while (false<>) {
+        }
+      }
+  testDeleteMethod:
+    transcript: delete method
+    before: |
+      <>class Bird {
+        void chirp() {
+          std::cout << "chirp" << std::endl;
+        }
+
+        void fly() {
+          // TODO
+        }
+      };
+    after: |
+      class Bird {
+        <>void fly() {
+          // TODO
+        }
+      };
+  testAddConstructor:
+    skipMappingGeneratorTest: true
+    transcript: add constructor
+    before: |
+      class Foo {
+        int foo;<>
+      };
+    after: |
+      class Foo {
+        int foo;
+
+        Foo<>() {
+        }
+      };
+  testAddModifier:
+    transcript: add modifier const
+    before: |
+      class Foo {
+        int foo;
+        int bar()<> {
+          return 0;
+        }
+      };
+    after: |
+      class Foo {
+        int foo;
+        int bar() const<> {
+          return 0;
+        }
+      };
+  testAddNamespace:
+    transcript: add namespace foo
+    before: |
+      using namespace std;
+    after: |
+      using namespace std;
+      namespace foo<> {
+      }
+  testAddParameterToPrototype:
+    transcript: add char parameter a
+    before: |
+      void foo();<>
+    after: |
+      void foo(char a<>);
+  testAddStruct:
+    transcript: add struct record object
+    before: |
+      using namespace std;
+    after: |
+      using namespace std;
+
+      struct RecordObject<> {
+      };
+    mappingGeneratorSource: |
+      using namespace std;
+
+      struct RecordObject<> {
+        long count;
+      };
+  testAddUsing:
+    transcript: add using namespace space standard
+    before: |
+      #include <iostream>
+    after: |
+      #include <iostream>
+      using namespace std<>;
+  testAddPointerVariable:
+    transcript: add char star foo bar equals three plus ampersand baz
+    before: |
+      int main() {<>
+      }
+    after: |
+      int main() {
+        char *foo_bar = 3 + &baz<>;
+      }
+  testDeleteArgument:
+    transcript: delete argument
+    before: |
+      void foo(int a, int b) {
+        baz(a);
+      }
+    after: |
+      void foo(int a, int b) {
+        baz(<>);
+      }
+  testDeleteExtends:
+    transcript: delete base class
+    before: |
+      class Foo: public Bar {
+          int foo;
+        public:
+          int bar() {
+            return 0;
+          }
+      };
+    after: |
+      class Foo<> {
+          int foo;
+        public:
+          int bar() {
+            return 0;
+          }
+      };
+  testDeleteParameter:
+    transcript: delete parameter
+    before: |
+      void foo(int a) {
+        baz(a);
+      }
+    after: |
+      void foo(<>) {
+        baz(a);
+      }
+  testDeletePrototype:
+    transcript: delete prototype
+    before: |
+      namespace Foo {
+        void bar();
+      }
+    after: |
+      namespace Foo {
+      <>}
+  testSelectArgument:
+    object: argument
+    before: |
+      void foo(int a, int b) {
+        baz(a);
+      }
+    after: |
+      void foo(int a, int b) {
+        baz(<>a<>);
+      }
+  testSelectArgumentList:
+    object: argument list
+    before: |
+      void foo(int a, int b) {
+        baz(a, b);
+      }
+    after: |
+      void foo(int a, int b) {
+        baz(<>a, b<>);
+      }
+  testSelectAssignment:
+    object: assignment
+    before: |
+      void foo(int a) {
+        int x = 5;
+      }
+    after: |
+      void foo(int a) {
+        int <>x = 5<>;
+      }
+  testSelectAssignmentValue:
+    object: assignment value
+    before: |
+      void foo(int a) {
+        int x = 5;
+      }
+    after: |
+      void foo(int a) {
+        int x = <>5<>;
+      }
+  testSelectAssignmentVariable:
+    object: assignment variable
+    before: |
+      void foo(int a) {
+        int x = 5;
+      }
+    after: |
+      void foo(int a) {
+        int <>x<> = 5;
+      }
+  testSelectBody:
+    object: body
+    before: |
+      void foo(int a) {
+        i<>nt x = 5;
+        x = 6;
+      }
+    after: |
+      void foo(int a) {
+        <>int x = 5;
+        x = 6;<>
+      }
+  testSelectCatch:
+    object: catch
+    before: |
+      int main() {
+        try {
+          throw 20;
+        }
+        catch (int e) {
+          cout << "An exception occurred: " << e;
+        }
+      }
+    after: |
+      int main() {
+        try {
+          throw 20;
+        }
+        <>catch (int e) {
+          cout << "An exception occurred: " << e;
+        }<>
+      }
+  testSelectClass:
+    object: class
+    before: |
+      using namespace std;
+      class Foo {
+          int foo;
+        public:
+          int bar() {
+            return 0;
+          }
+      };
+    after: |
+      using namespace std;
+      <>class Foo {
+          int foo;
+        public:
+          int bar() {
+            return 0;
+          }
+      }<>;
+  testSelectComment:
+    transcript: select comment
+    before: |
+      using namespace std;
+
+      bool check(x) {
+        // checks if x is less than 3
+        i<>f (x < 3) {
+          return true;
+        }
+        return false;
+      }
+    after: |
+      using namespace std;
+
+      bool check(x) {
+        <>// checks if x is less than 3<>
+        if (x < 3) {
+          return true;
+        }
+        return false;
+      }
+  testSelectCondition:
+    object: condition
+    before: |
+      void foo(int a) {
+        if (true) {
+        }
+      }
+    after: |
+      void foo(int a) {
+        if (<>true<>) {
+        }
+      }
+  testSelectConstructor:
+    object: constructor
+    before: |
+      class Foo {
+        public:
+          Foo() {}
+      }
+    after: |
+      class Foo {
+        public:
+          <>Foo() {}<>
+      }
+  testSelectDecorator:
+    notSupportedInLanguage: true
+  testSelectDictionary:
+    notSupportedInLanguage: true
+  testSelectElement:
+    notSupportedInLanguage: true
+  testSelectElse:
+    object: else
+    before: |
+      void foo(int a) {
+        if (true) {
+        } else {
+        }
+      }
+    after: |
+      void foo(int a) {
+        if (true) {
+        } <>else {
+        }<>
+      }
+  testSelectElseIf:
+    object: else if
+    before: |
+      void foo(int a) {
+        if (true) {
+        } else if (false) {
+        }
+      }
+    after: |
+      void foo(int a) {
+        if (true) {
+        } <>else if (false) {
+        }<>
+      }
+  testSelectEntry:
+    notSupportedInLanguage: true
+  testSelectEnum:
+    object: enum
+    before: |
+      using namespace std;
+      enum Color { red, green, blue };
+    after: |
+      using namespace std;
+      <>enum Color { red, green, blue }<>;
+  testSelectExtends:
+    object: base class
+    before: |
+      class Foo : public Bar {}
+    after: |
+      class Foo : <>public Bar<> {}
+  testSelectFinally:
+    notSupportedInLanguage: true
+  testSelectFor:
+    object: for
+    before: |
+      void foo(int a) {
+        for (;;) {
+        }
+      }
+    after: |
+      void foo(int a) {
+        <>for (;;) {
+        }<>
+      }
+  testSelectForEach:
+    object: for
+    before: |
+      void foo(int a) {
+        for (int n : {0, 1, 2}) {
+        }
+      }
+    after: |
+      void foo(int a) {
+        <>for (int n : {0, 1, 2}) {
+        }<>
+      }
+  testSelectFunction:
+    object: function
+    before: |
+      using namespace std;
+      void foo(int a, int b) {
+        baz(a);
+      }
+    after: |
+      using namespace std;
+      <>void foo(int a, int b) {
+        baz(a);
+      }<>
+  testSelectIf:
+    object: if
+    before: |
+      void foo(int a) {
+        if (true) {
+        } else {
+        }
+      }
+    after: |
+      void foo(int a) {
+        <>if (true) {
+        }<> else {
+        }
+      }
+  testSelectImplements:
+    notSupportedInLanguage: true
+  testSelectImport:
+    transcript: select include
+    before: |
+      #include <iostream>
+      using namespace std;
+    after: |-
+      <>#include <iostream><>
+      using namespace std;
+  testSelectInterface:
+    notSupportedInLanguage: true
+  testSelectLambda:
+    transcript: select lambda
+    before: |
+      [=] (e)->int<> {return foo*e;};
+    after: |
+      <>[=] (e)->int {return foo*e;}<>;
+  testSelectList:
+    notSupportedInLanguage: true
+  testSelectMethod:
+    transcript: select method
+    before: |
+      <>class Bird {
+        void chirp() {
+          std::cout << "chirp" << std::endl;
+        }
+      }
+    after: |
+      class Bird {
+        <>void chirp() {
+          std::cout << "chirp" << std::endl;
+        }<>
+      };
+  testSelectModifier:
+    object: modifier
+    before: |
+      void foo() const {
+      }
+    after: |
+      void foo() <>const<> {
+      }
+  testSelectModifierFromParameter:
+    object: modifier
+    before: |
+      void foo(volatile int a) {
+        baz(a);
+      }
+    after: |
+      void foo(<>volatile<> int a) {
+        baz(a);
+      }
+  testSelectModifierFromMethod:
+    object: modifier
+    before: |
+      using namespace std;
+      virtual void foo(int a, int b) {
+        baz(a);
+      }
+    after: |
+      using namespace std;
+      <>virtual<> void foo(int a, int b) {
+        baz(a);
+      }
+
+  testSelectFunctionModifier:
+    object: modifier
+    before: |
+      void foo (int a, int b) const {
+        baz(a);
+      }
+    after: |
+      void foo (int a, int b) <>const<> {
+        baz(a);
+      }
+  testSelectNamespace:
+    object: namespace
+    before: |
+      using namespace std;
+      namespace Foo {
+      }
+    after: |
+      using namespace std;
+      <>namespace Foo {
+      }<>
+  testSelectParameter:
+    object: parameter
+    before: |
+      void foo(int a) {
+        baz(a);
+      }
+    after: |
+      void foo(<>int a<>) {
+        baz(a);
+      }
+  testSelectTypeOnlyParameter:
+    object: parameter
+    before: |
+      #include <iostream>
+      using namespace std;
+
+      void foo (int)
+      {
+        baz (a);
+      }
+    after: |
+      #include <iostream>
+      using namespace std;
+
+      void foo (<>int<>)
+      {
+        baz (a);
+      }
+  testSelectParameterWithDefaultValue:
+    object: parameter
+    before: |
+      #include <iostream>
+      using namespace std;
+
+      void foo (int a = 1)
+      {
+        baz (a);
+      }
+    after: |
+      #include <iostream>
+      using namespace std;
+
+      void foo (<>int a = 1<>)
+      {
+        baz (a);
+      }
+  testSelectScopedParameterName:
+    transcript: select parameter b colon colon c
+    before: |
+      #include <iostream>
+      using namespace std;
+
+      void foo (int a, int b::c)
+      {
+        baz (a);
+      }
+    after: |
+      #include <iostream>
+      using namespace std;
+
+      void foo (int a, <>int b::c<>)
+      {
+        baz (a);
+      }
+  testSelectParameterList:
+    object: parameter list
+    before: |
+      void foo(int a, int b) {
+        baz(a);
+      }
+    after: |
+      void foo(<>int a, int b<>) {
+        baz(a);
+      }
+  testSelectParameterFromLambda:
+    transcript: select parameter
+    before: |
+      [=] (e)->int<> {return foo*e;};
+    after: |
+      [=] (<>e<>)->int {return foo*e;};
+  testSelectProperty:
+    object: property
+    before: |
+      class Foo {
+        int a = b;
+      };
+    after: |
+      class Foo {
+        <>int a = b<>;
+      };
+  testSelectPrototype:
+    object: prototype
+    before: |
+      namespace Foo {
+        void bar();
+      }
+    after: |
+      namespace Foo {
+        <>void bar()<>;
+      }
+  testSelectReturn:
+    object: return
+    before: |
+      int foo(int a, int b) {
+        return a + b;
+      }
+    after: |
+      int foo(int a, int b) {
+        <>return a + b<>;
+      }
+  testSelectReturnType:
+    object: return type
+    before: |
+      using namespace std;
+      void foo(int a, int b) {
+        baz(a);
+      }
+    after: |
+      using namespace std;
+      <>void<> foo(int a, int b) {
+        baz(a);
+      }
+  testSelectReturnValue:
+    object: return value
+    before: |
+      int foo(int a, int b) {
+        return a + b;
+      }
+    after: |
+      int foo(int a, int b) {
+        return <>a + b<>;
+      }
+  testSelectString:
+    object: string
+    before: |
+      int foo(int a, int b) {
+        cout << "Greeting message";
+        return a + b;
+      }
+    after: |
+      int foo(int a, int b) {
+        cout << <>"Greeting message"<>;
+        return a + b;
+      }
+  testSelectStringText:
+    object: string text
+    before: |
+      int foo(int a, int b) {
+        cout << "Greeting message";
+        return a + b;
+      }
+    after: |
+      int foo(int a, int b) {
+        cout << "<>Greeting message<>";
+        return a + b;
+      }
+  testSelectStruct:
+    object: struct
+    before: |
+      using namespace std;
+      struct Foo {
+          int foo;
+      };
+    after: |
+      using namespace std;
+      <>struct Foo {
+          int foo;
+      }<>;
+  testSelectThrow:
+    object: throw
+    before: |
+      int main() {
+        try {
+          throw 20;
+        }
+        catch (int e) {
+          cout << "An exception occurred: " << e;
+        }
+      }
+    after: |
+      int main() {
+        try {
+          <>throw 20<>;
+        }
+        catch (int e) {
+          cout << "An exception occurred: " << e;
+        }
+      }
+  testSelectTry:
+    object: try
+    before: |
+      int main() {
+        try {
+          throw 20;
+        }
+        catch (int e) {
+          cout << "An exception occurred: " << e;
+        }
+      }
+    after: |
+      int main() {
+        <>try {
+          throw 20;
+        }<>
+        catch (int e) {
+          cout << "An exception occurred: " << e;
+        }
+      }
+  testSelectTypeFromAssignment:
+    object: type
+    before: |
+      void foo(int a) {
+        int <>x = 5;
+      }
+    after: |
+      void foo(int a) {
+        <>int<> x = 5;
+      }
+  testSelectTypeFromFunction:
+    object: type
+    before: |
+      void <>foo(int a) {
+        int x = 5;
+      }
+    after: |
+      <>void<> foo(int a) {
+        int x = 5;
+      }
+  testSelectTypeFromFunctionPointer:
+    object: type
+    before: |
+      #include <iostream>
+      using namespace std;
+
+      int <>*foo (int a)
+      {
+        int *x = 5;
+        return x;
+      }
+    after: |
+      #include <iostream>
+      using namespace std;
+
+      <>int<> *foo (int a)
+      {
+        int *x = 5;
+        return x;
+      }
+  testSelectTypeFromParameter:
+    object: type
+    before: |
+      void foo(int<> a) {
+        int x = 5;
+      }
+    after: |
+      void foo(<>int<> a) {
+        <>int<> x = 5;
+      }
+  testSelectTypeFromConstPointerParameter:
+    object: type
+    before: |
+      void foo(const int<> *a) {
+        int x = 5;
+      }
+    after: |
+      void foo(const <>int<> *a) {
+        int x = 5;
+      }
+  testSelectTypeFromReferenceParameter:
+    object: type
+    before: |
+      void foo(int&<> a) {
+        int x = 5;
+      }
+    after: |
+      void foo(<>int<>& a) {
+        int x = 5;
+      }
+  testSelectTypeFromParameterWithGenerics:
+    object: type
+    before: |
+      void foo(Array<int><> a) {
+        int x = 5;
+      }
+    after: |
+      void foo(<>Array<int><> a) {
+        int x = 5;
+      }
+  testSelectTypeArgument:
+    object: type argument
+    before: |
+      Foo<5> f;
+    after: |
+      Foo<<>5<>> f;
+  testSelectTypeParameter:
+    object: type parameter
+    before: |
+      template<auto foo>
+      struct Foo {};
+    after: |
+      template<<>auto foo<>>
+      struct Foo {};
+  testSelectUsing:
+    transcript: select using
+    before: |
+      #include <iostream>
+      using namespace std;
+    after: |-
+      #include <iostream>
+      <>using namespace std<>;
+  testSelectWhile:
+    object: while
+    before: |
+      void foo(int a) {
+        while (true) {
+        }
+      }
+    after: |
+      void foo(int a) {
+        <>while (true) {
+        }<>
+      }

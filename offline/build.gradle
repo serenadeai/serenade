@@ -1,0 +1,24 @@
+apply plugin: "application"
+
+mainClassName = "offline.Offline"
+distZip.enabled = false
+distTar.enabled = false
+
+dependencies {
+    implementation project(":toolbelt")
+    implementation project(":corpusgen")
+    implementation project(":grammarflattener")
+    implementation project(":core")
+
+    implementation rootProject.antlrRuntime
+}
+
+task downloadSmallRepositories(type: Exec) {
+    // the script determines if we're up to date, so this task has no outputs
+    inputs.file "bin/download-small-repositories.py"
+    commandLine "./bin/download-small-repositories.py"
+}
+
+compileTestJava {
+    dependsOn downloadSmallRepositories
+}

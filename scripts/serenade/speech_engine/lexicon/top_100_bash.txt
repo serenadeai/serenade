@@ -1,0 +1,39 @@
+bzip  B IY1 Z IH1 P
+chmod  CH M AO1 D
+chmod  SH M AO1 D
+chmod  S IY1 EY1 CH M AO1 D
+chown  CH OW1 N
+chown  SH OW1 N
+chown  S IY1 EY1 CH OW1 N
+cmake  S IY1 M EY1 K
+dpkg  D IY1 P AE1 K AH0 JH
+dpkg  D IY1 P AE1 K IH0 JH
+etc  EH1 T S IY1
+fdisk  EH1 F D IH1 S K
+grep  G R EH1 P
+gzip  JH IY1 Z IH1 P
+hostname  HH OW1 S T N EY1 M
+htop  EY1 CH T AO1 P
+htop  EY1 CH T AA1 P
+ifconfig  AY1 EH1 F K AH0 N F IH1 G
+ipconfig  AY1 P IY1 K AH0 N F IH1 G
+iptables  AY1 P IY1 T EY1 B AH0 L Z
+lsblk  EH1 L EH1 S B L AA1 K
+lsof  EH1 L EH1 S AH1 V
+lsof  EH1 L S AH1 V
+mkdir  M EY1 K D ER1
+nmon  EH1 N M AA1 N
+nohup  N OW1 HH AH1 P
+nslookup  EH1 N EH1 S L UH1 K AH0 P
+passwd  P AE1 S D AH1 B AH0 L Y UW0 D IY1
+printf  P R IH1 N T EH1 F
+pyenv  P AY1 EH1 N V
+rsync  AA1 R S IH1 NG K
+sed  S EH1 D
+sysctl  S IH1 S K AH0 N T R OW1 L
+sysctl  S IH1 S S IY1 T IY1 EH1 L
+telnet  T EH1 L N EH1 T
+traceroute  T R EY1 S R AW1 T
+wget  D AH1 B AH0 L Y UW0 G EH1 T
+xargs  EH1 K S AA1 R G Z
+zcat  Z IY1 K AE1 T

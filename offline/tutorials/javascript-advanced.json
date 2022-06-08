@@ -1,0 +1,148 @@
+{
+  "filename": "javascript-advanced.js",
+  "steps": [
+    {
+      "title": "Getting Started",
+      "body": "<p>This guide will walk you through some more advanced Serenade features, using Python.</p><p>To start, click Next below</p>",
+      "skipEditorFocus": true
+    },
+    {
+      "title": "Setup",
+      "body": "<p>Serenade will send voice commands to whichever application you have in the foreground. You can see which application Serenade is controlling via the icon at the bottom-right.</p><p>To get started, open VS Code, Atom, or JetBrains, then click next.</p>",
+      "nextWhenEditorFocused": true
+    },
+    {
+      "title": "Setup",
+      "body": "<p>Before we start the tutorial, let's make sure we're using an empty file. In your editor (without using voice), create a new file and save it as <code>serenade.js</code>.</p>",
+      "nextWhenEditorFilename": true
+    },
+    {
+      "title": "Using an API",
+      "body": "<p>First, we're going to write a short program that makes an API call to download a dog photo to your machine. (Important stuff.) Your editor should now show you what the final product will look like.</p><p>When you're ready to start, click or say:</p>",
+      "textOnly": true,
+      "resetSource": "const request = require(\"axios\");\nconst fs = require(\"fs\");\n\nconst url = \"https://random.dog/woof.json\";\nrequest.get(url).then((response) => {\n  const path = response.data.url;\n  request.get(path, {responseType: \"stream\"}).then((image) => {\n    const stream = fs.createWriteStream(path.split(\"/\").pop());\n    image.data.pipe(stream);\n  });\n});",
+      "resetCursor": 0
+    },
+    {
+      "title": "Adding code",
+      "body": "<p>We started off the program for you, and now we'll write the rest with voice! First, let's make a request to the API. Say:</p>",
+      "transcript": "add request dot get of url",
+      "resetSource": "const request = require(\"axios\");\nconst fs = require(\"fs\");\n\nconst url = \"https://random.dog/woof.json\";",
+      "resetCursor": 102
+    },
+    {
+      "title": "Inserting code",
+      "body": "<p>Next, let's add a callback to handle the response. Say:</p>",
+      "transcript": "insert dot then of lambda response"
+    },
+    {
+      "title": "Adding code",
+      "body": "<p>Now, we can use a field returned by the API. Say:</p>",
+      "transcript": "add const path equals response dot data dot url"
+    },
+    {
+      "title": "Adding code",
+      "body": "<p>Next, let's download the file at that path. Say:</p>",
+      "transcript": "add request dot get of path comma braces response type colon quotes stream"
+    },
+    {
+      "title": "Inserting code",
+      "body": "<p>Just like before, let's add a callback to handle the response. Say:</p>",
+      "transcript": "insert dot then of lambda response"
+    },
+    {
+      "title": "Changing code",
+      "body": "<p>Actually, let's not create another variable called response here. Instead, let's rename it to image for clarity. Say:</p>",
+      "transcript": "change parameter to image"
+    },
+    {
+      "title": "Adding code",
+      "body": "<p>We can use a writeStream in order to pipe data to a file. To create a new stream, say:</p>",
+      "transcript": "add const stream equals fs dot create write stream of path"
+    },
+    {
+      "title": "Adding code",
+      "body": "<p>Now, we can use that stream to save our data. Say:</p>",
+      "transcript": "add image dot data dot pipe of stream"
+    },
+    {
+      "title": "Moving the cursor",
+      "body": "<p>Let's make one more change. When creating a new file, let's only use the last part of the URL rather than the whole thing. First, move your cursor by saying:</p>",
+      "transcript": "previous line end of argument"
+    },
+    {
+      "title": "Inserting code",
+      "body": "<p>Now, we can modify the argument. Say:</p>",
+      "transcript": "insert dot split of string slash dot pop parens"
+    },
+    {
+      "title": "JavaScript + Express",
+      "body": "<p>Awesome! That completes our first example. Next, we're going to write a simple Express web app with voice—but this time, we won't give you all the answers!</p><p>To get started, say:</p>",
+      "textOnly": true
+    },
+    {
+      "title": "Adding an import",
+      "body": "<p>First, import the Express framework by adding a require statement:</p><p><code>const express = require(\"express\");</code></p>",
+      "transcript": "add const express equals require of quotes express",
+      "hideAnswer": true,
+      "resetSource": "",
+      "resetCursor": 0
+    },
+    {
+      "title": "Adding a statement",
+      "body": "<p>Nice job! Next, create an instance of an Express app by adding:</p><p><code>const app = express();</code></p>",
+      "transcript": "add const app equals express parens",
+      "hideAnswer": true
+    },
+    {
+      "title": "Adding a statement",
+      "body": "<p>Next, create a variable to designate which port our application will run on:</p><p><code>const port = 3000;</code></p>",
+      "transcript": "add const port equals 3000",
+      "hideAnswer": true
+    },
+    {
+      "title": "Adding a route",
+      "body": "<p>Now, let's add a new Express route. Add a new statement:</p><p><code>app.get(\"/\");</code></p>",
+      "transcript": "add app dot get of quotes slash",
+      "hideAnswer": true
+    },
+    {
+      "title": "Adding a callback",
+      "body": "<p>We also need to pass a callback function that will be run when someone accesses our route. To add another argument to this functioon call, say:</p>",
+      "transcript": "add argument lambda of request comma response"
+    },
+    {
+      "title": "Adding a statement",
+      "body": "<p>Now, let's write a simple statement inside of the callback:</p><p><code>response.send(\"index\");</code></p>",
+      "transcript": "add response dot send of quotes index",
+      "hideAnswer": true
+    },
+    {
+      "title": "Moving the cursor",
+      "body": "<p>Great! Now our callback is all set up, so move your cursor to the next line.</p>",
+      "transcript": "next line"
+    },
+    {
+      "title": "Adding a call",
+      "body": "<p>The last thing we need to do is start up the Express server. To do so, add the line:</p><p><code>app.listen(port);</code></p>",
+      "transcript": "add app dot listen of port",
+      "hideAnswer": true
+    },
+    {
+      "title": "Adding an argument",
+      "body": "<p>This function also takes a callback as an argument. Just as you did before, try adding a lambda as an argument.</p>",
+      "transcript": "add argument lambda",
+      "hideAnswer": true
+    },
+    {
+      "title": "Adding a print",
+      "body": "<p>Finally, let's add a print statement inside of the callback.</p>",
+      "transcript": "add console dot log of quotes listening"
+    },
+    {
+      "title": "Try it out!",
+      "body": "<p>That's it for our tutorial!</p><p>Don't hesitate to reach out in the community if you run into any issues.</p>",
+      "skipEditorFocus": true
+    }
+  ]
+}

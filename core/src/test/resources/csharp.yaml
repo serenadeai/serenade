@@ -1,0 +1,1556 @@
+suite: CSharp
+filename: test.cs
+validate: true
+tests:
+  testAddArgument:
+    transcript: add argument first name plus last name
+    before: |
+      static void Main()
+      {
+        say("hello"<>);
+      }
+    after: |
+      static void Main()
+      {
+        say("hello", firstName + lastName<>);
+      }
+  testAddAssignment:
+    transcript: add int age equals previous plus one
+    before: |
+      static void Main()
+      {<>
+      }
+    after: |
+      static void Main()
+      {
+        int age = previous + 1<>;
+      }
+  testAddCatch:
+    transcript: add catch exception e
+    before: |
+      static void Main()
+      {
+        try
+        {
+          foo();
+        }
+        catch (FileNotFoundException e)
+        {<>
+        }
+      }
+    after: |
+      static void Main()
+      {
+        try
+        {
+          foo();
+        }
+        catch (FileNotFoundException e)
+        {
+        }
+        catch (Exception e<>)
+        {
+        }
+      }
+  testAddClass:
+    transcript: add public class example app
+    after: |
+      public class ExampleApp<>
+      {
+      }
+  testAddComment:
+    skipMappingGeneratorTest: true
+    transcript: add comment fix later
+    before: |
+      public class Application
+      {
+        public void main()
+        {<>
+        }
+      }
+    after: |
+      public class Application
+      {
+        public void main()
+        {
+          // Fix later<>
+        }
+      }
+  testAddConstructor:
+    skipMappingGeneratorTest: true
+    transcript: add constructor
+    before: |
+      class Foo
+      {
+      }
+    after: |
+      class Foo
+      {
+        Foo<>()
+        {
+        }
+      }
+  testAddDecorator:
+    transcript: add attribute serializable
+    before: |
+      public class Application
+      {
+        public void foo<>()
+        {
+          // do things
+        }
+        public void main()
+        {
+          // do things
+        }
+      }
+    after: |
+      public class Application
+      {
+        [Serializable<>]
+        public void foo()
+        {
+          // do things
+        }
+        public void main()
+        {
+          // do things
+        }
+      }
+  testAddElement:
+    notSupportedInLanguage: true
+  testAddElse:
+    transcript: add else return number times number minus one
+    before: |
+      static void Main()
+      {<>
+        if (true)
+        {
+        }
+      }
+    after: |
+      static void Main()
+      {
+        if (true)
+        {
+        }
+        else
+        {
+          return number * number - 1<>;
+        }
+      }
+  testAddElseIf:
+    transcript: add else if highest score plus one less than three
+    before: |
+      static void Main()
+      {<>
+        if (true)
+        {
+        }
+        else
+        {
+        }
+      }
+    after: |
+      static void Main()
+      {
+        if (true)
+        {
+        }
+        else if (highestScore + 1 < 3<>)
+        {
+        }
+        else
+        {
+        }
+      }
+  testAddEntry:
+    notSupportedInLanguage: true
+  testAddEnum:
+    transcript: add public enum category type
+    after: |
+      public enum CategoryType<>
+      {
+      }
+  testAddExtends:
+    transcript: add extends animal
+    before: |
+      public class Dog
+      {
+      }
+    after: |
+      public class Dog : Animal<>
+      {
+      }
+  testAddFinally:
+    transcript: add finally
+    before: |
+      static void Main()
+      {<>
+        try
+        {
+          write();
+        }
+        catch (Exception e)
+        {
+        }
+      }
+    after: |
+      static void Main()
+      {
+        try
+        {
+          write();
+        }
+        catch (Exception e)
+        {
+        }
+        finally
+        {<>
+        }
+      }
+  testAddFor:
+    transcript: add for string item in items
+    before: |
+      static void Main()
+      {<>
+      }
+    after: |
+      static void Main()
+      {
+        foreach (string item in items<>)
+        {
+        }
+      }
+  testAddFunction:
+    transcript: add function void bar
+    before: |
+      class Foo
+      {
+      }
+    after: |
+      class Foo
+      {
+        void Bar<>()
+        {
+        }
+      }
+  testAddIf:
+    transcript: add if count equals ten
+    before: |
+      static void Main()
+      {<>
+      }
+    after: |
+      static void Main()
+      {
+        if (count == 10<>)
+        {
+        }
+      }
+  testAddImplements:
+    transcript: add implements bar
+    before: |
+      class Foo
+      {
+      }
+    after: |
+      class Foo : Bar<>
+      {
+      }
+  testAddImport:
+    skipMappingGeneratorTest: true
+    transcript: add using system
+    before: |
+      using Something;
+    after: |
+      using Something;
+      using System<>;
+  testAddInterface:
+    transcript: add public interface vehicle
+    after: |
+      public interface Vehicle<>
+      {
+      }
+  testAddLambda:
+    transcript: add int c equals lambda of e
+    before: |
+      public class Foo
+      {
+        public void foo()
+        {<>
+        }
+      }
+    after: |
+      public class Foo
+      {
+        public void foo()
+        {
+          int c = e<> =>
+          {
+          };
+        }
+      }
+    mappingGeneratorSource: |
+      public class Foo
+      {
+        public void foo()
+        {
+          int c = e =>
+          {
+          };
+        }
+      }
+  testAddMethod:
+    transcript: add public void method fly
+    before: |
+      public class Bird
+      {
+        public void Chirp()
+        {
+        }
+      }
+    after: |
+      public class Bird
+      {
+        public void Fly<>()
+        {
+        }
+
+        public void Chirp()
+        {
+        }
+      }
+  testAddMethodToInterface:
+    transcript: add void method fly
+    before: |
+      interface Bird {
+        void Chirp();
+      }
+    after: |
+      interface Bird {
+        void Fly<>();
+        void Chirp();
+      }
+  testAddModifier:
+    transcript: add modifier static
+    before: |
+      public class FooParent
+      {
+        public<> void Foo()
+        {
+        }
+      }
+    after: |
+      public class FooParent
+      {
+        public static<> void Foo()
+        {
+        }
+      }
+  testAddNamespace:
+    transcript: add namespace foo
+    after: |
+      namespace Foo<>
+      {
+      }
+  testAddParameter:
+    transcript: add parameter string foo bar
+    before: |
+      class FooParent
+      {
+        public void Foo(int a)
+        {
+        }
+      }
+    after: |
+      class FooParent
+      {
+        public void Foo(int a, string fooBar<>)
+        {
+        }
+      }
+  testAddPrint:
+    skipMappingGeneratorTest: true
+    transcript: add print value
+    after: |
+      Console.WriteLine(value<>);
+  testAddProperty:
+    transcript: add int property players equals four
+    before: |
+      class Game
+      {
+      }
+    after: |
+      class Game
+      {
+        int players = 4<>;
+      }
+  testAddReturn:
+    transcript: add return get random number parens
+    before: |
+      public int Random()
+      {<>
+      }
+    after: |
+      public int Random()
+      {
+        return GetRandomNumber()<>;
+      }
+  testAddReturnValue:
+    transcript: add return value four
+    before: |
+      class Game
+      {
+        public int Random()
+        {<>
+          return;
+        }
+      }
+    after: |
+      class Game
+      {
+        public int Random()
+        {
+          return 4<>;
+        }
+      }
+  testAddStruct:
+    transcript: add public struct foo
+    before: |
+      using System;
+    after: |
+      using System;
+      public struct Foo<>
+      {
+      }
+  testAddThrow:
+    transcript: add throw new exception parens
+    before: |
+      public void Main()
+      {
+      }
+    after: |
+      public void Main()
+      {
+        throw new Exception()<>;
+      }
+  testAddToClass:
+    transcript: add int foo equals one
+    before: |
+      class Foo
+      {
+      }
+    after: |
+      class Foo
+      {
+        int foo = 1<>;
+      }
+  testAddToEmptyFile:
+    transcript: add class app
+    after: |
+      class App<>
+      {
+      }
+  testAddToEnum:
+    transcript: add blue
+    before: |
+      enum Colors
+      {
+        Red,
+        Green<>
+      }
+    after: |
+      enum Colors
+      {
+        Red,
+        Green,
+        Blue<>
+      }
+  testAddToInitializer:
+    transcript: add last name equals string craig
+    before: |
+      Student student = new Student
+      {
+        FirstName = "craig"<>
+      };
+    after: |
+      Student student = new Student
+      {
+        FirstName = "craig",
+        LastName = "craig"<>
+      };
+  testAddToNamespace:
+    transcript: add public class bar
+    before: |
+      namespace Foo
+      {
+      }
+    after: |
+      namespace Foo
+      {
+        public class Bar<>
+        {
+        }
+      }
+  testAddToStruct:
+    transcript: add int foo
+    before: |
+      struct Foo
+      {
+      }
+    after: |
+      struct Foo
+      {
+        int foo<>;
+      }
+  testAddToUsingBlock:
+    transcript: add return one
+    before: |
+      using (var reader = new StringReader<>(manyLines))
+      {
+      }
+    after: |
+      using (var reader = new StringReader(manyLines))
+      {
+        return 1<>;
+      }
+  testAddTry:
+    transcript: add try write parens
+    before: |
+      public void Main()
+      {<>
+      }
+    after: |
+      public void Main()
+      {
+        try
+        {
+          Write()<>;
+        }
+        catch (Exception ex)
+        {
+        }
+      }
+  testAddWhile:
+    transcript: add while bar is greater than one
+    before: |
+      static void Main()
+      {<>
+      }
+    after: |
+      static void Main()
+      {
+        while (bar > 1<>)
+        {
+        }
+      }
+  testDeleteArgument:
+    transcript: delete argument
+    before: |
+      using System;
+
+      public class Foo
+      {
+        public void bar()
+        {
+          baz(a);
+        }
+      }
+    after: |
+      using System;
+
+      public class Foo
+      {
+        public void bar()
+        {
+          baz(<>);
+        }
+      }
+  testDeleteExtends:
+    transcript: delete parent
+    before: |
+      using System;
+
+      public class Foo : Bar
+      {
+      }
+    after: |
+      using System;
+
+      public class Foo<>
+      {
+      }
+  testDeleteMethod:
+    transcript: delete method
+    before: |
+      <>class Bird
+      {
+        void Chirp()
+        {
+          System.out.println("chirp");
+        }
+
+        void fly()
+        {
+          // TODO
+        }
+      }
+    after: |
+      class Bird
+      {
+        <>void fly()
+        {
+          // TODO
+        }
+      }
+  testDeleteParameter:
+    transcript: delete parameter
+    before: |
+      using System;
+
+      public class Foo
+      {
+        public void foo(int a)
+        {
+        }
+      }
+    after: |
+      using System;
+
+      public class Foo
+      {
+        public void foo(<>)
+        {
+        }
+      }
+  testSelectArgument:
+    object: argument
+    before: |
+      using System;
+
+      public class Foo
+      {
+        public void bar()
+        {
+          baz(a);
+        }
+      }
+    after: |
+      using System;
+
+      public class Foo
+      {
+        public void bar()
+        {
+          baz(<>a<>);
+        }
+      }
+  testSelectArgumentList:
+    object: argument list
+    before: |
+      using System;
+
+      public class Foo
+      {
+        public void bar()
+        {
+          baz(a, b, c);
+        }
+      }
+    after: |
+      using System;
+
+      public class Foo
+      {
+        public void bar()
+        {
+          baz(<>a, b, c<>);
+        }
+      }
+  testSelectAssignment:
+    object: assignment
+    before: |
+      using System;
+
+      public class Foo
+      {
+        public void bar()
+        {
+          int x = 5;
+        }
+      }
+    after: |
+      using System;
+
+      public class Foo
+      {
+        public void bar()
+        {
+          int <>x = 5<>;
+        }
+      }
+  testSelectAssignmentValue:
+    object: assignment value
+    before: |
+      using System;
+
+      public class Foo
+      {
+        public void Bar()
+        {
+          int x = 5;
+        }
+      }
+    after: |
+      using System;
+
+      public class Foo
+      {
+        public void Bar()
+        {
+          int x = <>5<>;
+        }
+      }
+  testSelectAssignmentVariable:
+    object: assignment variable
+    before: |
+      using System;
+
+      public class Foo
+      {
+        public void Bar()
+        {
+          int x = 5;
+        }
+      }
+    after: |
+      using System;
+
+      public class Foo
+      {
+        public void Bar()
+        {
+          int <>x<> = 5;
+        }
+      }
+  testSelectBody:
+    object: body
+    before: |
+      using System;
+
+      public class Foo
+      {
+        public void Bar()
+        {<>
+          int x = 5;
+          int y = 6;
+        }
+      }
+    after: |
+      using System;
+
+      public class Foo
+      {
+        public void Bar()
+        {
+          <>int x = 5;
+          int y = 6;<>
+        }
+      }
+  testSelectCatch:
+    object: catch
+    before: |
+      using System;
+
+      public class Foo
+      {
+        public void foo()
+        {
+          try
+          {
+            foo();
+          }
+          catch (FileNotFoundException e)
+          {
+          }
+        }
+      }
+    after: |
+      using System;
+
+      public class Foo
+      {
+        public void foo()
+        {
+          try
+          {
+            foo();
+          }
+          <>catch (FileNotFoundException e)
+          {
+          }<>
+        }
+      }
+  testSelectClass:
+    object: class
+    before: |
+      using System;
+
+      public class Foo
+      {
+        public void foo()
+        {
+        }
+      }
+    after: |
+      using System;
+
+      <>public class Foo
+      {
+        public void foo()
+        {
+        }
+      }<>
+  testSelectClassInNamespace:
+    object: class
+    before: |
+      namespace Foo
+      {
+        public class Bar
+        {
+        }
+      }
+    after: |
+      namespace Foo
+      {
+        <>public class Bar
+        {
+        }<>
+      }
+  testSelectCondition:
+    object: condition
+    before: |
+      using System;
+
+      public class Foo
+      {
+        public void foo()
+        {
+          if (true)
+          {
+          }
+        }
+      }
+    after: |
+      using System;
+
+      public class Foo
+      {
+        public void foo()
+        {
+          if (<>true<>)
+          {
+          }
+        }
+      }
+  testSelectComment:
+    object: comment
+    before: |
+      using System;
+      // fix later
+    after: |
+      using System;
+      <>// fix later<>
+  testSelectConstructor:
+    object: constructor
+    before: |
+      public class Foo
+      {
+        public Foo()
+        {
+        }
+      }
+    after: |
+      public class Foo
+      {
+        <>public Foo()
+        {
+        }<>
+      }
+  testSelectDecorator:
+    object: attribute
+    before: |
+      [Serializable]
+      public class Application
+      {
+        public void foo()
+        {
+          // do things
+        }
+      }
+    after: |
+      <>[Serializable]<>
+      public class Application
+      {
+        public void foo()
+        {
+          // do things
+        }
+      }
+  testSelectDictionary:
+    notSupportedInLanguage: true
+  testSelectElement:
+    notSupportedInLanguage: true
+  testSelectElse:
+    object: else
+    before: |
+      using System;
+
+      public class Foo
+      {
+        public void Foo()
+        {
+          if (true)
+          {
+          }
+          else
+          {
+          }
+        }
+      }
+    after: |
+      using System;
+
+      public class Foo
+      {
+        public void Foo()
+        {
+          if (true)
+          {
+          }
+          <>else
+          {
+          }<>
+        }
+      }
+  testSelectElseIf:
+    object: else if
+    before: |
+      using System;
+
+      public class Foo
+      {
+        public void Foo()
+        {
+          if (true)
+          {
+          }
+          else if (false)
+          {
+          }
+        }
+      }
+    after: |
+      using System;
+
+      public class Foo
+      {
+        public void Foo()
+        {
+          if (true)
+          {
+          }
+          <>else if (false)
+          {
+          }<>
+        }
+      }
+  testSelectEntry:
+    notSupportedInLanguage: true
+  testSelectEnum:
+    object: enum
+    before: |
+      using System;
+
+      enum Foo
+      {
+        Bar,
+        Car
+      }
+    after: |
+      using System;
+
+      <>enum Foo
+      {
+        Bar,
+        Car
+      }<>
+  testSelectExtends:
+    object: parent
+    before: |
+      using System;
+
+      public class Foo : Bar
+      {
+        public void foo()
+        {
+        }
+      }
+    after: |
+      using System;
+
+      public class Foo : <>Bar<>
+      {
+        public void foo()
+        {
+        }
+      }
+  testSelectFinally:
+    object: finally
+    before: |
+      using System;
+
+      public class Foo
+      {
+        public void foo()
+        {
+          try
+          {
+            foo();
+          }
+          catch (Exception e)
+          {
+          }
+          finally
+          {
+          }
+        }
+      }
+    after: |
+      using System;
+
+      public class Foo
+      {
+        public void foo()
+        {
+          try
+          {
+            foo();
+          }
+          catch (Exception e)
+          {
+          }
+          <>finally
+          {
+          }<>
+        }
+      }
+  testSelectFor:
+    object: for
+    before: |
+      public class Foo
+      {
+        public void foo()
+        {
+          for (;;)
+          {
+          }
+        }
+      }
+    after: |
+      public class Foo
+      {
+        public void foo()
+        {
+          <>for (;;)
+          {
+          }<>
+        }
+      }
+  testSelectForEach:
+    object: for
+    before: |
+      public class Foo
+      {
+        public void foo()
+        {
+          foreach (int foo in bar)
+          {
+          }
+        }
+      }
+    after: |
+      public class Foo
+      {
+        public void foo()
+        {
+          <>foreach (int foo in bar)
+          {
+          }<>
+        }
+      }
+  testSelectFunction:
+    object: function
+    before: |
+      class Foo
+      {
+        void Bar()
+        {
+        }
+      }
+    after: |
+      class Foo
+      {
+        <>void Bar()
+        {
+        }<>
+      }
+  testSelectIf:
+    object: if
+    before: |
+      using System;
+
+      public class Foo
+      {
+        public void foo()
+        {
+          if (true)
+          {
+          }
+        }
+      }
+    after: |
+      using System;
+
+      public class Foo
+      {
+        public void foo()
+        {
+          <>if (true)
+          {
+          }<>
+        }
+      }
+  testSelectImplements:
+    notSupportedInLanguage: true
+  testSelectImport:
+    object: using
+    before: |
+      using System;
+
+      in<>terface Bar
+      {
+      }
+    after: |
+      <>using System;<>
+
+      interface Bar
+      {
+      }
+  testSelectInterface:
+    object: interface
+    before: |
+      using System;
+
+      interface Bar
+      {
+      }
+    after: |
+      using System;
+
+      <>interface Bar
+      {
+      }<>
+  testSelectLambda:
+    transcript: select lambda
+    before: |
+      public class Foo
+      {
+        public void foo<>()
+        {
+          Func<double, double> cube = x => x * x * x;
+        }
+      }
+    after: |
+      public class Foo
+      {
+        public void foo()
+        {
+          Func<double, double> cube = <>x => x * x * x<>;
+        }
+      }
+  testSelectList:
+    notSupportedInLanguage: true
+  testSelectMethod:
+    object: method
+    before: |
+      public class Foo
+      {
+        public void foo()
+        {
+        }
+      }
+    after: |
+      public class Foo
+      {
+        <>public void foo()
+        {
+        }<>
+      }
+  testSelectModifier:
+    object: modifier
+    before: |
+      public class Foo
+      {
+        public <>void foo()
+        {
+        }
+      }
+    after: |
+      public class Foo
+      {
+        <>public<> void foo()
+        {
+        }
+      }
+  testSelectNamespace:
+    object: namespace
+    before: |
+      using System;
+      namespace Foo
+      {
+      }
+    after: |
+      using System;
+      <>namespace Foo
+      {
+      }<>
+  testSelectParameter:
+    object: parameter
+    before: |
+      public class Foo
+      {
+        public void foo(int a)
+        {
+        }
+      }
+    after: |
+      public class Foo
+      {
+        public void foo(<>int a<>)
+        {
+        }
+      }
+  testSelectParameterList:
+    object: parameter list
+    before: |
+      public class Foo
+      {
+        public void foo(int a, int b)
+        {
+        }
+      }
+    after: |
+      public class Foo
+      {
+        public void foo(<>int a, int b<>)
+        {
+        }
+      }
+  testSelectProperty:
+    object: property
+    before: |
+      class Foo
+      {
+        int a = b;
+      }
+    after: |
+      class Foo
+      {
+        <>int a = b<>;
+      }
+  testSelectReturn:
+    object: return
+    before: |
+      using System;
+
+      public class Foo
+      {
+        public void foo()
+        {
+          return 4;
+        }
+      }
+    after: |
+      using System;
+
+      public class Foo
+      {
+        public void foo()
+        {
+          <>return 4<>;
+        }
+      }
+  testSelectReturnType:
+    object: return type
+    before: |
+      using System;
+
+      public class Foo
+      {
+        public void foo()
+        {
+          <>int i = 0;
+          return 4;
+        }
+      }
+    after: |
+      using System;
+
+      public class Foo
+      {
+        public <>void<> foo()
+        {
+          int i = 0;
+          return 4;
+        }
+      }
+  testSelectReturnValue:
+    object: return value
+    before: |
+      using System;
+
+      public class Foo
+      {
+        public void foo()
+        {
+          return 4;
+        }
+      }
+    after: |
+      using System;
+
+      public class Foo
+      {
+        public void foo()
+        {
+          return <>4<>;
+        }
+      }
+  testSelectString:
+    object: string
+    before: |
+      public class Foo
+      {
+        public void foo()
+        {
+          return "hi";
+        }
+      }
+    after: |
+      public class Foo
+      {
+        public void foo()
+        {
+          return <>"hi"<>;
+        }
+      }
+  testSelectStringText:
+    object: string text
+    before: |
+      public class Foo
+      {
+        public void foo()
+        {
+          return "hi";
+        }
+      }
+    after: |
+      public class Foo
+      {
+        public void foo()
+        {
+          return "<>hi<>";
+        }
+      }
+  testSelectStruct:
+    object: struct
+    before: |
+      using System;
+
+      public struct Foo
+      {
+      }
+    after: |
+      using System;
+
+      <>public struct Foo
+      {
+      }<>
+  testSelectThrow:
+    object: throw
+    before: |
+      using System;
+
+      public class Foo
+      {
+        public void foo()
+        {
+          throw new IndexOutOfRangeException();
+        }
+      }
+    after: |
+      using System;
+
+      public class Foo
+      {
+        public void foo()
+        {
+          <>throw new IndexOutOfRangeException()<>;
+        }
+      }
+  testSelectTry:
+    object: try
+    before: |
+      using System;
+
+      public class Foo
+      {
+        public void foo()
+        {
+          try
+          {
+          }
+          catch (Exception e)
+          {
+          }
+        }
+      }
+    after: |
+      using System;
+
+      public class Foo
+      {
+        public void foo()
+        {
+          <>try
+          {
+          }<>
+          catch (Exception e)
+          {
+          }
+        }
+      }
+  testSelectTypeFromAssignment:
+    object: type
+    before: |
+      using System;
+
+      public class Foo
+      {
+        public void foo()
+        {
+          int n<>umber = 1;
+        }
+      }
+    after: |
+      using System;
+
+      public class Foo
+      {
+        public void foo()
+        {
+          <>int<> number = 1;
+        }
+      }
+  testSelectTypeFromFunction:
+    object: type
+    before: |
+      using System;
+
+      public class Foo
+      {
+        public void foo()
+        {
+        }
+      }
+    after: |
+      using System;
+
+      public class Foo
+      {
+        public <>void<> foo()
+        {
+        }
+      }
+  testSelectTypeFromParameter:
+    object: type
+    before: |
+      using System;
+
+      public class Foo
+      {
+        public void foo(int<> a)
+        {
+        }
+      }
+    after: |
+      using System;
+
+      public class Foo
+      {
+        public void foo(<>int<> a)
+        {
+        }
+      }
+  testSelectTypeArgument:
+    object: type argument
+    before: |
+      class Foo
+      {
+        void Bar()
+        {
+          Foo<string> foo = new Foo<string>();
+        }
+      }
+    after: |
+      class Foo
+      {
+        void Bar()
+        {
+          Foo<<>string<>> foo = new Foo<string>();
+        }
+      }
+  testSelectTypeParameter:
+    object: type parameter
+    before: |
+      class Foo<T> {}
+    after: |
+      class Foo<<>T<>> {}
+  testSelectWhile:
+    object: while
+    before: |
+      using System;
+
+      public class Foo
+      {
+        public void foo()
+        {
+          while (true)
+          {
+          }
+        }
+      }
+    after: |
+      using System;
+
+      public class Foo
+      {
+        public void foo()
+        {
+          <>while (true)
+          {
+          }<>
+        }
+      }

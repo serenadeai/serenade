@@ -1,0 +1,110 @@
+{
+  "filename": "chrome.js",
+  "steps": [
+    {
+      "title": "Welcome to Serenade!",
+      "body": "<p>This guide will walk you through controlling your browser with just your voice.</p><p>Be sure that the Serenade for Chrome <b>extension is installed</b> from the <a href=\"https://chrome.google.com/webstore/detail/bgfbijeikimjmdjldemlegooghdjinmj\">Chrome Web Store</a>.</p><p><b>Click the switch above</b> to start Serenade, and say:</p>",
+      "textOnly": true,
+      "skipEditorFocus": true
+    },
+    {
+      "title": "Alternatives",
+      "body": "<p>As you speak, you'll see a numbered list of possible commands appear below. The first one will be run automatically, but to select a different one, just say the number of the row you want instead, like \"two\" or \"three\".</p><p>Let's go! First, bring Chrome into focus by saying:</p>",
+      "transcript": "focus chrome",
+      "skipEditorFocus": true
+    },
+    {
+      "title": "Tabs",
+      "body": "<p>First, let's create a new browser tab. Say:</p>",
+      "transcript": "new tab",
+      "skipEditorFocus": true
+    },
+    {
+      "title": "Navigation",
+      "body": "<p>Let's head to Stack Overflow by saying:</p>",
+      "transcript": "open stackoverflow dot com",
+      "matches": ["open <code>stackoverflow.com</code>"],
+      "skipEditorFocus": true
+    },
+    {
+      "title": "Showing inputs",
+      "body": "<p>Sometimes, pages have many different input boxes you can click. To see them all, say:</p>",
+      "transcript": "inputs",
+      "matches": ["inputs"],
+      "skipEditorFocus": true
+    },
+    {
+      "title": "Choosing an input",
+      "body": "<p>Each input now has a numbered overlay. Let's put our cursor in the search box by saying:</p>",
+      "transcript": "one",
+      "matches": ["one"],
+      "skipEditorFocus": true
+    },
+    {
+      "title": "Typing text",
+      "body": "<p>You can use <i>type</i> command to insert text with your voice. Say:</p>",
+      "transcript": "type python reverse string",
+      "matches": ["type <code>python reverse string</code>"],
+      "skipEditorFocus": true
+    },
+    {
+      "title": "Pressing keys",
+      "body": "<p>Similarly, you can use the <i>press</i> command to press individual keys. To perform the search, say:</p>",
+      "transcript": "press enter",
+      "matches": ["press <code>enter</code>"],
+      "skipEditorFocus": true
+    },
+    {
+      "title": "Clicking links",
+      "body": "<p>To click on a link, you can use the <i>click</i> command again, specifying which link you want to click. Try saying:</p>",
+      "transcript": "click reverse a string in python",
+      "matches": ["click <code>reverse a string in python</code>"],
+      "skipEditorFocus": true
+    },
+    {
+      "title": "Navigation",
+      "body": "<p>To go back to the page you were just on, you can say <i>back</i>. You can also say commands like <i>reload</i> and <i>forward</i>. Try it by saying:</p>",
+      "transcript": "back",
+      "skipEditorFocus": true
+    },
+    {
+      "title": "Showing links",
+      "body": "<p>Like with input boxes, pages can have many different links you can click. To see them all, say:</p>",
+      "transcript": "links",
+      "skipEditorFocus": true
+    },
+    {
+      "title": "Choosing a link",
+      "body": "<p>Each link now has a numbered overlay. Now, to click a link, just say its number:</p>",
+      "transcript": "two",
+      "matches": ["two"],
+      "skipEditorFocus": true
+    },
+    {
+      "title": "Finishing up",
+      "body": "<p>Finally, let's close that Stack Overflow tab. To do so, just say:</p>",
+      "transcript": "close tab",
+      "skipEditorFocus": true
+    },
+    {
+      "title": "Congrats!",
+      "body": "<p>Now you know the commands you need to browse the web with voice! Here are a few links you might find useful as you're using Serenade.</p>",
+      "skipEditorFocus": true
+    },
+    {
+      "title": "Community",
+      "body": "<p>The Serenade Community is a Discord server where you can get help directly from the Serenade team and meet other people using Serenade.</p><a href=\"https://serenade.ai/community\" target=\"_blank\" class=\"primary-button block text-center\">Join the community</a>",
+      "skipEditorFocus": true
+    },
+    {
+      "title": "Documentation",
+      "body": "<p>To learn more about all the voice commands supported by Serenade, check out the Serenade documentation.</p><a href=\"https://serenade.ai/docs\" target=\"_blank\" class=\"primary-button block text-center\">Open documentation</a>",
+      "skipEditorFocus": true
+    },
+    {
+      "title": "Try it out!",
+      "body": "<p>That's it for our tutorial!</p><p>Don't hesitate to reach out in the community if you run into any issues.</p>",
+      "skipEditorFocus": true
+    }
+  ]
+}

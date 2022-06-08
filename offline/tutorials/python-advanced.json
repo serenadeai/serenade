@@ -1,0 +1,143 @@
+{
+  "filename": "python-advanced.py",
+  "steps": [
+    {
+      "title": "Getting Started",
+      "body": "<p>This guide will walk you through some more advanced Serenade features, using Python.</p><p>To start, click Next below.</p>",
+      "skipEditorFocus": true
+    },
+    {
+      "title": "Setup",
+      "body": "<p>Serenade will send voice commands to whichever application you have in the foreground. You can see which application Serenade is controlling via the icon at the bottom-right.</p><p>To get started, open VS Code, Atom, or JetBrains, then click next.</p>",
+      "nextWhenEditorFocused": true
+    },
+    {
+      "title": "Setup",
+      "body": "<p>Before we start the tutorial, let's make sure we're using an empty file. In your editor (without using voice), create a new file and save it as <code>serenade.py</code>.</p>",
+      "nextWhenEditorFilename": true
+    },
+    {
+      "title": "Using an API",
+      "body": "<p>First, we're going to write a short program that makes an API call to download a dog photo to your machine. (Important stuff.) Your editor should now show you what the final product will look like.</p><p>When you're ready to start, click or say:</p>",
+      "textOnly": true,
+      "resetSource": "import requests\n\nurl = 'https://random.dog/woof.json'\nresponse = requests.get(url)\ndata = response.json()\npath = data['url']\nwith open(path.split('/')[-1], 'wb') as file:\n    file.write(requests.get(path).content)",
+      "resetCursor": 0
+    },
+    {
+      "title": "Adding code",
+      "body": "<p>We started off the program for you, and now we'll write the rest with voice! First, let's make a request to the API. Say:</p>",
+      "transcript": "add response equals requests dot get of url",
+      "resetSource": "import requests\n\nurl = 'https://random.dog/woof.json'",
+      "resetCursor": 53
+    },
+    {
+      "title": "Adding code",
+      "body": "<p>Next, we can parse the API response as JSON. Say:</p>",
+      "transcript": "add data equals response dot json parens"
+    },
+    {
+      "title": "Adding code",
+      "body": "<p>Now, we can use a field returned by the API. Say:</p>",
+      "transcript": "add path equals data brackets string url"
+    },
+    {
+      "title": "Adding code",
+      "body": "<p>Next, let's open up a new file where we'll save the image. Say:</p>",
+      "transcript": "add with open of path comma string wb as file"
+    },
+    {
+      "title": "Changing an argument",
+      "body": "<p>Actually, let's change that first argument to only include the last part of the URL, instead of the whole thing. First, move your cursor there by saying:</p>",
+      "transcript": "end of first argument"
+    },
+    {
+      "title": "Changing an argument",
+      "body": "<p>Now, let's extract the end of the URL by calling the split function, then using the last element of that list. Say:</p>",
+      "transcript": "insert dot split of string slash brackets negative one"
+    },
+    {
+      "title": "Adding code",
+      "body": "<p>Finally, we can actually download and save the file from the API. Say:</p>",
+      "transcript": "add file dot write of requests dot get of path"
+    },
+    {
+      "title": "Inserting code",
+      "body": "<p>Oops! We forgot something in the argument to the write function. To append some text to the argument, say:</p>",
+      "transcript": "end of argument insert dot content"
+    },
+    {
+      "title": "Python + Flask",
+      "body": "<p>Awesome! That completes our first example. Next, we're going to write a simple Flask web app with voice—but this time, we won't give you all the answers!</p><p>To get started, say:</p>",
+      "textOnly": true
+    },
+    {
+      "title": "Python + Flask",
+      "body": "<p>Your editor should now have a Flask app as a starting point. We're going to add a few new functions to handle login and logout.</p><p>When you're ready, say:</p>",
+      "textOnly": true,
+      "resetCursor": 245,
+      "resetSource": "from flask import Flask, session, redirect, url_for\n\napp = Flask(__name__)\napp.secret_key = 'secret'\n\n\n@app.route(\"/index\")\ndef index():\n    return \"Welcome to my page\"\n\n\n@app.route(\"/hello/<name>\")\ndef hello(name):\n    return \"hello \" + name\n\n"
+    },
+    {
+      "title": "Adding a function",
+      "body": "<p>First, create a new function called <code>login</code>.</p>",
+      "transcript": "add function login",
+      "hideAnswer": true
+    },
+    {
+      "title": "Adding a condition",
+      "body": "<p>Inside of that function, add a new if statement:</p><p><code>if request.method == 'POST'</code></p>",
+      "transcript": "add if request dot method equals string post",
+      "hideAnswer": true
+    },
+    {
+      "title": "Adding an assignment",
+      "body": "<p>Next, we're going to add a new entry to the global <code>session</code> dictionary. First, say:</p>",
+      "transcript": "add session brackets string username"
+    },
+    {
+      "title": "Inserting a value",
+      "body": "<p>Now, finish the right-hand side of the assignment. On this line, insert:</p><p><code>= request.form[\"username\"]</code></p>",
+      "transcript": "insert equals request dot form brackets string username",
+      "hideAnswer": true
+    },
+    {
+      "title": "Adding a return",
+      "body": "<p>To finish this function, add a return statement:</p><p><code>return redirect(url_for(\"index\"))</code></p>",
+      "transcript": "add return redirect of url for of string index",
+      "hideAnswer": true
+    },
+    {
+      "title": "Adding a decorator",
+      "body": "<p>In order to register this function as a Flask route, we need to add a special Flask decorator. To do so, say:",
+      "transcript": "add decorator app dot route of string slash login"
+    },
+    {
+      "title": "Adding a function",
+      "body": "<p>That's it for our login function! All that's left is to add a logout function. So, add a function called <code>logout</code>.</p>",
+      "transcript": "add function logout",
+      "hideAnswer": true
+    },
+    {
+      "title": "Adding a statement",
+      "body": "<p>Now, we're ready to write our logout function. First, let's add a line that removes the <code>username</code> key we added to the <code>session</code> global earlier. Say:",
+      "transcript": "add session dot pop of string username comma none"
+    },
+    {
+      "title": "Adding a return",
+      "body": "<p>To finish this function, add a return statement, just like before:</p><p><code>return redirect(url_for(\"index\"))</code></p>",
+      "transcript": "add return redirect of url for of string index",
+      "hideAnswer": true
+    },
+    {
+      "title": "Adding a decorator",
+      "body": "<p>Just like before, we need to add a decorator to this function. Add one that looks like this:</p><p><code>@app.route(\"/logout\")</code></p>",
+      "transcript": "add decorator app dot route of string slash logout",
+      "hideAnswer": true
+    },
+    {
+      "title": "Try it out!",
+      "body": "<p>That's it for our tutorial!</p><p>Don't hesitate to reach out in the community if you run into any issues.</p>",
+      "skipEditorFocus": true
+    }
+  ]
+}

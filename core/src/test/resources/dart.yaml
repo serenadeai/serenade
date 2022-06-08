@@ -1,0 +1,1140 @@
+suite: Dart
+filename: file.dart
+skipAllMappingGeneratorTests: true
+tests:
+  testAddArgument:
+    transcript: add argument first name plus last name
+    before: |
+      main() {
+        say("hello");
+      }
+    after: |
+      main() {
+        say("hello", firstName + lastName<>);
+      }
+  testAddAssignment:
+    transcript: add int age equals current age plus one
+    before: |
+      main() {
+      }
+    after: |
+      main() {
+        int age = currentAge + 1<>;
+      }
+  testAddCatch:
+    transcript: add catch runtime exception
+    before: |
+      main() {
+        try {
+          foo();
+        } on Exception catch (e) {
+        }<>
+      }
+    after: |
+      main() {
+        try {
+          foo();
+        } on Exception catch (e) {
+        } on RuntimeException catch (e<>) {
+        }
+      }
+  testAddClass:
+    transcript: add abstract class download manager
+    before: |
+      import 'dart:math';
+    after: |
+      import 'dart:math';
+      abstract class DownloadManager<> {
+      }
+  testAddComment:
+    skipMappingGeneratorTest: true
+    transcript: add comment hello
+    before: |
+      void main() {
+        fo<>o();
+      }
+    after: |
+      void main() {
+        foo();
+        // hello<>
+      }
+  testAddConstructor:
+    transcript: add constructor
+    before: |
+      class Foo {
+      }
+    after: |
+      class Foo {
+        Foo<>() {
+        }
+      }
+  testAddDecorator:
+    transcript: add decorator override
+    before: |
+      class Bird {
+        void c<>hirp() {
+        }
+      }
+    after: |
+      class Bird {
+        @override<>
+        void chirp() {
+        }
+      }
+  testAddClassDecorator:
+    transcript: add decorator override
+    before: |
+      class Bird {
+      }
+    after: |
+      @override<>
+      class Bird {
+      }
+  testAddElseIf:
+    transcript: add else if highest score plus one less than three
+    before: |
+      main() {
+        if (true) {
+        } else {
+        }
+      }
+    after: |
+      main() {
+        if (true) {
+        } else if (highestScore + 1 < 3<>) {
+        } else {
+        }
+      }
+  testAddElse:
+    transcript: add else return number times factorial of number minus one
+    before: |
+      main() {
+        if (true) {
+        }
+      }
+    after: |
+      main() {
+        if (true) {
+        } else<> {
+          return number * factorial(number - 1);
+        }
+      }
+  testAddEnum:
+    transcript: add enum category type
+    before: |
+      import 'dart:math';
+    after: |
+      import 'dart:math';
+      enum CategoryType<> {
+      }
+  testAddExtends:
+    transcript: add extends animal
+    before: |
+      class Dog {
+      }
+    after: |
+      class Dog extends Animal<> {
+      }
+  testAddFinally:
+    transcript: add finally
+    before: |
+      main() {
+        try {
+          write();
+        } on Exception catch (e) {
+        }
+      }
+    after: |
+      main() {
+        try {
+          write();
+        } on Exception catch (e) {
+        } finally<> {
+        }
+      }
+  testAddFor:
+    transcript: add for var item in items
+    before: |
+      main() {
+      }
+    after: |
+      main() {
+        for (var item in items<>) {
+        }
+      }
+  testAddFunction:
+    transcript: add int function compute factorial
+    before: |
+      import 'dart:math';
+    after: |
+      import 'dart:math';
+      int computeFactorial<>() {
+      }
+  testAddIf:
+    transcript: add if count equals ten
+    before: |
+      main() {
+      }
+    after: |
+      main() {
+        if (count == 10<>) {
+        }
+      }
+  testAddImplements:
+    transcript: add implements vehicle
+    before: |
+      class Car {
+      }
+    after: |
+      class Car implements Vehicle<> {
+      }
+  testAddImport:
+    transcript: add import dart colon math
+    before: |
+      import "lib";<>
+    after: |
+      import "lib";
+      import "dart:math<>";
+  testAddInterface:
+    notSupportedInLanguage: true
+  testAddLambda:
+    notSupportedInLanguage: true
+  testAddMethod:
+    transcript: add void method fly
+    before: |
+      class Bird {
+        void chirp() {
+        }
+      }
+    after: |
+      class Bird {
+        void fly<>() {
+        }
+
+        void chirp() {
+        }
+      }
+  testAddParameter:
+    transcript: add object parameter end location
+    before: |
+      void run(int speed) {
+      }
+    after: |
+      void run(int speed, Object endLocation<>) {
+      }
+  testAddParameterWithModifier:
+    transcript: add parameter final name
+    before: |
+      void sayHello() {
+      }
+    after: |
+      void sayHello(final name<>) {
+      }
+  testAddParameterWithTypeAndModifier:
+    transcript: add parameter final string name
+    before: |
+      void sayHello() {
+      }
+    after: |
+      void sayHello(final String name<>) {
+      }
+  testAddParameterWithoutTypeOrModifier:
+    transcript: add parameter name
+    before: |
+      void sayHello() {
+      }
+    after: |
+      void sayHello(name<>) {
+      }
+  testAddPrint:
+    transcript: add print value
+    before: |
+      main() {
+      }
+    after: |
+      main() {
+        print(value<>);
+      }
+  testAddProperty:
+    transcript: add int property players equals four
+    before: |
+      class Game {
+      }
+    after: |
+      class Game {
+        int players = 4<>;
+      }
+  testAddReturn:
+    transcript: add return value
+    before: |
+      main() {
+      }
+    after: |
+      main() {
+        return value<>;
+      }
+  testAddReturnValue:
+    transcript: add return value four
+    before: |
+      main() {
+        return;
+      }
+    after: |
+      main() {
+        return 4<>;
+      }
+  testAddThrow:
+    transcript: add throw e
+    before: |
+      main() {
+      }
+    after: |
+      main() {
+        throw e<>;
+      }
+  testAddToEmptyFile:
+    transcript: add function main
+    after: |
+      main<>() {
+      }
+  testAddTry:
+    transcript: add try write parens
+    before: |
+      main() {
+      }
+    after: |
+      main() {
+        try<> {
+          write();
+        } on Exception catch (e) {
+        }
+      }
+  testAddWhile:
+    transcript: add while false
+    before: |
+      main() {
+      }
+    after: |
+      main() {
+        while (false<>) {
+        }
+      }
+  testAddClassAfterClass:
+    transcript: add class bar
+    before: |
+      class Foo {
+      }<>
+    after: |
+      class Foo {
+      }
+      class Bar<> {
+      }
+  testAddModifier:
+    notSupportedInLanguage: true
+  testAddNamedParameter:
+    transcript: add named int parameter bar
+    before: |
+      int foo(bool baz) {
+      }
+    after: |
+      int foo(bool baz, {int bar<>}) {
+      }
+  testAddNamedParameterToList:
+    transcript: add named int parameter baz
+    before: |
+      int foo({int bar<>}) {
+      }
+    after: |
+      int foo({int bar, int baz<>}) {
+      }
+  testAddPositionalParameter:
+    transcript: add positional int parameter bar
+    before: |
+      int foo(bool baz) {
+      }
+    after: |
+      int foo(bool baz, [int bar<>]) {
+      }
+  testAddPositionalParameterWithDefaultValue:
+    transcript: add positional int parameter bar equals one
+    before: |
+      int foo(bool baz) {
+      }
+    after: |
+      int foo(bool baz, [int bar = 1<>]) {
+      }
+  testAddPositionalParameterToList:
+    transcript: add positional int parameter baz equals one
+    before: |
+      int foo(bool baz, [int bar]) {
+      }
+    after: |
+      int foo(bool baz, [int bar, int baz = 1<>]) {
+      }
+  testAddParameterToListWithOptional:
+    transcript: add int parameter bar
+    before: |
+      int foo([int i]) {
+      }
+    after: |
+      int foo(int bar<>, [int i]) {
+      }
+  testAddWith:
+    transcript: add with baz
+    before: |
+      class Foo extends Bar {
+      }
+    after: |
+      class Foo extends Bar with Baz<> {
+      }
+  testDeleteArgument:
+    transcript: delete second argument
+    before: |
+      main() {
+        foo(bar, baz);
+      }
+    after: |
+      main() {
+        foo(bar<>);
+      }
+  testDeleteExtends:
+    transcript: delete extends
+    before: |
+      class Foo extends Bar {
+      }
+    after: |
+      class Foo <>{
+      }
+  testDeleteImplements:
+    transcript: delete implements
+    before: |
+      class Foo implements Bar {
+      }
+    after: |
+      class Foo <>{
+      }
+  testDeleteMethod:
+    transcript: delete method
+    before: |
+      <>class Bird {
+        void chirp() {
+          print("chirp");
+        }
+
+        void fly() {
+          // TODO
+        }
+      }
+    after: |
+      class Bird {
+        <>void fly() {
+          // TODO
+        }
+      }
+  testDeleteNamedParameter:
+    transcript: delete named parameter
+    before: |
+      int foo(bool baz, {int bar<>}) {
+      }
+    after: |
+      int foo(bool baz<>) {
+      }
+  testDeleteNamedParameterList:
+    transcript: delete named parameter list
+    before: |
+      int foo(bool baz, {int bar, int baz}) {
+      }
+    after: |
+      int foo(bool baz<>) {
+      }
+  testDeletePositionalParameter:
+    transcript: delete positional parameter
+    before: |
+      int foo(bool baz, [int bar<>]) {
+      }
+    after: |
+      int foo(bool baz<>) {
+      }
+  testDeletePositionalParameterList:
+    transcript: delete positional parameter list
+    before: |
+      int foo(bool baz, [int bar, int foo]) {
+      }
+    after: |
+      int foo(bool baz<>) {
+      }
+  testDeleteParameter:
+    transcript: delete parameter
+    before: |
+      int foo(int x) {
+      }
+    after: |
+      int foo(<>) {
+      }
+  testDeleteParameterFromListWithOptional:
+    transcript: delete parameter
+    before: |
+      int foo(int x, {int y}) {
+      }
+    after: |
+      int foo(<>{int y}) {
+      }
+  testDeleteParameterListFromListWithOptional:
+    transcript: delete parameter list
+    before: |
+      int foo(int x, int bar, {int baz}) {
+      }
+    after: |
+      int foo(<>{int baz}) {
+      }
+  testSelectArgument:
+    object: argument
+    before: |
+      main() {
+        foo(bar, baz);
+      }
+    after: |
+      main() {
+        foo(<>bar<>, baz);
+      }
+  testSelectArgumentList:
+    object: argument list
+    before: |
+      main() {
+        foo(bar, baz);
+      }
+    after: |
+      main() {
+        foo(<>bar, baz<>);
+      }
+  testSelectAssignment:
+    object: assignment
+    before: |
+      main() {
+        var a = b;
+      }
+    after: |
+      main() {
+        <>var a = b<>;
+      }
+  testSelectAssignmentValue:
+    object: assignment value
+    before: |
+      main() {
+        var a = b;
+      }
+    after: |
+      main() {
+        var a = <>b<>;
+      }
+  testSelectAssignmentVariable:
+    object: assignment variable
+    before: |
+      main() {
+        var a = b;
+      }
+    after: |
+      main() {
+        var <>a<> = b;
+      }
+  testSelectBody:
+    object: body
+    before: |
+      int foo(int n) {
+        re<>turn 1;
+      }
+    after: |
+      int foo(int n) {
+        <>return 1;<>
+      }
+  testSelectCatch:
+    object: catch
+    before: |
+      main() {
+        try {
+          foo();
+        }
+        on IOException catch (e) {
+          bar();
+        }
+      }
+    after: |
+      main() {
+        try {
+          foo();
+        }
+        <>on IOException catch (e) {
+          bar();
+        }<>
+      }
+  testSelectClass:
+    object: class
+    before: |
+      import 'dart:math';
+      class Foo {
+      }
+    after: |
+      import 'dart:math';
+      <>class Foo {
+      }<>
+  testSelectClassModifier:
+    object: modifier
+    before: |
+      import 'dart:math';
+      abstract class Foo {
+      }
+    after: |
+      import 'dart:math';
+      <>abstract<> class Foo {
+      }
+  testSelectComment:
+    transcript: select comment
+    before: |
+      void main() {
+        // hello
+        fo<>o();
+      }
+    after: |
+      void main() {
+        <>// hello<>
+        foo();
+      }
+  testSelectGetter:
+    object: getter
+    before: |
+      class Foo {
+        double get right => left + width;
+      }
+    after: |
+      class Foo {
+        <>double get right => left + width<>;
+      }
+  testSelectGetterAsProperty:
+    object: property
+    before: |
+      class Foo {
+        double get right => left + width;
+      }
+    after: |
+      class Foo {
+        <>double get right => left + width<>;
+      }
+  testSelectSetter:
+    object: setter
+    before: |
+      class Foo {
+        set bottom(double value) => top = value - height;
+      }
+    after: |
+      class Foo {
+        <>set bottom(double value) => top = value - height<>;
+      }
+  testSelectSetterAsProperty:
+    object: property
+    before: |
+      class Foo {
+        set bottom(double value) => top = value - height;
+      }
+    after: |
+      class Foo {
+        <>set bottom(double value) => top = value - height<>;
+      }
+
+  testSelectCondition:
+    object: condition
+    before: |
+      main() {
+        if (true) {
+        }
+      }
+    after: |
+      main() {
+        if (<>true<>) {
+        }
+      }
+  testSelectConstructor:
+    object: constructor
+    before: |
+      class Foo {
+        int bar;
+
+        Foo(this.bar) {
+        }
+      }
+    after: |
+      class Foo {
+        int bar;
+
+        <>Foo(this.bar) {
+        }<>
+      }
+  testSelectConstructorParameter:
+    object: parameter
+    before: |
+      class Foo {
+        Foo(this.bar) {
+        }
+      }
+    after: |
+      class Foo {
+        Foo(<>this.bar<>) {
+        }
+      }
+  testSelectDecorator:
+    object: decorator
+    before: |
+      class Foo extends Bar {
+        @override
+        @baz
+        void foo() {
+        }
+      }
+    after: |
+      class Foo extends Bar {
+        <>@override<>
+        @baz
+        void foo() {
+        }
+      }
+  testSelectRequiredNamedParameter:
+    object: parameter
+    before: |
+      int foo({ required String bar }) {
+      }
+    after: |
+      int foo({ <>required String bar<> }) {
+      }
+  testSelectElse:
+    object: else
+    before: |
+      main() {
+        if (true) {
+        }
+        else {
+        }
+      }
+    after: |
+      main() {
+        if (true) {
+        }
+        <>else {
+        }<>
+      }
+  testSelectElseIf:
+    object: else if
+    before: |
+      main() {
+        if (true) {
+        }
+        else if (false) {
+        }
+      }
+    after: |
+      main() {
+        if (true) {
+        }
+        <>else if (false) {
+        }<>
+      }
+  testSelectEnum:
+    object: enum
+    before: |
+      import 'dart:math';
+      enum Color {
+        red,
+        green,
+        blue
+      }
+    after: |
+      import 'dart:math';
+      <>enum Color {
+        red,
+        green,
+        blue
+      }<>
+  testSelectExtends:
+    object: extends
+    before: |
+      class Foo extends Bar {
+      }
+    after: |
+      class Foo extends <>Bar<> {
+      }
+  testSelectFinally:
+    object: finally
+    before: |
+      main() {
+        try {
+          foo();
+        }
+        on IOException catch (e) {
+          bar();
+        }
+        finally {
+          baz();
+        }
+      }
+    after: |
+      main() {
+        try {
+          foo();
+        }
+        on IOException catch (e) {
+          bar();
+        }
+        <>finally {
+          baz();
+        }<>
+      }
+  testSelectFor:
+    object: for
+    before: |
+      main() {
+        for (;;) {
+        }
+      }
+    after: |
+      main() {
+        <>for (;;) {
+        }<>
+      }
+  testSelectFunction:
+    object: function
+    before: |
+      int f<>oo() {
+      }
+    after: |
+      <>int foo() {
+      }<>
+  testSelectGenericClass:
+    object: class
+    before: |
+      import 'dart:math'
+      class Foo extends Bar<String> {
+      }
+    after: |
+      import 'dart:math'
+      <>class Foo extends Bar<String> {
+      }<>
+  testSelectGenericParameter:
+    object: parameter
+    before: |
+      void foo(List<String> bar) {
+      }
+    after: |
+      void foo(<>List<String> bar<>) {
+      }
+  testSelectIf:
+    object: if
+    before: |
+      main() {
+        if (true) {
+        }
+      }
+    after: |
+      main() {
+        <>if (true) {
+        }<>
+      }
+  testSelectImplements:
+    object: implements
+    before: |
+      class Foo implements Bar {
+      }
+    after: |
+      class Foo implements <>Bar<> {
+      }
+  testSelectImport:
+    object: import
+    before: |
+      import 'dart:math';
+      m<>ain() {
+      }
+    after: |
+      <>import 'dart:math';<>
+      main() {
+      }
+  testSelectInterface:
+    notSupportedInLanguage: true
+  testSelectLambda:
+    object: lambda
+    before: |
+      import 'dart:math';
+      void main() => run();
+    after: |
+      import 'dart:math';
+      <>void main() => run()<>;
+  testSelectList:
+    object: list
+    before: |
+      main() {
+        var foo = [1, 2, 3];
+      }
+    after: |
+      main() {
+        var foo = [<>1, 2, 3<>];
+      }
+  testSelectMethod:
+    object: method
+    before: |
+      class Foo {
+        void bar() {
+          baz();
+        }
+      }
+    after: |
+      class Foo {
+        <>void bar() {
+          baz();
+        }<>
+      }
+  testSelectMethodModifier:
+    object: modifier
+    before: |
+      class Foo {
+        factory bar() {
+          baz();
+        }
+      }
+    after: |
+      class Foo {
+        <>factory<> bar() {
+          baz();
+        }
+      }
+  testSelectMixin:
+    object: mixin
+    before: |
+      class Foo extends Bar with Baz {
+      }
+    after: |
+      class Foo extends Bar with <>Baz<> {
+      }
+  testSelectModifier:
+    notSupportedInLanguage: true
+  testSelectNamedParameter:
+    object: named parameter
+    before: |
+      int foo(bool baz, {int bar}) {
+      }
+    after: |
+      int foo(bool baz, {<>int bar<>}) {
+      }
+  testSelectNamedParameterList:
+    object: named parameter list
+    before: |
+      int foo(bool baz, {int bar, int baz}) {
+      }
+    after: |
+      int foo(bool baz, {<>int bar, int baz<>}) {
+      }
+  testSelectOperatorMethod:
+    object: method
+    before: |
+      class Vector {
+        Vector operator +(Vector v) {
+        }
+      }
+    after: |
+      class Vector {
+        <>Vector operator +(Vector v) {
+        }<>
+      }
+  testSelectOptionalNamedParameter:
+    object: named parameter
+    before: |
+      int foo({ Bar? bar }) {
+      }
+    after: |
+      int foo({ <>Bar? bar<> }) {
+      }
+  testSelectOptionalPositionalParameter:
+    object: positional parameter
+    before: |
+      int foo([Bar? bar]) {
+      }
+    after: |
+      int foo([<>Bar? bar<>]) {
+      }
+  testSelectPositionalParameter:
+    object: positional parameter
+    before: |
+      int foo(bool baz, [int bar]) {
+      }
+    after: |
+      int foo(bool baz, [<>int bar<>]) {
+      }
+  testSelectPositionalParameterList:
+    object: positional parameter list
+    before: |
+      int foo(bool baz, [int bar, int baz]) {
+      }
+    after: |
+      int foo(bool baz, [<>int bar, int baz<>]) {
+      }
+  testSelectParameter:
+    object: parameter
+    before: |
+      int foo(int x) {
+      }
+    after: |
+      int foo(<>int x<>) {
+      }
+  testSelectParameterModifier:
+    object: modifier
+    before: |
+      int foo(final int x) {
+      }
+    after: |
+      int foo(<>final<> int x) {
+      }
+  testSelectUntypedParameterName:
+    transcript: select parameter bar
+    before: |
+      int foo(int x, bar) {
+      }
+    after: |
+      int foo(int x, <>bar<>) {
+      }
+  testSelectParameterList:
+    object: parameter list
+    before: |
+      int foo(int x, int bar) {
+      }
+    after: |
+      int foo(<>int x, int bar<>) {
+      }
+  testSelectProperty:
+    object: property
+    before: |
+      class Foo {
+        int bar;
+      }
+    after: |
+      class Foo {
+        <>int bar<>;
+      }
+  testSelectReturn:
+    object: return
+    before: |
+      int foo() {
+        return 3;
+      }
+    after: |
+      int foo() {
+        <>return 3<>;
+      }
+  testSelectReturnType:
+    object: return type
+    before: |
+      int foo() {
+        return 3;
+      }
+    after: |
+      <>int<> foo() {
+        <>return 3;<>
+      }
+  testSelectReturnValue:
+    object: return value
+    before: |
+      int foo() {
+        return 3;
+      }
+    after: |
+      int foo() {
+        return <>3<>;
+      }
+  testSelectString:
+    object: string
+    before: |
+      main() {
+        var foo = "foo";
+      }
+    after: |
+      main() {
+        var foo = <>"foo"<>;
+      }
+  testSelectThrow:
+    object: throw
+    before: |
+      main() {
+        throw Error();
+      }
+    after: |
+      main() {
+        <>throw Error()<>;
+      }
+  testSelectTry:
+    object: try
+    before: |
+      main() {
+        try {
+          foo();
+        }
+        on IOException catch (e) {
+          bar();
+        }
+      }
+    after: |
+      main() {
+        <>try {
+          foo();
+        }<>
+        on IOException catch (e) {
+          bar();
+        }
+      }
+  testSelectTypeFromAssignment:
+    object: type
+    before: |
+      main() {
+        String f<>oo = "foo";
+      }
+    after: |
+      main() {
+        <>String<> foo = "foo";
+      }
+  testSelectTypeFromFunction:
+    object: type
+    before: |
+      int f<>oo() {
+      }
+    after: |
+      <>int<> foo() {
+      }
+  testSelectTypeFromParameter:
+    object: type
+    before: |
+      int foo(int<> n) {
+      }
+    after: |
+      int foo(<>int<> n) {
+      }
+  testSelectWhile:
+    object: while
+    before: |
+      main() {
+        while (true) {
+        }
+      }
+    after: |
+      main() {
+        <>while (true) {
+        }<>
+      }
+  testSelectWith:
+    object: with
+    before: |
+      class Foo extends Bar with Baz {
+      }
+    after: |
+      class Foo extends Bar with <>Baz<> {
+      }
+  testSelectWithList:
+    object: with list
+    before: |
+      class Foo extends Bar with Baz, FooBar {
+      }
+    after: |
+      class Foo extends Bar with <>Baz, FooBar<> {
+      }

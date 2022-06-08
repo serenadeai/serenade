@@ -1,0 +1,38 @@
+package core.util;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import core.gen.antlr.command.CommandParser;
+import core.parser.ParseTree;
+import core.util.TextStyler;
+
+@Singleton
+public class ObjectTypeConverter {
+  @Inject
+  TextStyler textStyler;
+
+  @Inject
+  public ObjectTypeConverter() {}
+
+  public ObjectType objectNameToObjectType(String objectName) {
+    {{#each object_types}}
+    if (objectName.equals(textStyler.toCamelCase("{{this.upper}}") + "SingularObject")) {
+      return ObjectType.{{this.upper}};
+    }
+    {{/each}}
+
+    {{#each object_types}}
+    if (objectName.equals(textStyler.toCamelCase("{{this.upper}}") + "PluralObject")) {
+      return ObjectType.{{this.upper}};
+    }
+    {{/each}}
+
+    {{#each named_object_types}}
+    if (objectName.equals(textStyler.toCamelCase("{{this.upper}}") + "NamedObject")) {
+      return ObjectType.{{this.upper}};
+    }
+    {{/each}}
+
+    throw new RuntimeException("Invalid ObjectType: " + objectName);
+  }
+}

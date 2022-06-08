@@ -1,0 +1,5 @@
+elsif  EH1 L S IH1 F
+proc  P R AA1 K
+redis  R EH1 D IH0 S
+rspec  AA1 R S P EH1 K
+truthy  T R UW2 TH IY1

@@ -1,0 +1,6 @@
+vm
+vlc
+vnc
+py
+php
+sql

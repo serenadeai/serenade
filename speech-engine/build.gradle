@@ -1,0 +1,39 @@
+plugins {
+    id "base"
+}
+
+task buildCMake(type: Exec, dependsOn: [rootProject.downloadModels]) {
+    commandLine "bash", "-c", "mkdir -p server/build && cd server/build && cmake .. && cmake --build . -j2"
+}
+
+task distTar(type: Tar) {
+    archiveExtension = "tar.gz"
+    compression = Compression.GZIP
+
+    from(
+        fileTree(".").include("bin/run-pro").files,
+        fileTree(".").include("server/build/speech-engine/serenade-speech-engine").files
+    )
+    into "speech-engine"
+}
+
+task packageModels(type: Tar, dependsOn: [rootProject.downloadModels]) {
+    archiveBaseName = "speech-engine-models"
+    archiveExtension = "tar.gz"
+    compression = Compression.GZIP
+
+    from rootProject.speechEngineModels
+    exclude "acoustic-model/**", "user-language-model/**"
+    into "speech-engine-models"
+}
+
+task installDist(dependsOn: [buildCMake]) {}
+
+build {
+    dependsOn buildCMake
+}
+
+clean {
+    delete "build"
+    delete "server/build"
+}

@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package speech_engine;
+option java_package = "speechengine.gen.rpc";
+option java_multiple_files = true;
+
+message AudioToAlternativesRequest {
+    oneof request {
+        InitRequest init_request = 1;
+        AudioRequest audio_request = 2;
+        RevertRequest revert_request = 3;
+        TranscriptsRequest transcripts_request = 4;
+    }
+}
+
+message AudioRequest {
+    bytes audio = 1;
+}
+
+message InitRequest {
+    repeated string hints = 1;
+}
+
+message RevertRequest {
+}
+
+message AlternativesResponse {
+    repeated Alternative alternatives = 1;
+}
+
+message Alternative {
+    string transcript = 1;
+    double cost = 2;
+    double acoustic_cost = 3;
+    double language_model_cost = 4;
+    string transcript_id = 5;
+}
+
+message TranscriptsRequest {
+    string endpoint_id = 1;
+}

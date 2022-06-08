@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+import "core.proto";
+
+package code_engine;
+option java_package = "codeengine.gen.rpc";
+option java_multiple_files = true;
+
+enum Model {
+    MODEL_NONE = 0;
+    MODEL_AUTO_STYLE = 1;
+    MODEL_CONTEXTUAL_LANGUAGE_MODEL = 2;
+    MODEL_TRANSCRIPT_PARSER = 3;
+}
+
+message RescoringAlternative {
+    string input_sentence = 1;
+    string output_sentence = 2;
+    float score = 3;
+}
+
+message RescoringRequest {
+    Model model = 1;
+    core.Language language = 2;
+    repeated RescoringAlternative alternative = 3;
+}
+
+message RescoringResponse {
+    repeated RescoringAlternative alternative = 1;
+}
+
+message TranslationAlternative {
+    string sentence = 1;
+    float score = 2;
+}
+
+message TranslationOutput {
+    repeated TranslationAlternative alternative = 1;
+}
+
+message TranslationRequest {
+    Model model = 1;
+    core.Language language = 2;
+    repeated string input_sentence = 3;
+}
+
+message TranslationResponse {
+    repeated TranslationOutput output = 1;
+}
+

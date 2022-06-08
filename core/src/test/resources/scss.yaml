@@ -1,0 +1,293 @@
+suite: Scss
+filename: file.scss
+tests:
+  testAddProperty:
+    transcript: add property color colon red
+    before: |
+      foo<> {
+      }
+    after: |
+      foo {
+        color: red<>;
+      }
+  testAddImport:
+    # Need to tag the imported part in order to generate this but not generate the @import.
+    skipMappingGeneratorTest: true
+    transcript: add import foo
+    after: |
+      @import "foo<>";
+  testAddInclude:
+    transcript: add include foo
+    after: |
+      @include foo<>;
+  testAddMixin:
+    transcript: add mixin hidden
+    after: |
+      @mixin hidden<> {
+      }
+  testAddUnit:
+    transcript: add top equals two em
+    before: |
+      foo<> {
+      }
+    after: |
+      foo {
+        top: 2em<>;
+      }
+  testAddVariable:
+    # Variables aren't an AST concept. We'd need to tag them to be able to differentiate.
+    skipMappingGeneratorTest: true
+    transcript: add variable foo dash bar equals red
+    before: |
+      foo<> {
+      }
+    after: |
+      foo {
+        $foo-bar: red<>;
+      }
+  testAddRuleset:
+    transcript: add ruleset foo
+    after: |
+      foo<> {
+      }
+  testAddRulesetExpression:
+    transcript: add ruleset ampersand space dot bar
+    after: |
+      & .bar<> {
+      }
+  testAddImplicitProperty:
+    transcript: add color colon red
+    before: |
+      foo<> {
+      }
+    after: |
+      foo {
+        color: red<>;
+      }
+  testAddImplicitRuleset:
+    transcript: add div
+    after: |
+      div<> {
+      }
+  testDeleteArgument:
+    transcript: delete argument
+    before: |
+      html {
+        @include foo($bar, $baz);
+      }
+    after: |
+      html {
+        @include foo(<>$baz);
+      }
+  testDeleteArgumentList:
+    object: argument list
+    before: |
+      html {
+        @include foo($bar, $baz);
+      }
+    after: |
+      html {
+        @include foo(<>);
+      }
+  testDeleteName:
+    transcript: delete name
+    before: |
+      .foo {
+        background: blue;
+
+        .bar {
+      <>    color: red;
+        }
+      }
+    after: |
+      .foo {
+        background: blue;
+
+        .bar {
+          <>: red;
+        }
+      }
+  testDeleteParameter:
+    transcript: delete parameter
+    before: |
+      @mixin foo($bar, $baz) {
+      }
+    after: |
+      @mixin foo(<>$baz) {
+      }
+  testDeleteParameterList:
+    transcript: delete parameter list
+    before: |
+      @mixin foo($bar, $baz) {
+      }
+    after: |
+      @mixin foo<>{
+      }
+  testDeleteProperty:
+    transcript: delete property
+    before: |
+      .foo {
+        background: blue;
+
+        .bar {
+        <>  color: red;
+        }
+      }
+    after: |
+      .foo {
+        background: blue;
+
+        .bar {
+      <>  }
+      }
+  testDeleteRuleset:
+    transcript: delete ruleset
+    before: |
+      .foo {
+        background: blue;
+
+        .bar {
+        <>  color: red;
+        }
+      }
+    after: |
+      .foo {
+        background: blue;
+
+      <>}
+  testDeleteValue:
+    transcript: delete value
+    before: |
+      .foo {
+        background: blue;
+
+        .bar {
+        <>  color: red;
+        }
+      }
+    after: |
+      .foo {
+        background: blue;
+
+        .bar {
+          color: <>;
+        }
+      }
+  testSelectArgument:
+    object: argument
+    before: |
+      html {
+        @include foo($bar, $baz);
+      }
+    after: |
+      html {
+        @include foo(<>$bar<>, $baz);
+      }
+  testSelectArgumentList:
+    object: argument list
+    before: |
+      html {
+        @include foo($bar, $baz);
+      }
+    after: |
+      html {
+        @include foo(<>$bar, $baz<>);
+      }
+  testSelectMixin:
+    object: mixin
+    before: |
+      html {}
+      @mixin foo($bar) {
+      }
+    after: |
+      html {}
+      <>@mixin foo($bar) {
+      }<>
+  testSelectName:
+    object: name
+    before: |
+      .foo {
+        background: blue;
+
+        .bar {
+        <>  color: red;
+        }
+      }
+    after: |
+      .foo {
+        background: blue;
+
+        .bar {
+          <>color<>: red;
+        }
+      }
+  testSelectParameter:
+    object: parameter
+    before: |
+      @mixin foo($bar, $baz) {
+      }
+    after: |
+      @mixin foo(<>$bar<>, $baz) {
+      }
+  testSelectParameterList:
+    object: parameter list
+    before: |
+      @mixin foo($bar, $baz) {
+      }
+    after: |
+      @mixin foo(<>$bar, $baz<>) {
+      }
+  testSelectProperty:
+    object: property
+    before: |
+      .foo {
+        background: blue;
+
+        .bar {
+        <>  color: red;
+        }
+      }
+    after: |
+      .foo {
+        background: blue;
+
+        .bar {
+          <>color: red<>;
+        }
+      }
+  testSelectRuleset:
+    object: ruleset
+    before: |
+      .foo {
+        background: blue;
+
+        bar {
+        <>  color: red;
+        }
+      }
+    after: |
+      .foo {
+        background: blue;
+
+        <>bar {
+          color: red;
+        }<>
+      }
+  testSelectValue:
+    object: value
+    before: |
+      .foo {
+        background: blue;
+
+        .bar {
+        <>  color: red;
+        }
+      }
+    after: |
+      .foo {
+        background: blue;
+
+        .bar {
+          color: <>red<>;
+        }
+      }

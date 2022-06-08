@@ -1,0 +1,817 @@
+suite: Html
+filename: file.html
+tests:
+  testAddAttribute:
+    transcript: add attribute rel equals in double quotes manifest
+    before: |
+      <link href="/manifest.json" />
+    after: |
+      <link href="/manifest.json" rel="manifest"<> />
+  testAddAttributeToEmptyList:
+    transcript: add attribute href equals in double quotes foo
+    before: |
+      <a></a>
+    after: |
+      <a href="foo"<>></a>
+  testAddTag:
+    transcript: add tag a
+    before: |
+    after: |
+      <a><></a>
+  testAddTagInner:
+    transcript: add tag a
+    before: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <a href="http://somegreatsite.com">Link Name</a>
+          is a link to another nifty site<>
+          <hr />
+        </body>
+      </html>
+    after: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <a href="http://somegreatsite.com">Link Name</a>
+          is a link to another nifty site
+          <a><></a>
+          <hr />
+        </body>
+      </html>
+  testAddTagInnerSameLine:
+    transcript: add tag a
+    before: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /><></center>
+          <hr />
+          <a href="http://somegreatsite.com">Link Name</a>
+          is a link to another nifty site<>
+          <hr />
+        </body>
+      </html>
+    after: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center>
+            <img src="clouds.jpg" align="BOTTOM" />
+            <a><></a>
+          </center>
+          <hr />
+          <a href="http://somegreatsite.com">Link Name</a>
+          is a link to another nifty site
+          <hr />
+        </body>
+      </html>
+  testAddTagAfterTag:
+    transcript: add tag a
+    before: |
+      <div>
+        <h1>hello</h1><>
+      </div>
+    after: |
+      <div>
+        <h1>hello</h1>
+        <a><></a>
+      </div>
+  testAddEmptyTag:
+    transcript: add empty tag hr
+    before: |
+    after: |
+      <hr /><>
+  testAddEmptyTagInner:
+    transcript: add empty tag br
+    before: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /></center><>
+          <hr />
+          <a href="http://somegreatsite.com">Link Name</a>
+          is a link to another nifty site<>
+          <hr />
+        </body>
+      </html>
+    after: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <br /><>
+          <hr />
+          <a href="http://somegreatsite.com">Link Name</a>
+          is a link to another nifty site
+          <hr />
+        </body>
+      </html>
+  testAddEmptyTagInnerSameLine:
+    transcript: add empty tag br
+    before: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /><></center>
+          <hr />
+          <a href="http://somegreatsite.com">Link Name</a>
+          is a link to another nifty site<>
+          <hr />
+        </body>
+      </html>
+    after: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center>
+            <img src="clouds.jpg" align="BOTTOM" />
+            <br /><>
+          </center>
+          <hr />
+          <a href="http://somegreatsite.com">Link Name</a>
+          is a link to another nifty site
+          <hr />
+        </body>
+      </html>
+  testAddNestedTag:
+    transcript: add empty tag br
+    before: |
+      <html>
+        <body>
+          <h3 color="red">
+            <template id="imports">
+              <link rel="import" href="imports.html">
+              <>
+            </template>
+          </h3>
+        </body>
+      </html>
+    after: |
+      <html>
+        <body>
+          <h3 color="red">
+            <template id="imports">
+              <link rel="import" href="imports.html">
+              <br /><>
+            </template>
+          </h3>
+        </body>
+      </html>
+  testAddTagNearComment:
+    transcript: add tag div
+    before: |
+      <html>
+        <meta /><>
+        <!-- hi -->
+        <link />
+      </html>
+    after: |
+      <html>
+        <meta />
+        <div><></div>
+        <!-- hi -->
+        <link />
+      </html>
+  testAddText:
+    transcript: add here is more text
+    before: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <a href="http://somegreatsite.com">Link Name</a>
+          is a link to another nifty site<>
+          <hr />
+        </body>
+      </html>
+    after: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <a href="http://somegreatsite.com">Link Name</a>
+          is a link to another nifty site
+          here is more text<>
+          <hr />
+        </body>
+      </html>
+  testAddTextInner:
+    transcript: add more text
+    before: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <a <>href="http://somegreatsite.com">Link Name</a>
+          is a link to another nifty site
+          <hr />
+        </body>
+      </html>
+    after: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <a href="http://somegreatsite.com">
+            Link Name
+            more text<>
+          </a>
+          is a link to another nifty site
+          <hr />
+        </body>
+      </html>
+  testAddToScript:
+    skipMappingGeneratorTest: true
+    transcript: add function foo
+    before: |
+      <html>
+        <body>
+          <script>
+            var x = 0<>;
+          </script>
+        </body>
+      </html>
+    after: |
+      <html>
+        <body>
+          <script>
+            var x = 0;
+      
+            function foo<>() {
+            }
+          </script>
+        </body>
+      </html>
+  testAddToStyle:
+    skipMappingGeneratorTest: true
+    transcript: add ruleset foo
+    before: |
+      <html>
+        <body>
+          <style>
+            div {}<>
+          </style>
+        </body>
+      </html>
+    after: |
+      <html>
+        <body>
+          <style>
+            div {}
+            foo<> {
+            }
+          </style>
+        </body>
+      </html>
+  testChangeContent:
+    transcript: change content to bar
+    before: |
+      <html>
+        <body>
+          <p>foo</p><>
+        </body>
+      </html>
+    after: |
+      <html>
+        <body>
+          bar<>
+        </body>
+      </html>
+  testCommentRange:
+    transcript: comment lines two through four
+    before: |
+      <html>
+        <head>
+      <>    <title>My HTML Page</title>
+        </head>
+        <body></body>
+      </html>
+    after: |
+      <html>
+        <!--
+        <head>
+          <title>My HTML Page</title>
+        </head>
+        --><>
+        <body></body>
+      </html>
+  testCommentLine:
+    transcript: comment line three
+    before: |
+      <html>
+        <head>
+      <>    <title>My HTML Page</title>
+        </head>
+        <body></body>
+      </html>
+    after: |
+      <html>
+        <head>
+          <!-- <title>My HTML Page</title> --><>
+        </head>
+        <body></body>
+      </html>
+  testSelectAttribute:
+    transcript: select attribute
+    before: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <a href="http://somegreatsite.com">Link Name</a>
+          is a link to another nifty site
+          <hr />
+        </body>
+      </html>
+    after: |
+      <html>
+        <body <>bgcolor="FFFFFF"<>>
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <a href="http://somegreatsite.com">Link Name</a>
+          is a link to another nifty site<>
+          <hr />
+        </body>
+      </html>
+  testSelectAttributeName:
+    transcript: select attribute name
+    before: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+        </body>
+      </html>
+    after: |
+      <html>
+        <body <>bgcolor<>="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+        </body>
+      </html>
+  testSelectAttributeValue:
+    transcript: select attribute value
+    before: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+        </body>
+      </html>
+    after: |
+      <html>
+        <body bgcolor=<>"FFFFFF"<>>
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+        </body>
+      </html>
+  testSelectComment:
+    transcript: select comment
+    before: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <!-- comment -->
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <a href="http://somegreatsite.com">Link Name</a>
+          is a link to another nifty site
+          <hr />
+        </body>
+      </html>
+    after: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <><!-- comment --><>
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <a href="http://somegreatsite.com">Link Name</a>
+          is a link to another nifty site<>
+          <hr />
+        </body>
+      </html>
+  testSelectCommentMultiline:
+    transcript: select comment
+    before: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <!-- multiline
+               comment -->
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <a href="http://somegreatsite.com">Link Name</a>
+          is a link to another nifty site
+          <hr />
+        </body>
+      </html>
+    after: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <><!-- multiline
+               comment --><>
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <a href="http://somegreatsite.com">Link Name</a>
+          is a link to another nifty site<>
+          <hr />
+        </body>
+      </html>
+  testSelectContentHtml:
+    transcript: select content
+    before: |
+      <html>
+        <head>
+      <>    <title>My HTML Page</title>
+        </head>
+        <body></body>
+      </html>
+    after: |
+      <html>
+        <head>
+          <><title>My HTML Page</title><>
+        </head>
+        <body></body>
+      </html>
+  testSelectContentText:
+    transcript: select content
+    before: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <a h<>ref="http://somegreatsite.com">Link Name</a>
+          is a link to another nifty site
+          <hr />
+        </body>
+      </html>
+    after: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <a href="http://somegreatsite.com"><>Link Name<></a>
+          is a link to another nifty site
+          <hr />
+        </body>
+      </html>
+  testSelectKey:
+    transcript: select key
+    before: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <a href="http://somegreatsite.com">Link Name</a>
+          is a link to another nifty site
+          <hr />
+        </body>
+      </html>
+    after: |
+      <html>
+        <body <>bgcolor<>="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <a href="http://somegreatsite.com">Link Name</a>
+          is a link to another nifty site
+          <hr />
+        </body>
+      </html>
+  testSelectTag:
+    transcript: select tag
+    before: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <a hre<>f="http://somegreatsite.com">Link Name</a>
+          is a link to another nifty site
+          <hr />
+        </body>
+      </html>
+    after: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <><a href="http://somegreatsite.com">Link Name</a><>
+          is a link to another nifty site
+          <hr />
+        </body>
+      </html>
+  testSelectTagByName:
+    transcript: select tag center
+    before: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+        </body>
+      </html>
+    after: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <><center><img src="clouds.jpg" align="BOTTOM" /></center><>
+        </body>
+      </html>
+  testSelectOpenTag:
+    transcript: select open tag
+    before: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <a hre<>f="http://somegreatsite.com">Link Name</a>
+          is a link to another nifty site
+          <hr />
+        </body>
+      </html>
+    after: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <><a href="http://somegreatsite.com"><>Link Name</a>
+          is a link to another nifty site
+          <hr />
+        </body>
+      </html>
+  testSelectCloseTag:
+    transcript: select close tag
+    before: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <a hre<>f="http://somegreatsite.com">Link Name</a>
+          is a link to another nifty site
+          <hr />
+        </body>
+      </html>
+    after: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <a href="http://somegreatsite.com">Link Name<></a><>
+          is a link to another nifty site
+          <hr />
+        </body>
+  testSelectValue:
+    transcript: select value
+    before: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <a href="http://somegreatsite.com">Link Name</a>
+          is a link to another nifty site
+          <hr />
+        </body>
+      </html>
+    after: |
+      <html>
+        <body bgcolor=<>"FFFFFF"<>>
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <a href="http://somegreatsite.com">Link Name</a>
+          is a link to another nifty site
+          <hr />
+        </body>
+      </html>
+  testSelectString:
+    transcript: select string
+    before: |
+      <html>
+        <body bgcolor="FFFFFF">
+        </body>
+      </html>
+    after: |
+      <html>
+        <body bgcolor=<>"FFFFFF"<>>
+        </body>
+      </html>
+  testSelectStringText:
+    transcript: select string text
+    before: |
+      <html>
+        <body bgcolor="FFFFFF">
+        </body>
+      </html>
+    after: |
+      <html>
+        <body bgcolor="<>FFFFFF<>">
+        </body>
+      </html>
+  testSelectAttributeText:
+    transcript: select attribute text
+    before: |
+      <html>
+        <body bgcolor="FFFFFF">
+        </body>
+      </html>
+    after: |
+      <html>
+        <body bgcolor="<>FFFFFF<>">
+        </body>
+      </html>
+  testSelectFromScript:
+    transcript: go to function
+    before: |
+      <html>
+        <body>
+          <script>
+            var x = 0<>;
+            function foo<>() {
+            }
+          </script>
+        </body>
+      </html>
+    after: |
+      <html>
+        <body>
+          <script>
+            var x = 0;
+            <>function foo() {
+            }
+          </script>
+        </body>
+      </html>
+  testDeleteAttribute:
+    transcript: delete attribute
+    before: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <a href="http://somegreatsite.com">Link Name</a>
+          is a link to another nifty site
+          <hr />
+        </body>
+      </html>
+    after: |
+      <html>
+        <body<>>
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <a href="http://somegreatsite.com">Link Name</a>
+          is a link to another nifty site
+          <hr />
+        </body>
+      </html>
+  testDeleteContent:
+    transcript: delete content
+    before: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <a h<>ref="http://somegreatsite.com">Link Name</a>
+          is a link to another nifty site
+          <hr />
+        </body>
+      </html>
+    after: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <a href="http://somegreatsite.com"><></a>
+          is a link to another nifty site
+          <hr />
+        </body>
+      </html>
+  testDeleteComment:
+    transcript: delete comment
+    before: |
+      <html>
+        <body>
+          <!-- comment -->
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <a href="http://somegreatsite.com">Link Name</a>
+          is a link to another nifty site
+          <hr />
+        </body>
+      </html>
+    after: |
+      <html>
+        <body>
+          <><center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <a href="http://somegreatsite.com">Link Name</a>
+          is a link to another nifty site
+          <hr />
+        </body>
+      </html>
+  testDeleteCommentInline:
+    transcript: delete comment
+    before: |
+      <html>
+        <body>
+          <center><!-- comment --><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <a href="http://somegreatsite.com">Link Name</a>
+          is a link to another nifty site
+          <hr />
+        </body>
+      </html>
+    after: |
+      <html>
+        <body>
+          <center><><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <a href="http://somegreatsite.com">Link Name</a>
+          is a link to another nifty site
+          <hr />
+        </body>
+      </html>
+  testDeleteTag:
+    transcript: delete tag
+    before: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <a h<>ref="http://somegreatsite.com">Link Name</a>
+          is a link to another nifty site
+          <hr />
+        </body>
+      </html>
+    after: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <>is a link to another nifty site
+          <hr />
+        </body>
+      </html>
+  testDeleteOpenTag:
+    transcript: delete open tag
+    before: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <a h<>ref="http://somegreatsite.com">Link Name</a>
+          is a link to another nifty site
+          <hr />
+        </body>
+      </html>
+    after: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <>Link Name</a>
+          is a link to another nifty site
+          <hr />
+        </body>
+      </html>
+  testDeleteCloseTag:
+    transcript: delete close tag
+    before: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <a h<>ref="http://somegreatsite.com">Link Name</a>
+          is a link to another nifty site
+          <hr />
+        </body>
+      </html>
+    after: |
+      <html>
+        <body bgcolor="FFFFFF">
+          <center><img src="clouds.jpg" align="BOTTOM" /></center>
+          <hr />
+          <a href="http://somegreatsite.com">Link Name<>
+          is a link to another nifty site
+          <hr />
+        </body>
+      </html>
+  testUncommentRange:
+    transcript: uncomment lines two through six
+    before: |
+      <html>
+        <!--
+        <head>
+          <title>My HTML Page</title>
+        </head>
+        --><>
+        <body></body>
+      </html>
+    after: |
+      <html>
+        <head>
+          <title>My HTML Page</title>
+        </head><>
+        <body></body>
+      </html>
+  testUncommentLine:
+    transcript: uncomment line three
+    before: |
+      <html>
+        <head>
+          <!-- <title>My HTML Page</title> --><>
+        </head>
+        <body></body>
+      </html>
+    after: |
+      <html>
+        <head>
+          <title>My HTML Page</title> <>
+        </head>
+        <body></body>
+      </html>

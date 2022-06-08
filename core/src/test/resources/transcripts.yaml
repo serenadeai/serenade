@@ -1,0 +1,60 @@
+suite: TranscriptParser
+filename: test.java
+tests:
+  testGoToRightParen:
+    transcript: go to right paren
+    before: |
+      public <>class Application {
+        public void foo() {}
+      }
+    after: |
+      public class Application {
+        public void foo(<>) {}
+      }
+  testSelectorFunctionAmbiguityOne:
+    transcript: select function foo
+    before: |
+      public <>class Application {
+        public void foo() {
+          String s1 = "Inside function foo";
+        }
+      }
+    after: |
+      public class Application {
+        <>public void foo() {
+          String s1 = "Inside function foo";
+        }<>
+      }
+  testTypeFunctionTypeCommand:
+    transcript: type function
+    before: |
+      public class Application {
+        public void foo(String s) {
+          <>
+          String s1 = "Inside function foo";
+        }
+      }
+    after: |
+      public class Application {
+        public void foo(String s) {
+          function<>
+          String s1 = "Inside function foo";
+        }
+      }
+  # this test requires larger changes to the transcript parser model
+  # in order to work, but ideally this test should pass
+  # testGoToMethodContainingKeyword:
+  #   allowSecondAlternative: true
+  #   transcript: go to method create snippet
+  #   before: |
+  #     public class List {
+  #       public void createSnippet() {
+  #         String <>s1 = "class list";
+  #       }
+  #     }
+  #   after: |
+  #     public class List {
+  #       <>public void createSnippet() {
+  #         String s1 = "class list";
+  #       }
+  #     }

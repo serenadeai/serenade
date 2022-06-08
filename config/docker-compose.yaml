@@ -1,0 +1,29 @@
+version: "3.7"
+services:
+  serenade:
+    command: "tail -F /dev/null"
+    image: "${SERENADE_IMAGE:-serenadeai/serenade}"
+    stdin_open: true
+    tty: true
+    ports:
+      - "17200:17200"
+      - "17201:17201"
+      - "17202:17202"
+      - "17203:17203"
+    volumes:
+      - "gradle:/root/.gradle"
+      - "logs:/logs"
+      - "${SERENADE_SOURCE_ROOT:-~/serenade}:/root/serenade"
+      - "${SERENADE_DEV_TREE_SITTER_ROOT:-~/dev-tree-sitter}:/root/dev-tree-sitter"
+    networks:
+      dev:
+        aliases:
+          - speech-engine
+          - core
+          - code-engine
+
+volumes:
+  gradle:
+  logs:
+networks:
+  dev:

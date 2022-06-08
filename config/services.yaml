@@ -1,0 +1,19 @@
+default:
+  CODE_ENGINE_HOST: "code-engine"
+  CODE_ENGINE_MODELS: "$SERENADE_LIBRARY_ROOT/models/code-engine"
+  CODE_ENGINE_PORT: "17203"
+  IN_MEMORY: "1"
+  JAVA_OPTS: "-Dlogback.configurationFile=$SERENADE_SOURCE_ROOT/toolbelt/src/main/resources/logback.xml"
+  CORE_HOST: "core"
+  CORE_PORT: "17200"
+  SPEECH_ENGINE_HOST: "speech-engine"
+  SPEECH_ENGINE_MODELS: "$SERENADE_LIBRARY_ROOT/models/speech-engine"
+  SPEECH_ENGINE_PORT: "17202"
+docker:
+  ENV: "dev"
+  REGION: "us-west-2"
+local:
+  ENV: "dev-local"
+  CODE_ENGINE_HOST: "localhost"
+  CORE_HOST: "localhost"
+  SPEECH_ENGINE_HOST: "localhost"

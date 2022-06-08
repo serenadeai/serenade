@@ -1,0 +1,108 @@
+def daggerVersion = "2.41"
+def jettyVersion = "9.4.38.v20210224"
+def jupiterVersion = "5.8.2"
+def logbackVersion = "1.2.3"
+def protobufVersion = "3.14.0"
+def slf4jVersion = "1.7.25"
+
+project.ext.antlrRuntime = "org.antlr:antlr4-runtime:4.7"
+project.ext.jettyServer = "org.eclipse.jetty:jetty-server:$jettyVersion"
+project.ext.jettyWebsocketServer = "org.eclipse.jetty.websocket:javax-websocket-server-impl:$jettyVersion"
+project.ext.protobufVersion = protobufVersion
+project.ext.s3 = "com.amazonaws:aws-java-sdk-s3:1.11.313"
+project.ext.websocketApi = "javax.websocket:javax.websocket-api:1.0"
+
+def sourceRoot = project.ext.sourceRoot = (
+    System.env.SERENADE_SOURCE_ROOT != null ?
+        System.env.SERENADE_SOURCE_ROOT :
+        System.properties["user.home"] + "/serenade"
+)
+
+def libraryRoot = project.ext.libraryRoot = (
+    System.env.SERENADE_LIBRARY_ROOT != null ?
+        System.env.SERENADE_LIBRARY_ROOT :
+        System.properties["user.home"] + "/libserenade"
+)
+
+project.ext.codeEngineModels = "$libraryRoot/models/code-engine"
+project.ext.speechEngineModels = "$libraryRoot/models/speech-engine"
+
+subprojects {
+    apply plugin: "java"
+
+    plugins.withType(DistributionPlugin) {
+        distTar {
+            archiveExtension = "tar.gz"
+            compression = Compression.GZIP
+        }
+    }
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven {
+            url "https://jitpack.io"
+        }
+    }
+
+    dependencies {
+        implementation "ch.qos.logback:logback-core:$logbackVersion"
+        implementation "ch.qos.logback:logback-classic:$logbackVersion"
+        implementation "com.google.dagger:dagger:$daggerVersion"
+        implementation "com.google.guava:guava:29.0-jre"
+        implementation "com.google.protobuf:protobuf-java:$protobufVersion"
+        implementation "com.google.protobuf:protobuf-java-util:$protobufVersion"
+        implementation "com.sun.xml.bind:jaxb-impl:3.0.0-M4"
+        implementation "com.sun.activation:javax.activation:1.2.0"
+        implementation "javax.annotation:javax.annotation-api:1.2"
+        implementation "javax.xml.bind:jaxb-api:2.3.0"
+        implementation "net.java.dev.jna:jna:5.8.0"
+        implementation "net.sourceforge.argparse4j:argparse4j:0.8.1"
+        implementation "org.codehaus.janino:janino:3.0.12"
+        implementation "org.slf4j:slf4j-api:$slf4jVersion"
+        implementation "org.slf4j:jul-to-slf4j:$slf4jVersion"
+
+        annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
+
+        testImplementation "com.google.dagger:dagger:$daggerVersion"
+        testImplementation "org.junit.jupiter:junit-jupiter-api:$jupiterVersion"
+        testImplementation "org.junit.jupiter:junit-jupiter-engine:$jupiterVersion"
+
+        testAnnotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
+    }
+
+    test {
+        maxHeapSize = "2048m"
+
+        jvmArgs([
+            "-Dlogback.configurationFile=$sourceRoot/toolbelt/src/main/resources/logback-test.xml"
+        ])
+
+        systemProperty "java.util.logging.config.file", "$sourceRoot/toolbelt/src/main/resources/logging-test.properties"
+        useJUnitPlatform()
+        dependsOn cleanTest
+        testLogging {
+            showStandardStreams = true
+        }
+    }
+}
+
+task downloadModels(type: Exec) {
+    inputs.file "bin/download-models.py"
+    commandLine "./bin/download-models.py"
+}
+
+task packageJdk(type: Exec) {
+    inputs.file "bin/build-jdk.py"
+    outputs.file "build/distributions/jdk.tar.gz"
+    commandLine "./bin/build-jdk.py"
+}
+
+task createPackages {
+    dependsOn ":packageJdk"
+    dependsOn ":code-engine:distTar"
+    dependsOn ":code-engine:packageModels"
+    dependsOn ":core:distTar"
+    dependsOn ":speech-engine:distTar"
+    dependsOn ":speech-engine:packageModels"
+}

@@ -1,0 +1,1454 @@
+suite: Java
+filename: test.java
+validate: true
+tests:
+  testAddArgument:
+    transcript: add argument first name plus last name
+    before: |
+      public void greet() {
+        say("hello");
+      }
+    after: |
+      public void greet() {
+        say("hello", firstName + lastName<>);
+      }
+  testAddAssignment:
+    transcript: add int age equals current age plus one
+    after: |
+      int age = currentAge + 1<>;
+  testAddCatch:
+    transcript: add catch exception e
+    before: |
+      try {
+        write();
+      } catch (FileNotFoundException e) {
+      }
+    after: |
+      try {
+        write();
+      } catch (FileNotFoundException e) {
+      } catch (Exception e<>) {
+      }
+  testAddClass:
+    transcript: add public class download manager
+    after: |
+      public class DownloadManager<> {
+      }
+  testAddClassDecorator:
+    transcript: add annotation test
+    before: |
+      pu<>blic class Application {
+      }
+    after: |
+      @Test<>
+      public class Application {
+      }
+  testAddClassDecoratorToList:
+    transcript: add annotation test
+    before: |
+      @Annotati<>on
+      public class Application {
+
+        public static void main() {}
+      }
+    after: |
+      @Annotation
+      @Test<>
+      public class Application {
+
+        public static void main() {}
+      }
+  testAddComment:
+    skipMappingGeneratorTest: true
+    transcript: add comment fix later
+    before: |
+      public class Application {
+        public void m<>ain() {
+        }
+      }
+    after: |
+      public class Application {
+        public void main() {
+          // fix later<>
+        }
+      }
+  testAddDecorator:
+    transcript: add annotation test
+    before: |
+      public class Application {
+        public void foo<>() {
+          // do things
+        }
+        public void main() {
+          // do things
+        }
+      }
+    after: |
+      public class Application {
+        @Test<>
+        public void foo() {
+          // do things
+        }
+        public void main() {
+          // do things
+        }
+      }
+  testAddAnnotationWithArguments:
+    transcript: add annotation test of in double quotes foo
+    before: |
+      public class Application {
+        public void foo<>() {
+        }
+        public void main() {
+        }
+      }
+    after: |
+      public class Application {
+        @Test("foo")<>
+        public void foo() {
+        }
+        public void main() {
+        }
+      }
+  testAddElement:
+    notSupportedInLanguage: true
+  testAddElseIf:
+    transcript: add else if highest score plus one less than three
+    before: |
+      if (true) {
+      } else {
+      }
+    after: |
+      if (true) {
+      } else if (highestScore + 1 < 3<>) {
+      } else {
+      }
+  testAddElse:
+    transcript: add else return number times factorial of number minus one
+    before: |
+      if (true) {
+        return 1;
+      }
+    after: |
+      if (true) {
+        return 1;
+      } else {
+        return number * factorial(number - 1)<>;
+      }
+  testAddEntry:
+    notSupportedInLanguage: true
+  testAddEnum:
+    transcript: add public enum category type
+    after: |
+      public enum CategoryType<> {
+      }
+  testAddExtends:
+    transcript: add extends animal
+    before: |
+      public class Dog {
+      }
+    after: |
+      public class Dog extends Animal<> {
+      }
+  testAddFinally:
+    transcript: add finally
+    before: |
+      try {
+        write();
+      } catch (Exception e) {
+      }
+    after: |
+      try {
+        write();
+      } catch (Exception e) {
+      } finally {<>
+      }
+  testAddFor:
+    transcript: add for int i equals zero i less than list
+    after: |
+      for (int i = 0; i < list<>;) {
+      }
+  testAddForEach:
+    transcript: add for string item in items
+    after: |
+      for (String item : items<>) {
+      }
+  testAddFunction:
+    transcript: add function void bar
+    before: |
+      public class Foo {
+      }
+    after: |
+      public class Foo {
+        void bar<>() {
+        }
+      }
+  testAddIf:
+    transcript: add if count equals ten
+    after: |
+      if (count == 10<>) {
+      }
+  testAddImplements:
+    transcript: add implements vehicle
+    before: |
+      public class Car {
+      }
+    after: |
+      public class Car implements Vehicle<> {
+      }
+  testAddImport:
+    transcript: add import com dot example
+    before: |
+      import foo.bar<>;
+    after: |
+      import foo.bar;
+      import com.example<>;
+  testAddInterface:
+    transcript: add public interface vehicle
+    after: |
+      public interface Vehicle<> {
+      }
+  testAddLambda:
+    transcript: add processor equals lambda of e
+    before: |
+      public class Foo {
+        public void foo<>() {
+        }
+      }
+    after: |
+      public class Foo {
+        public void foo() {
+          processor = e<> -> {
+          };
+        }
+      }
+  testAddMainMethod:
+    skipMappingGeneratorTest: true
+    transcript: add main method
+    before: |
+      public class Bird {
+        public void chirp() {
+        }<>
+      }
+    after: |
+      public class Bird {
+        public void chirp() {
+        }
+
+        public static void main<>(String[] args) {
+        }
+      }
+  testAddMethod:
+    transcript: add public void method fly
+    before: |
+      public class Bird {
+        public void chirp() {
+        }
+      }
+    after: |
+      public class Bird {
+        public void fly<>() {
+        }
+
+        public void chirp() {
+        }
+      }
+  testAddMethodToInterface:
+    transcript: add void method fly
+    before: |
+      public interface Bird {
+        void chirp();
+      }
+    after: |
+      public interface Bird {
+        void fly<>();
+        void chirp();
+      }
+  testAddNamespace:
+    notSupportedInLanguage: true
+  testAddPrint:
+    skipMappingGeneratorTest: true
+    transcript: add print value
+    after: |
+      System.out.println(value<>);
+  testAddProperty:
+    transcript: add private int property players equals four
+    before: |
+      class Game {
+      }
+    after: |
+      class Game {
+        private int players = 4<>;
+      }
+  testAddPropertyAnnotation:
+    transcript: add annotation test
+    before: |
+      class Game {
+        private int players = 4<>;
+      }
+    after: |
+      class Game {
+        @Test<>
+        private int players = 4;
+      }
+  testAddReturn:
+    transcript: add return get random number parens
+    before: |
+      public int random() {
+      }
+    after: |
+      public int random() {
+        return getRandomNumber()<>;
+      }
+  testAddReturnValue:
+    transcript: add return value four
+    before: |
+      public int random() {
+        return;
+      }
+    after: |
+      public int random() {
+        return 4<>;
+      }
+  testAddStruct:
+    notSupportedInLanguage: true
+  testAddThrow:
+    transcript: add throw new exception parens
+    before: |
+      public void main() {
+      }
+    after: |
+      public void main() {
+        throw new Exception()<>;
+      }
+  testAddToClass:
+    transcript: add int foo
+    before: |
+      class Foo<> {
+      }
+    after: |
+      class Foo {
+        int foo<>;
+      }
+  testAddToEmptyFile:
+    transcript: add int answer equals forty two
+    after: |
+      int answer = 42<>;
+  testAddToEnum:
+    transcript: add blue
+    before: |
+      enum Colors {
+        RED,
+        GREEN<>
+      }
+    after: |
+      enum Colors {
+        RED,
+        GREEN,
+        BLUE<>
+      }
+  testAddToNamespace:
+    notSupportedInLanguage: true
+  testAddToStruct:
+    notSupportedInLanguage: true
+  testAddTry:
+    transcript: add try write parens
+    before: |
+      public void main() {
+      }
+    after: |
+      public void main() {
+        try {
+          write()<>;
+        } catch (Exception e) {
+        }
+      }
+    mappingGeneratorSource: |
+      public void main() {
+        try {
+          write();
+        } catch (Exception e) {
+          System.out.println("don't generate this line");
+        }
+      }
+  testAddTryMultipleCatches:
+    transcript: add try read parens
+    before: |
+      public void main() {
+      }
+    after: |
+      public void main() {
+        try {
+          read()<>;
+        } catch (Exception e) {
+        }
+      }
+    mappingGeneratorSource: |
+      public void main() {
+        try {
+          read();
+        } catch (Exception e) {
+          System.out.println("chirp");
+        } catch (RuntimeException e) {
+          System.out.println("something");
+        } catch (RuntimeException e) {
+          System.out.println("sometahing");
+        } catch (RuntimeException e) {
+          System.out.println("somethbing");
+        }
+      }
+  testAddWhile:
+    transcript: add while bar is greater than one
+    after: |
+      while (bar > 1<>) {
+      }
+  testAddConstructor:
+    skipMappingGeneratorTest: true
+    transcript: add constructor
+    before: |
+      public class Foo {
+      }
+    after: |
+      public class Foo {
+        public Foo<>() {
+        }
+      }
+  testAddImportToEmptyList:
+    transcript: add import bar
+    before: |
+      package foo;
+    after: |
+      package foo;
+      import bar<>;
+  testAddMethodToClassWithConstructor:
+    transcript: add void method bar
+    before: |
+      public class Foo {
+        public Foo() {}
+      }
+    after: |
+      public class Foo {
+        void bar<>() {
+        }
+
+        public Foo() {}
+      }
+  testAddModifier:
+    transcript: add modifier static
+    before: |
+      public class Foo {
+        public<> void foo() {
+        }
+      }
+    after: |
+      public class Foo {
+        public static<> void foo() {
+        }
+      }
+  testAddModifiers:
+    skipMappingGeneratorTest: true # We don't support adding multiple elements in ml snippets yet.
+    transcript: add modifiers static abstract
+    before: |
+      public class Foo {
+        public void foo() {
+        }<>
+      }
+    after: |
+      public class Foo {
+        public static abstract<> void foo() {
+        }
+      }
+  testAddParameter:
+    transcript: add parameter string builder foo bar
+    before: |
+      class Foo {
+        public void foo(int a) {
+        }
+      }
+    after: |
+      class Foo {
+        public void foo(int a, StringBuilder fooBar<>) {
+        }
+      }
+  testAddParameterGeneric:
+    transcript: add parameter map of string comma string foo bar
+    before: |
+      class Foo {
+        public void foo(int a) {
+        }
+      }
+    after: |
+      class Foo {
+        public void foo(int a, Map<String, String> fooBar<>) {
+        }
+      }
+  testAddPropertyFromMethod:
+    transcript: add private int property players equals four
+    before: |
+      class Game {
+        public void start() {
+          retu<>rn;
+        }
+      }
+    after: |
+      class Game {
+        public void start() {
+          return;
+        }
+
+        private int players = 4<>;
+      }
+  testDeleteArgument:
+    transcript: delete argument
+    before: |
+      package foo;
+
+      public class Foo {
+        public void bar() {
+          baz(a);
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        public void bar() {
+          baz(<>);
+        }
+      }
+  testDeleteAssignment:
+    transcript: delete assignment
+    before: |
+      package foo;
+
+      public class Foo {
+        public void bar() {
+          int x = 5;
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        public void bar() {
+      <>  }
+      }
+  testDeleteExtends:
+    transcript: delete parent
+    before: |
+      package foo;
+
+      public class Foo extends Bar {
+      }
+    after: |
+      package foo;
+
+      public class Foo <>{
+      }
+  testDeleteImplements:
+    transcript: delete implements
+    before: |
+      package foo;
+
+      public class Foo implements Bar {
+        public void foo() {
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo <>{
+        public void foo() {
+        }
+      }
+  testDeleteMethod:
+    transcript: delete method
+    before: |
+      <>class Bird {
+        void chirp() {
+          System.out.println("chirp");
+        }
+
+        void fly() {
+          // TODO
+        }
+      }
+    after: |
+      class Bird {
+        <>void fly() {
+          // TODO
+        }
+      }
+  testDeleteParameter:
+    transcript: delete parameter
+    before: |
+      package foo;
+
+      public class Foo {
+        public void foo(int a) {
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        public void foo(<>) {
+        }
+      }
+  testStatementListInsideConstructor:
+    transcript: delete body
+    before: |
+      package foo;
+
+      public class Foo {
+        public Foo(int room, String requesterId) {
+      		super(room, requesterId);
+      		<>this.room = room;
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        public Foo(int room, String requesterId) {
+      <>  }
+      }
+  testSuperStatementInsideConstructor:
+    transcript: delete statement
+    before: |
+      package foo;
+
+      public class Foo {
+        public Foo(int room, String requesterId) {
+      		<>super(room, requesterId);
+      		this.room = room;
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        public Foo(int room, String requesterId) {
+      		<>this.room = room;
+        }
+      }
+  testSelectAnnotationWithArguments:
+    object: annotation
+    before: |
+      public class Application {
+        @Annotation(params)
+        public void foo() {
+          // do things
+        }
+      }
+    after: |
+      public class Application {
+        <>@Annotation(params)<>
+        public void foo() {
+          // do things
+        }
+      }
+  testSelectArgument:
+    object: argument
+    before: |
+      package foo;
+
+      public class Foo {
+        public void bar() {
+          baz(a);
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        public void bar() {
+          baz(<>a<>);
+        }
+      }
+  testSelectArgumentList:
+    object: argument list
+    before: |
+      package foo;
+
+      public class Foo {
+        public void bar() {
+          baz(a, b, c);
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        public void bar() {
+          baz(<>a, b, c<>);
+        }
+      }
+  testSelectAssignment:
+    object: assignment
+    before: |
+      package foo;
+
+      public class Foo {
+        public void bar() {
+          int x = 5;
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        public void bar() {
+          <>int x = 5<>;
+        }
+      }
+  testSelectAssignmentValue:
+    object: assignment value
+    before: |
+      package foo;
+
+      public class Foo {
+        public void bar() {
+          int x = 5;
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        public void bar() {
+          int x = <>5<>;
+        }
+      }
+  testSelectAssignmentVariable:
+    object: assignment variable
+    before: |
+      package foo;
+
+      public class Foo {
+        public void bar() {
+          int x = 5;
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        public void bar() {
+          int <>x<> = 5;
+        }
+      }
+  testSelectBody:
+    object: body
+    before: |
+      package foo;
+
+      public class Foo {
+        public void bar() {
+          int x = 5;
+          int y = 6;
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        public void bar() {
+          <>int x = 5;
+          int y = 6;<>
+        }
+      }
+  testSelectCatch:
+    object: catch
+    before: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+          try {
+            foo();
+          }
+          catch (FileNotFoundException e) {
+          }
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+          try {
+            foo();
+          }
+          <>catch (FileNotFoundException e) {
+          }<>
+        }
+      }
+  testSelectClass:
+    object: class
+    before: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+        }
+      }
+    after: |
+      package foo;
+
+      <>public class Foo {
+        public void foo() {
+        }
+      }<>
+  testSelectComment:
+    transcript: select comment
+    before: |
+      public class Applica<>tion {
+        public void main() {
+          // fix later
+        }
+      }
+    after: |
+      public class Application {
+        public void main() {
+          <>// fix later<>
+        }
+      }
+  testSelectCondition:
+    object: condition
+    before: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+          if (true) {
+          }
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+          if (<>true<>) {
+          }
+        }
+      }
+  testSelectConstructor:
+    object: constructor
+    before: |
+      public class Foo {
+        public Foo() {}
+      }
+    after: |
+      public class Foo {
+        <>public Foo() {}<>
+      }
+  testSelectDecorator:
+    object: decorator
+    before: |
+      public class Application {
+        @Annotation
+        public void foo() {
+          // do things
+        }
+      }
+    after: |
+      public class Application {
+        <>@Annotation<>
+        public void foo() {
+          // do things
+        }
+      }
+  testSelectDeclaration:
+    object: declaration
+    before: |
+      package foo;
+
+      public class Foo {
+        public void bar() {
+          int x;
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        public void bar() {
+          <>int x<>;
+        }
+      }
+  testSelectDictionary:
+    notSupportedInLanguage: true
+  testSelectElement:
+    notSupportedInLanguage: true
+  testSelectElse:
+    object: else
+    before: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+          if (true) {
+          }
+          else {
+          }
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+          if (true) {
+          }
+          <>else {
+          }<>
+        }
+      }
+  testSelectElseIf:
+    object: else if
+    before: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+          if (true) {
+          }
+          else if (false) {
+          }
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+          if (true) {
+          }
+          <>else if (false) {
+          }<>
+        }
+      }
+  testSelectEntry:
+    notSupportedInLanguage: true
+  testSelectEnum:
+    object: enum
+    before: |
+      package foo;
+
+      public enum Foo {
+      }
+    after: |
+      package foo;
+
+      <>public enum Foo {
+      }<>
+  testSelectExtends:
+    object: parent
+    before: |
+      package foo;
+
+      public class Foo extends Bar {
+        public void foo() {
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo extends <>Bar<> {
+        public void foo() {
+        }
+      }
+  testSelectFinally:
+    object: finally
+    before: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+          try {
+            foo();
+          }
+          catch (Exception e) {
+          }
+          finally {
+          }
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+          try {
+            foo();
+          }
+          catch (Exception e) {
+          }
+          <>finally {
+          }<>
+        }
+      }
+  testSelectFor:
+    object: for
+    before: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+          for (;;) {
+          }
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+          <>for (;;) {
+          }<>
+        }
+      }
+  testSelectForEach:
+    object: for
+    before: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+          for (Object e : list) {
+          }
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+          <>for (Object e : list) {
+          }<>
+        }
+      }
+  testSelectFunction:
+    object: function
+    before: |
+      public class Foo {
+        void bar() {
+        }
+      }
+    after: |
+      public class Foo {
+        <>void bar() {
+        }<>
+      }
+  testSelectIf:
+    object: if
+    before: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+          if (true) {
+          }
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+          <>if (true) {
+          }<>
+        }
+      }
+  testSelectImplements:
+    object: implements
+    before: |
+      package foo;
+
+      public class Foo implements Bar {
+        public void foo() {
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo implements <>Bar<> {
+        public void foo() {
+        }
+      }
+  testSelectImport:
+    object: import
+    before: |
+      package foo;
+
+      import bar;
+    after: |
+      package foo;
+
+      <>import bar;<>
+  testSelectInterface:
+    object: interface
+    before: |
+      package foo;
+
+      public interface Bar {
+      }
+    after: |
+      package foo;
+
+      <>public interface Bar {
+      }<>
+  testSelectLambda:
+    transcript: select lambda
+    before: |
+      public class Foo {
+        public void foo<>() {
+          (e) -> e * 2;
+        }
+      }
+    after: |
+      public class Foo {
+        public void foo() {
+          <>(e) -> e * 2<>;
+        }
+      }
+  testSelectLambdaParameter:
+    object: parameter
+    before: |
+      package foo;
+
+      public class Foo {
+        public void foo(int a) {
+          x -> a;<>
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        public void foo(int a) {
+          <>x<> -> a;
+        }
+      }
+  testSelectList:
+    notSupportedInLanguage: true
+  testSelectMethod:
+    object: method
+    before: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        <>public void foo() {
+        }<>
+      }
+  testSelectModifier:
+    object: modifier
+    before: |
+      package foo;
+
+      public class Foo {
+        public <>void foo() {
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        <>public<> void foo() {
+        }
+      }
+  testSelectNamespace:
+    notSupportedInLanguage: true
+  testSelectParameter:
+    object: parameter
+    before: |
+      package foo;
+
+      public class Foo {
+        public void foo(int a) {
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        public void foo(<>int a<>) {
+        }
+      }
+  testSelectParameterList:
+    object: parameter list
+    before: |
+      package foo;
+
+      public class Foo {
+        public void foo(int a, int b) {
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        public void foo(<>int a, int b<>) {
+        }
+      }
+  testSelectProperty:
+    object: property
+    before: |
+      class Foo {
+        int a = b;
+      }
+    after: |
+      class Foo {
+        <>int a = b<>;
+      }
+  testSelectReturn:
+    object: return
+    before: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+          return 4;
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+          <>return 4<>;
+        }
+      }
+  testSelectReturnType:
+    object: return type
+    before: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+          <>int i = 0;
+          return 4;
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        public <>void<> foo() {
+          int i = 0;
+          return 4;
+        }
+      }
+  testSelectReturnValue:
+    object: return value
+    before: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+          return 4;
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+          return <>4<>;
+        }
+      }
+  testSelectString:
+    object: string
+    before: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+          return "hi";
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+          return <>"hi"<>;
+        }
+      }
+  testSelectStringText:
+    object: string text
+    before: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+          return "hi";
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+          return "<>hi<>";
+        }
+      }
+  testSelectStruct:
+    notSupportedInLanguage: true
+  testSelectThrow:
+    object: throw
+    before: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+          throw e;
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+          <>throw e<>;
+        }
+      }
+  testSelectTry:
+    object: try
+    before: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+          try {
+          }
+          catch (Exception e) {
+          }
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+          <>try {
+          }<>
+          catch (Exception e) {
+          }
+        }
+      }
+  testSelectTypeFromAssignment:
+    object: type
+    before: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+          int n<>umber = 1;
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+          <>int<> number = 1;
+        }
+      }
+  testSelectTypeFromFunction:
+    object: type
+    before: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        public <>void<> foo() {
+        }
+      }
+  testSelectTypeFromParameter:
+    object: type
+    before: |
+      package foo;
+
+      public class Foo {
+        public void foo(int<> a) {
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        public void foo(<>int<> a) {
+        }
+      }
+  testSelectTypeArgument:
+    object: type argument
+    before: |
+      class Foo {
+        void foo() {
+          Foo<String> foo = new Foo<String>();
+        }
+      }
+    after: |
+      class Foo {
+        void foo() {
+          Foo<<>String<>> foo = new Foo<String>();
+        }
+      }
+  testSelectTypeParameter:
+    object: type parameter
+    before: |
+      class Foo<T> extends Baz {}
+    after: |
+      class Foo<<>T<>> extends Baz {}
+  testSelectWhile:
+    object: while
+    before: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+          while (true) {
+          }
+        }
+      }
+    after: |
+      package foo;
+
+      public class Foo {
+        public void foo() {
+          <>while (true) {
+          }<>
+        }
+      }
+  testStyle:
+    transcript: style file
+    before: |
+      package foo;
+
+      public class Foo {
+          public void foo() {
+          }
+      }
+    after: |
+      <>package foo;
+
+      public class Foo {
+
+          public void foo() {}
+      }

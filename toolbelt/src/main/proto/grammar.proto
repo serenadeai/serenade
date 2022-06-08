@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package grammar;
+option java_package = "grammar.gen.rpc";
+option java_multiple_files = true;
+
+message NodeType {
+    string name = 1;
+    string type = 2; // Accepts FIELD, PLACEHOLDER, SYMBOL, (ALIAS but we want to remove)
+}
+
+message GrammarRoot {
+    map<string, GrammarTree> rule = 1;
+    repeated string wild_card_rule = 2;
+}
+
+message GrammarTree {
+    NodeType node_type = 1;
+    repeated GrammarTree local_child = 2;
+    repeated Production flattened_production = 3;
+    map<string, string> alias_to_rule = 4;
+}
+
+message Production {
+    repeated NodeType node_type = 1;
+}

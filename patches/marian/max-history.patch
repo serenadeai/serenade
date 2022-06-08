@@ -1,0 +1,14 @@
+diff --git a/src/translator/beam_search.cpp b/src/translator/beam_search.cpp
+index 9335c55b..e3b71b24 100755
+--- a/src/translator/beam_search.cpp
++++ b/src/translator/beam_search.cpp
+@@ -497,7 +497,8 @@ Histories BeamSearch::search(Ptr<ExpressionGraph> graph, Ptr<data::CorpusBatch>
+     for(int batchIdx = 0; batchIdx < origDimBatch; ++batchIdx) {
+       // if this batch entry has surviving hyps then add them to the traceback grid
+       if(!beams[batchIdx].empty()) { // if the beam is not empty expand the history object associated with the beam
+-        if (histories[batchIdx]->size() >= options_->get<float>("max-length-factor") * batch->front()->batchWidth())
++        if (histories[batchIdx]->size() >= options_->get<float>("max-length-factor") * batch->front()->batchWidth()
++              || histories[batchIdx]->size() >= options_->get<float>("max-length"))
+           maxLengthReached = true;
+         histories[batchIdx]->add(beams[batchIdx], trgEosId, purgedNewBeams[batchIdx].empty() || maxLengthReached);
+       }

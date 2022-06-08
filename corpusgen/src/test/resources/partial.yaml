@@ -1,0 +1,60 @@
+suite: Partial
+skipAllMappingGeneratorTests: true
+tests:
+  testAddPartialKeywordParameter:
+    filename: test.py
+    transcript: add parameter a equals
+    before: |
+      def foo():
+        pass
+    after: |
+      def foo(a=<>):
+        pass
+    mappingGeneratorSource: |
+      def foo(a=None):
+        pass
+  testAddPartialKeywordLambda:
+    # This might not be what comes up in practice.
+    transcript: add a equals lambda x
+    after: |
+      a = lambda x<>:
+    mappingGeneratorSource: |
+      a = lambda x: b
+  testAddPartialTag:
+    transcript: add a equals tag a
+    filename: foo.js
+    after: |
+      a = <a><></a>
+    mappingGeneratorSource: |
+      a = <a href="google.com">Hello there</a>
+  testAddPartialTagWithAttribute:
+    transcript: add tag a href equals
+    filename: foo.js
+    after: |
+      <a href=<>></a>
+    mappingGeneratorSource: |
+      <a href="google.com">Hello there</a>
+  testAddPartialAdjacentSymbols:
+    transcript: add a plus
+    filename: foo.js
+    after: |-
+      a +<>;
+    mappingGeneratorSource: |-
+      a += 1;
+  testInsertEndOfAlpha:
+    transcript: insert world server
+    before: |
+      hello<>
+    after: |
+      hello_world_server<>
+  testInsertEndOfPluralCompositeAlpha:
+    transcript: insert s
+    before: |
+      parent<>
+    after: |
+      parents<>
+  testAddCompositeImport:
+    filename: file.java
+    transcript: add import optimus dot formatted text dot formatted text options
+    after: |
+      import optimus.formattedtext.FormattedTextOptions<>;

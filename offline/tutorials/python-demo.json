@@ -1,0 +1,29 @@
+{
+  "filename": "python-demo.py",
+  "steps": [
+    {
+      "transcript": "add import random"
+    },
+    {
+      "transcript": "add function get random"
+    },
+    {
+      "transcript": "add return four"
+    },
+    {
+      "transcript": "add function hello"
+    },
+    {
+      "transcript": "add parameter name"
+    },
+    {
+      "transcript": "add print name"
+    },
+    {
+      "transcript": "change return value to one"
+    },
+    {
+      "transcript": "delete first function"
+    }
+  ]
+}

@@ -1,0 +1,185 @@
+import ai.serenade.AntlrGenerateTask
+
+def antlrJar = (
+    (
+        System.env.SERENADE_LIBRARY_ROOT != null ?
+            System.env.SERENADE_LIBRARY_ROOT :
+            System.properties["user.home"] + "/libserenade"
+    ) + "/antlr/antlr-4.7.2-complete.jar"
+)
+
+apply plugin: "application"
+
+mainClassName = "core.Core"
+distZip.enabled = false
+
+dependencies {
+    implementation project(":toolbelt")
+
+    implementation "com.spotify:futures-extra:4.2.0"
+    implementation "com.github.serenadeai:java-tree-sitter:1.1.2"
+    implementation "com.vdurmont:semver4j:3.1.0"
+
+    implementation rootProject.antlrRuntime
+    implementation rootProject.s3
+
+    implementation rootProject.jettyServer
+    implementation rootProject.jettyWebsocketServer
+    implementation rootProject.websocketApi
+}
+
+task buildTreeSitter(type: Exec, dependsOn: [":grammarflattener:installDist"]) {
+    // the script determines if we're up to date, so this task has no outputs
+    inputs.file "bin/build-tree-sitter.py"
+    commandLine "./bin/build-tree-sitter.py", "src/dist/lib/libjava-tree-sitter"
+}
+
+task copyLexicons(type: Copy, dependsOn: [rootProject.downloadModels]) {
+    from fileTree(rootProject.codeEngineModels).include("**/*lexicon.txt").files
+    into "src/main/resources/lexicons"
+}
+
+task generateAntlr(type: Exec) {
+    inputs.files([
+        "bin/generate-antlr.py",
+        "bin/object-types.yaml",
+        "src/main/antlr/CommandLexer.g4.hbs",
+        "src/main/antlr/CommandParser.g4.hbs"
+    ])
+
+    outputs.files([
+        "src/main/resources/CommandLexer.g4",
+        "src/main/resources/CommandParser.g4"
+    ])
+
+    commandLine "./bin/generate-antlr.py"
+}
+
+task generateCommandGrammar(type: AntlrGenerateTask, dependsOn: generateAntlr) {
+    jar = antlrJar
+    language = "java"
+    lexer = "src/main/resources/CommandLexer.g4"
+    parser = "src/main/resources/CommandParser.g4"
+    packageName = "core.gen.antlr.command"
+}
+
+task generateANTLRv4Grammar(type: AntlrGenerateTask) {
+    jar = antlrJar
+    language = "java"
+    lexer = "src/main/antlr/ANTLRv4Lexer.g4"
+    parser = "src/main/antlr/ANTLRv4Parser.g4"
+    packageName = "core.gen.antlr.antlr4"
+}
+
+task generateObjectTypes(type: Exec) {
+    inputs.files([
+        "bin/object-types.yaml",
+        "src/main/java/core/util/ObjectType.java.hbs"
+    ])
+
+    outputs.files([
+        "src/main/java/core/util/ObjectType.java",
+        "src/main/java/core/util/ObjectTypeConverter.java"
+    ])
+
+    commandLine "./bin/generate-object-types.py"
+}
+
+task generateTests(type: Exec) {
+    inputs.files([
+        "bin/generate-tests",
+        "src/test/resources/base.yaml",
+        "src/test/resources/bash.yaml",
+        "src/test/resources/change.yaml",
+        "src/test/resources/cplusplus.yaml",
+        "src/test/resources/csharp.yaml",
+        "src/test/resources/dart.yaml",
+        "src/test/resources/descriptions.yaml",
+        "src/test/resources/default.yaml",
+        "src/test/resources/errors.yaml",
+        "src/test/resources/formatting.yaml",
+        "src/test/resources/go.yaml",
+        "src/test/resources/html.yaml",
+        "src/test/resources/java.yaml",
+        "src/test/resources/javascript.yaml",
+        "src/test/resources/kotlin.yaml",
+        "src/test/resources/python.yaml",
+        "src/test/resources/required.yaml",
+        "src/test/resources/ruby.yaml",
+        "src/test/resources/rust.yaml",
+        "src/test/resources/scss.yaml",
+        "src/test/resources/system.yaml",
+        "src/test/resources/transcripts.yaml",
+        "src/test/resources/type.yaml"
+    ])
+
+    outputs.files([
+        "src/test/java/core/gen/BaseTest.java",
+        "src/test/java/core/gen/BashTest.java",
+        "src/test/java/core/gen/ChangeTest.java",
+        "src/test/java/core/gen/CPlusPlusTest.java",
+        "src/test/java/core/gen/CSharpTest.java",
+        "src/test/java/core/gen/DartTest.java",
+        "src/test/java/core/gen/DescriptionsTest.java",
+        "src/test/java/core/gen/DefaultTest.java",
+        "src/test/java/core/gen/ErrorsTest.java",
+        "src/test/java/core/gen/FormattingTest.java",
+        "src/test/java/core/gen/GoTest.java",
+        "src/test/java/core/gen/HtmlTest.java",
+        "src/test/java/core/gen/JavaTest.java",
+        "src/test/java/core/gen/JavascriptTest.java",
+        "src/test/java/core/gen/KotlinTest.java",
+        "src/test/java/core/gen/PythonTest.java",
+        "src/test/java/core/gen/RubyTest.java",
+        "src/test/java/core/gen/RustTest.java",
+        "src/test/java/core/gen/ScssTest.java",
+        "src/test/java/core/gen/SystemTest.java",
+        "src/test/java/core/gen/TranscriptParserTest.java",
+        "src/test/java/core/gen/TypeTest.java"
+    ])
+
+    commandLine "./bin/generate-tests.py"
+}
+
+clean {
+    delete "src/dist/lib"
+    delete "src/main/antlr/CommandLexer.g4"
+    delete "src/main/antlr/CommandParser.g4"
+    delete "src/main/java/core/util/ObjectType.java"
+    delete "src/main/java/core/util/ObjectTypeConverter.java"
+    delete "src/main/resources/CommandLexer.g4"
+    delete "src/main/resources/CommandParser.g4"
+    delete "src/main/resources/grammars"
+    delete "src/main/resources/lexicons"
+    delete "src/test/java/core/gen"
+}
+
+compileJava {
+    dependsOn buildTreeSitter
+    dependsOn copyLexicons
+    dependsOn generateANTLRv4Grammar
+    dependsOn generateCommandGrammar
+    dependsOn generateObjectTypes
+}
+
+compileTestJava {
+    dependsOn generateTests
+}
+
+processResources {
+    dependsOn copyLexicons
+    dependsOn generateAntlr
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs "build/generated/antlr/main"
+            srcDirs "build/generated/antlr/main"
+        }
+    }
+}
+
+test {
+    maxParallelForks = 2
+}

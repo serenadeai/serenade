@@ -1,0 +1,30 @@
+{
+  "filename": "typescript-demo.ts",
+  "steps": [
+    {
+      "transcript": "add number function factorial",
+      "resetSource": ""
+    },
+    {
+      "transcript": "add parameter n"
+    },
+    {
+      "transcript": "add return n times factorial of n minus one"
+    },
+    {
+      "transcript": "previous line"
+    },
+    {
+      "transcript": "add if n equals zero"
+    },
+    {
+      "transcript": "add return one"
+    },
+    {
+      "transcript": "go to parameter n"
+    },
+    {
+      "transcript": "add type number"
+    }
+  ]
+}

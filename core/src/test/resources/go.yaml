@@ -1,0 +1,724 @@
+suite: Go
+filename: test.go
+validate: true
+tests:
+  testAddArgument:
+    transcript: add argument first name plus last name
+    before: |
+      func greet() {
+        say("hello")
+      }
+    after: |
+      func greet() {
+        say("hello", firstName+lastName<>)
+      }
+  testAddArgument:
+    transcript: add argument first name plus last name
+    before: |
+      func greet() {
+        say("hello")
+      }
+    after: |
+      func greet() {
+        say("hello", firstName+lastName<>)
+      }
+  testAddAssignment:
+    transcript: add var age int equals current age plus one
+    after: |
+      var age int = currentAge + 1<>
+  testAddCatch:
+    notSupportedInLanguage: true
+  testAddClass:
+    notSupportedInLanguage: true
+  testAddComment:
+    skipMappingGeneratorTest: true
+    transcript: add comment fix later
+    before: |
+      func greet() {
+        say("hello"<>)
+      }
+    after: |
+      func greet() {
+        say("hello")
+        // fix later<>
+      }
+  testAddConstructor:
+    notSupportedInLanguage: true
+  testAddDecorator:
+    notSupportedInLanguage: true
+  testAddElement:
+    notSupportedInLanguage: true
+  testAddElseIf:
+    transcript: add else if highest score plus one less than three
+    before: |
+      func foo() {
+        if true {
+        } else {
+        }
+      }
+    after: |
+      func foo() {
+        if true {
+        } else if highestScore+1 < 3<> {
+        } else {
+        }
+      }
+  testAddElse:
+    transcript: add else return number times factorial of number minus one
+    before: |
+      if true {
+        return 1
+      }
+    after: |
+      if true {
+        return 1
+      } else {
+        return number * factorial(number - 1)<>
+      }
+  testAddEnum:
+    notSupportedInLanguage: true
+  testAddEntry:
+    transcript: add entry string bar colon two
+    before: |
+      foo := map[string]int{<>
+        "foo": 1,
+      }
+    after: |
+      foo := map[string]int{
+        "bar": 2<>,
+        "foo": 1,
+      }
+  testAddExtends:
+    notSupportedInLanguage: true
+  testAddFinally:
+    notSupportedInLanguage: true
+  testAddFor:
+    transcript: add for e in list
+    after: |
+      for e := range list<> {
+      }
+  testAddForWithInitializerAndConditionAndUpdate:
+    transcript: add for i colon equals zero i is less than one i plus plus
+    after: |
+      for i := 0; i < 1; i++<> {
+      }
+  testAddFunction:
+    transcript: add string function foo
+    after: |
+      func foo<>() string {
+      }
+  testAddFunctionInline:
+    skipMappingGeneratorTest: true
+    transcript: add inline string function
+    before: |
+      func foo() {
+        a = b<>
+      }
+    after: |
+      func foo() {
+        a = b
+
+        func<>() string {
+        }
+      }
+  testAddIf:
+    transcript: add if count equals ten
+    after: |
+      if count == 10<> {
+      }
+  testAddImplements:
+    notSupportedInLanguage: true
+  testAddImport:
+    transcript: add import string math
+    before: |
+      import "fmt"<>
+    after: |
+      import "fmt"
+      import "math"<>
+  testAddInterface:
+    allowSecondAlternative: true
+    transcript: add interface vehicle
+    after: |
+      type Vehicle<> interface {
+      }
+  testAddLambda:
+    transcript: add f equals lambda of x int
+    mappingGeneratorSource: |
+      f = func(x int) {
+      }
+    after: |
+      f = func(x int<>) {
+      }
+  testAddLambdaWithFunc:
+    allowSecondAlternative: true
+    transcript: add f equals func of x int
+    mappingGeneratorSource: |
+      f = func(x int) {
+      }
+    after: |
+      f = func(x int<>) {
+      }
+  testAddNamespace:
+    notSupportedInLanguage: true
+  testAddPrint:
+    skipMappingGeneratorTest: true
+    transcript: add print value
+    after: |
+      fmt.Printf(value)<>
+  testAddProperty:
+    skipMappingGeneratorTest: true
+    transcript: add int property players
+    before: |
+      type game struct {
+      }
+    mappingGeneratorSource: |
+      type game struct {
+        players<>       int
+      }
+    after: |
+      type game struct {
+        players<> int
+      }
+  testAddReceiverArgument:
+    skipMappingGeneratorTest: true
+    transcript: add receiver argument c circle
+    before: |
+      func radius() {}
+    after: |
+      func (c circle<>) radius() {}
+  testAddReturn:
+    transcript: add return get random number parens
+    before: |
+      func random() int {
+      }
+    after: |
+      func random() int {
+        return getRandomNumber()<>
+      }
+  testAddReturnValue:
+    transcript: add return value four
+    before: |
+      func random() {
+        return
+      }
+    after: |
+      func random() {
+        return 4<>
+      }
+  testAddStruct:
+    transcript: add struct record object
+    after: |
+      type recordObject<> struct {
+      }
+  testAddThrow:
+    notSupportedInLanguage: true
+  testAddToConstList:
+    transcript: add bar
+    before: |
+      const (
+        _ = iota
+        foo<>
+      )
+    after: |
+      const (
+        _ = iota
+        foo
+        bar<>
+      )
+  testAddToClass:
+    notSupportedInLanguage: true
+  testAddToEmptyFile:
+    transcript: add var answer int equals forty two
+    after: |
+      var answer int = 42<>
+  testAddToEnum:
+    notSupportedInLanguage: true
+  testAddToNamespace:
+    notSupportedInLanguage: true
+  testAddToStruct:
+    notSupportedInLanguage: true
+  testAddTry:
+    notSupportedInLanguage: true
+  testAddWhile:
+    notSupportedInLanguage: true
+  testAddImportToEmptyList:
+    transcript: add import string fmt
+    before: |
+      package main
+    after: |
+      package main
+      import "fmt"<>
+  testAddMethod:
+    transcript: add string method foo
+    before: |
+      type bar interface {}
+    after: |
+      type bar interface {
+        foo<>() string
+      }
+  testAddModifier:
+    notSupportedInLanguage: true
+  testAddParameter:
+    transcript: add parameter string name
+    before: |
+      func foo(a int) {
+      }
+    after: |
+      func foo(a int, name<> string) {
+      }
+  testAddParameterWithTypePostfixed:
+    transcript: add parameter name string
+    before: |
+      func foo(a int) {
+      }
+    after: |
+      func foo(a int, name string<>) {
+      }
+  testDeleteArgument:
+    transcript: delete argument
+    before: |
+      baz(a)
+    after: |
+      baz(<>)
+  testDeleteExtends:
+    notSupportedInLanguage: true
+  testDeleteMethod:
+    notSupportedInLanguage: true
+  testDeleteReturnValueName:
+    transcript: delete return value name
+    before: |
+      func foo() (bar int) {
+      }
+    after: |
+      func foo() <>{
+      }
+  testDeleteReturnValueNameList:
+    transcript: delete return value name list
+    before: |
+      func foo() (bar int, baz string) {
+      }
+    after: |
+      func foo() <>{
+      }
+  testDeleteReceiverArgument:
+    transcript: delete receiver argument
+    before: |
+      func radius() {}
+      func (c Circle) radius() {}
+    after: |
+      func radius() {}
+      func <>radius() {}
+  testDeleteParameter:
+    transcript: delete parameter
+    before: |
+      func chirp(foo int) {
+        fmt.Println(foo)
+      }
+    after: |
+      func chirp(<>) {
+        fmt.Println(foo)
+      }
+  testSelectArgument:
+    object: argument
+    before: |
+      func chirp(foo int) {
+        fmt.Println(foo)
+      }
+    after: |
+      func chirp(foo int) {
+        fmt.Println(<>foo<>)
+      }
+  testSelectArgumentList:
+    object: argument list
+    before: |
+      func chirp(foo int) {
+        fmt.Println(foo, bar)
+      }
+    after: |
+      func chirp(foo int) {
+        fmt.Println(<>foo, bar<>)
+      }
+  testSelectAssignment:
+    object: assignment
+    before: |
+      func chirp(foo int) {
+        var x int = 5
+      }
+    after: |
+      func chirp(foo int) {
+        <>var x int = 5<>
+      }
+  testSelectDeclaration:
+    object: declaration
+    before: |
+      func chirp(foo int) {
+        var x int
+      }
+    after: |
+      func chirp(foo int) {
+        <>var x int<>
+      }
+  testSelectAssignmentValue:
+    object: assignment value
+    before: |
+      func chirp(foo int) {
+        var x int = 5
+      }
+    after: |
+      func chirp(foo int) {
+        var x int = <>5<>
+      }
+  testSelectAssignmentVariable:
+    object: assignment variable
+    before: |
+      func chirp(foo int) {
+        var x int = 5
+      }
+    after: |
+      func chirp(foo int) {
+        var <>x<> int = 5
+      }
+  testSelectBody:
+    object: body
+    before: |
+      func chirp(foo int) {
+        var x int = 5<>
+        return x * foo
+      }
+    after: |
+      func chirp(foo int) {
+        <>var x int = 5
+        return x * foo<>
+      }
+  testSelectCatch:
+    notSupportedInLanguage: true
+  testSelectClass:
+    notSupportedInLanguage: true
+  testSelectComment:
+    transcript: select comment
+    before: |
+      func chirp(foo int) {
+        // fix later
+        var x int = 5
+        return x * foo
+      }
+    after: |
+      func chirp(foo int) {
+        <>// fix later<>
+        var x int = 5
+        return x * foo
+      }
+  testSelectCondition:
+    object: condition
+    before: |
+      func chirp(foo int) {
+        if foo {
+        }
+      }
+    after: |
+      func chirp(foo int) {
+        if <>foo<> {
+        }
+      }
+  testSelectConstructor:
+    notSupportedInLanguage: true
+  testSelectDecorator:
+    notSupportedInLanguage: true
+  testSelectDefer:
+    object: defer
+    before: |
+      func chirp(foo int) {
+        defer fmt.Println(foo)
+      }
+    after: |
+      func chirp(foo int) {
+        <>defer fmt.Println(foo)<>
+      }
+  testSelectDictionary:
+    notSupportedInLanguage: true
+  testSelectElement:
+    notSupportedInLanguage: true
+  testSelectElse:
+    object: else
+    before: |
+      if true {
+      } else {
+      }
+    after: |
+      if true {
+      } <>else {
+      }<>
+  testSelectElseIf:
+    object: else if
+    before: |
+      if true {
+      } else if false {
+      }
+    after: |
+      if true {
+      } <>else if false {
+      }<>
+  testSelectEnum:
+    notSupportedInLanguage: true
+  testSelectEntry:
+    transcript: select entry
+    before: |
+      foo := map[string]int{<>
+        "foo": 1,
+      }
+    after: |
+      foo := map[string]int{
+        <>"foo": 1<>,
+      }
+  testSelectExtends:
+    notSupportedInLanguage: true
+  testSelectFinally:
+    notSupportedInLanguage: true
+  testSelectFor:
+    object: for
+    before: |
+      func chirp(foo int) {
+        for {
+        }
+      }
+    after: |
+      func chirp(foo int) {
+        <>for {
+        }<>
+      }
+  testSelectForEach:
+    object: for
+    before: |
+      func chirp(foo int) {
+        for i := range list {
+        }
+      }
+    after: |
+      func chirp(foo int) {
+        <>for i := range list {
+        }<>
+      }
+  testSelectFunction:
+    transcript: select function
+    before: |
+      a = b
+      func foo() {
+      }
+    after: |
+      a = b
+      <>func foo() {
+      }<>
+  testSelectReturnValueName:
+    transcript: select return value name
+    before: |
+      func foo() (bar int) {
+      }
+    after: |
+      func foo() (<>bar int<>) {
+      }
+  testSelectReturnValueNameList:
+    transcript: select return value name list
+    before: |
+      func foo() (bar int, baz string) {
+      }
+    after: |
+      func foo() (<>bar int, baz string<>) {
+      }
+  testSelectIf:
+    object: if
+    before: |
+      func foo() {
+        if true {
+        }
+      }
+    after: |
+      func foo() {
+        <>if true {
+        }<>
+      }
+  testSelectImplements:
+    notSupportedInLanguage: true
+  testSelectImport:
+    object: import
+    before: |
+      package main
+
+      import "bar"
+    after: |
+      package main
+
+      <>import "bar"<>
+  testSelectInterface:
+    object: interface
+    before: |
+      package main
+
+      type Bar interface {
+      }
+    after: |
+      package main
+
+      <>type Bar interface {
+      }<>
+  testSelectLambda:
+    object: lambda
+    before: |
+      func (c Circle) radius() {}
+      f = func() string {}
+    after: |
+      func (c Circle) radius() {}
+      f = <>func() string {}<>
+  testSelectList:
+    notSupportedInLanguage: true
+  testSelectMethod:
+    object: method
+    before: |
+      func radius() {}
+      func (c Circle) radius() {}
+    after: |
+      func radius() {}
+      <>func (c Circle) radius() {}<>
+  testSelectMethodFromInterface:
+    object: method
+    before: |
+      type rect interface {
+        area() (int, int)
+      }
+    after: |
+      type rect interface {
+        <>area() (int, int)<>
+      }
+  testSelectModifier:
+    notSupportedInLanguage: true
+  testSelectNamespace:
+    notSupportedInLanguage: true
+  testSelectParameter:
+    object: parameter
+    before: |
+      func foo(a int) {
+      }
+    after: |
+      func foo(<>a int<>) {
+      }
+  testSelectParameterList:
+    object: parameter list
+    before: |
+      func foo(a int, b String) {
+      }
+    after: |
+      func foo(<>a int, b String<>) {
+      }
+  testSelectProperty:
+    object: property
+    before: |
+      type Foo struct {
+        a int
+      }
+    after: |
+      type Foo struct {
+        <>a int<>
+      }
+  testSelectPropertyTag:
+    object: tag
+    before: |
+      type Foo struct {
+        a int `a`
+      }
+    after: |
+      type Foo struct {
+        a int <>`a`<>
+      }
+  testSelectReceiverArgument:
+    object: receiver argument
+    before: |
+      func radius() {}
+      func (c Circle) radius() {}
+    after: |
+      func radius() {}
+      func (<>c Circle<>) radius() {}
+  testSelectReturn:
+    object: return
+    before: |
+      func foo(a int) {
+        return 4
+      }
+    after: |
+      func foo(a int) {
+        <>return 4<>
+      }
+  testSelectReturnType:
+    object: return type
+    before: |
+      func foo(a int) int {
+        return 4
+      }
+    after: |
+      func foo(a int) <>int<> {
+        return 4
+      }
+  testSelectReturnValue:
+    object: return value
+    before: |
+      func foo(a int) {
+        return 4
+      }
+    after: |
+      func foo(a int) {
+        return <>4<>
+      }
+  testSelectStruct:
+    object: struct
+    before: |
+      a = b
+      type foo struct {
+          X int
+      }
+    after: |
+      a = b
+      <>type foo struct {
+          X int
+      }<>
+  testSelectString:
+    object: string
+    before: |
+      a := "hi"
+    after: |
+      a := <>"hi"<>
+  testSelectStringText:
+    object: string text
+    before: |
+      a := "hi"
+    after: |
+      a := "<>hi<>"
+  testSelectThrow:
+    notSupportedInLanguage: true
+  testSelectTry:
+    notSupportedInLanguage: true
+  testSelectTypeArgument:
+    notSupportedInLanguage: true
+  testSelectTypeFromAssignment:
+    object: type
+    before: |
+      var foo string = "hi"
+    after: |
+      var foo <>string<> = "hi"
+  testSelectTypeFromFunction:
+    object: type
+    before: |
+      func foo() string {
+      }
+    after: |
+      func foo() <>string<> {
+      }
+  testSelectTypeFromParameter:
+    object: type
+    before: |
+      func foo(<>a int) string {
+      }
+    after: |
+      func foo(a <>int<>) string {
+      }
+  testSelectTypeParameter:
+    notSupportedInLanguage: true
+  testSelectWhile:
+    notSupportedInLanguage: true

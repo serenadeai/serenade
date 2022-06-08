@@ -1,0 +1,9 @@
+.gradle
+.git
+**/__pycache__/**
+**/client/**
+**/CMakeFiles/**
+**/distributions/**
+**/node_modules/**
+**/web/**
+**/*.class

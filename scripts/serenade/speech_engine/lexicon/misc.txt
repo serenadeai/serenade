@@ -1,0 +1,38 @@
+debugger d iy0 b ah1 g er0
+debuggers d iy0 b ah1 g er0 z
+deindent D IY0 IH1 N D EH0 N T
+ellipsis ih0 l ih1 p s ih0 s
+enum IY1 N AH0 M
+enums IY1 N AH0 M S
+enum IY0 N UW1 M
+enums IY0 N UW1 M S
+evernote EH1 V ER N OW1 T
+exclam EH0 K S K L AE1 M
+factorial f ae2 k t ao1 r iy0 ah0 l
+firefox F AY1 ER0 F AA1 K S
+gmail JH IY1 M EY1 L
+gvim JH IY1 V IH1 M
+gimp G IH1 M P
+git G IH1 T
+github G IH1 T HH AH2 B
+intellij IH0 N T EH1 L AH0 JH EY1
+iterm AY1 T ER1 M
+libre L IY1 B R EY0
+modifier M AA1 D AH F AY0 ER0
+modifiers M AA1 D AH F AY0 ER0 Z
+modulo M AA1 JH AH0 L OW0
+paren p er0 eh1 n
+parens p er0 eh1 n z
+parenthesee P ER0 EH1 N TH AH0 S IY2
+ruleset R UW1 L S EH2 T
+rulesets R UW1 L S EH2 T S
+semicolon s eh1 m ih0 k ow1 l ah0 n
+sql S IY1 K W AH0 L
+tmux T IY1 M AH1 K S
+unindent AH0 N IH1 N D EH0 N T
+verticals V ER1 T IH0 K AH0 L Z
+visio V IH1 ZH IY0 OW0
+withs W IH1 DH S
+xcode EH1 K S K OW1 D
+xorg EH1 K S AO1 R G
+xterm EH1 K S T ER1 M

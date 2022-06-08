@@ -1,0 +1,431 @@
+diff --git a/src/decoder/lattice-faster-decoder.cc b/src/decoder/lattice-faster-decoder.cc
+index 42d1d2af4..415115ece 100644
+--- a/src/decoder/lattice-faster-decoder.cc
++++ b/src/decoder/lattice-faster-decoder.cc
+@@ -52,6 +52,58 @@ LatticeFasterDecoderTpl<FST, Token>::LatticeFasterDecoderTpl(
+   toks_.SetSize(1000);  // just so on the first frame we do something reasonable.
+ }
+
++template <typename FST, typename Token>
++LatticeFasterDecoderTpl<FST, Token>::LatticeFasterDecoderTpl(
++    const LatticeFasterDecoderTpl<FST, Token> &other)
++    : active_toks_(other.active_toks_), fst_(other.fst_), delete_fst_(false),
++      cost_offsets_(other.cost_offsets_), config_(other.config_),
++      num_toks_(other.num_toks_), warned_(other.warned_),
++      decoding_finalized_(other.decoding_finalized_),
++      final_costs_(other.final_costs_),
++      final_relative_cost_(other.final_relative_cost_),
++      final_best_cost_(other.final_best_cost_) {
++  KALDI_ASSERT(!other.delete_fst_);
++  PossiblyResizeHash(num_toks_);
++
++  std::unordered_map<Token *, Token *> new_tokens;
++  new_tokens.reserve(num_toks_);
++
++  for (TokenList &token_list : active_toks_) {
++    Token *token = token_list.toks;
++    Token **next = &token_list.toks;
++    *next = NULL;
++    while (token != NULL) {
++      Token *new_token = new (token_pool_.Allocate()) Token(*token);
++      new_tokens[token] = new_token;
++      *next = new_token;
++      token = token->next;
++      next = &(new_token->next);
++    }
++  }
++
++  for (TokenList &token_list : active_toks_) {
++    Token *token = token_list.toks;
++    while (token != NULL) {
++      ForwardLinkT *link = token->links;
++      ForwardLinkT **next = &(token->links);
++      while (link != NULL) {
++        ForwardLinkT *new_link = new (forward_link_pool_.Allocate()) ForwardLinkT(*link);
++        new_link->next_tok = new_tokens[new_link->next_tok];
++        *next = new_link;
++        link = link->next;
++        next = &(new_link->next);
++      }
++      token = token->next;
++    }
++  }
++
++  const Elem *elem = other.toks_.GetList();
++  while (elem != NULL) {
++    toks_.Insert(elem->key, new_tokens[elem->val]);
++    elem = elem->tail;
++  }
++}
++
+ template <typename FST, typename Token>
+ LatticeFasterDecoderTpl<FST, Token>::~LatticeFasterDecoderTpl() {
+   DeleteElems(toks_.Clear());
+diff --git a/src/decoder/lattice-faster-decoder.h b/src/decoder/lattice-faster-decoder.h
+index 2016ad571..177edd504 100644
+--- a/src/decoder/lattice-faster-decoder.h
++++ b/src/decoder/lattice-faster-decoder.h
+@@ -259,6 +259,8 @@ class LatticeFasterDecoderTpl {
+   LatticeFasterDecoderTpl(const LatticeFasterDecoderConfig &config,
+                           FST *fst);
+
++  LatticeFasterDecoderTpl(const LatticeFasterDecoderTpl<FST, Token> &other);
++
+   void SetOptions(const LatticeFasterDecoderConfig &config) {
+     config_ = config;
+   }
+@@ -338,6 +340,10 @@ class LatticeFasterDecoderTpl {
+   /// use_final_probs = false.  Used to be called PruneActiveTokensFinal().
+   void FinalizeDecoding();
+
++  void Checkpoint();
++
++  void Rollback();
++
+   /// FinalRelativeCost() serves the same purpose as ReachedFinal(), but gives
+   /// more information.  It returns the difference between the best (final-cost
+   /// plus cost) of any token on the final frame, and the best cost of any token
+@@ -536,8 +542,6 @@ class LatticeFasterDecoderTpl {
+                             std::vector<Token*> *topsorted_list);
+
+   void ClearActiveTokens();
+-
+-  KALDI_DISALLOW_COPY_AND_ASSIGN(LatticeFasterDecoderTpl);
+ };
+
+ typedef LatticeFasterDecoderTpl<fst::StdFst, decoder::StdToken> LatticeFasterDecoder;
+diff --git a/src/decoder/lattice-faster-online-decoder.h b/src/decoder/lattice-faster-online-decoder.h
+index 8b10996fd..8d13f8f02 100644
+--- a/src/decoder/lattice-faster-online-decoder.h
++++ b/src/decoder/lattice-faster-online-decoder.h
+@@ -135,8 +135,6 @@ class LatticeFasterOnlineDecoderTpl:
+   bool GetRawLatticePruned(Lattice *ofst,
+                            bool use_final_probs,
+                            BaseFloat beam) const;
+-
+-  KALDI_DISALLOW_COPY_AND_ASSIGN(LatticeFasterOnlineDecoderTpl);
+ };
+
+ typedef LatticeFasterOnlineDecoderTpl<fst::StdFst> LatticeFasterOnlineDecoder;
+diff --git a/src/feat/online-feature.cc b/src/feat/online-feature.cc
+index acf2bb9cf..908df1abb 100644
+--- a/src/feat/online-feature.cc
++++ b/src/feat/online-feature.cc
+@@ -105,7 +105,7 @@ void OnlineGenericBaseFeature<C>::MaybeCreateResampler(
+
+ template <class C>
+ void OnlineGenericBaseFeature<C>::InputFinished() {
+-  if (resampler_ != nullptr) {
++  /*if (resampler_ != nullptr) {
+     // There may be a few samples left once we flush the resampler_ object, telling it
+     // that the file has finished.  This should rarely make any difference.
+     Vector<BaseFloat> appended_wave;
+@@ -122,9 +122,13 @@ void OnlineGenericBaseFeature<C>::InputFinished() {
+           .CopyFromVec(resampled_wave);
+       waveform_remainder_.Swap(&appended_wave);
+     }
+-  }
++  }*/
+   input_finished_ = true;
+-  ComputeFeatures();
++  // ComputeFeatures();
++}
++
++template <class C> void OnlineGenericBaseFeature<C>::RevertInputFinished() {
++  input_finished_ = false;
+ }
+
+ template <class C>
+diff --git a/src/feat/online-feature.h b/src/feat/online-feature.h
+index b9dfcc017..bbf06aa39 100644
+--- a/src/feat/online-feature.h
++++ b/src/feat/online-feature.h
+@@ -115,6 +115,8 @@ class OnlineGenericBaseFeature: public OnlineBaseFeature {
+   // affects the return value of IsLastFrame().
+   virtual void InputFinished();
+
++  virtual void RevertInputFinished();
++
+  private:
+   // This function computes any additional feature frames that it is possible to
+   // compute from 'waveform_remainder_', which at this point may contain more
+diff --git a/src/nnet3/decodable-online-looped.cc b/src/nnet3/decodable-online-looped.cc
+index 751438606..264ae064a 100644
+--- a/src/nnet3/decodable-online-looped.cc
++++ b/src/nnet3/decodable-online-looped.cc
+@@ -33,8 +33,8 @@ DecodableNnetLoopedOnlineBase::DecodableNnetLoopedOnlineBase(
+     frame_offset_(0),
+     input_features_(input_features),
+     ivector_features_(ivector_features),
+-    computer_(info_.opts.compute_config, info_.computation,
+-              info_.nnet, NULL) {   // NULL is 'nnet_to_update'
++    computer_(new NnetComputer(info_.opts.compute_config, info_.computation,
++              info_.nnet, NULL)) {   // NULL is 'nnet_to_update'
+   // Check that feature dimensions match.
+   KALDI_ASSERT(input_features_ != NULL);
+   int32 nnet_input_dim = info_.nnet.InputDim("input"),
+@@ -164,7 +164,7 @@ void DecodableNnetLoopedOnlineBase::AdvanceChunk() {
+     }
+     feats_chunk.Swap(&this_feats);
+   }
+-  computer_.AcceptInput("input", &feats_chunk);
++  computer_->AcceptInput("input", &feats_chunk);
+
+   if (info_.has_ivectors) {
+     KALDI_ASSERT(ivector_features_ != NULL);
+@@ -202,9 +202,9 @@ void DecodableNnetLoopedOnlineBase::AdvanceChunk() {
+     ivectors.CopyRowsFromVec(ivector);
+     CuMatrix<BaseFloat> cu_ivectors;
+     cu_ivectors.Swap(&ivectors);
+-    computer_.AcceptInput("ivector", &cu_ivectors);
++    computer_->AcceptInput("ivector", &cu_ivectors);
+   }
+-  computer_.Run();
++  computer_->Run();
+
+   {
+     // Note: it's possible in theory that if you had weird recurrence that went
+@@ -213,7 +213,7 @@ void DecodableNnetLoopedOnlineBase::AdvanceChunk() {
+     // instead of GetOutputDestructive().  But we don't anticipate this will
+     // happen in practice.
+     CuMatrix<BaseFloat> output;
+-    computer_.GetOutputDestructive("output", &output);
++    computer_->GetOutputDestructive("output", &output);
+
+     if (info_.log_priors.Dim() != 0) {
+       // subtract log-prior (divide by prior)
+@@ -255,6 +255,22 @@ BaseFloat DecodableAmNnetLoopedOnline::LogLikelihood(int32 subsampled_frame,
+       trans_model_.TransitionIdToPdfFast(index));
+ }
+
++void DecodableNnetLoopedOnlineBase::Rollback() {
++  current_log_post_ = checkpoint_current_log_post_;
++  num_chunks_computed_ = checkpoint_num_chunks_computed_;
++  current_log_post_subsampled_offset_ =
++      checkpoint_current_log_post_subsampled_offset_;
++  computer_ = std::make_unique<NnetComputer>(*checkpoint_computer_);
++}
++
++void DecodableNnetLoopedOnlineBase::Checkpoint() {
++  checkpoint_computer_ = std::make_unique<NnetComputer>(*computer_);
++
++  checkpoint_current_log_post_ = current_log_post_;
++  checkpoint_num_chunks_computed_ = num_chunks_computed_;
++  checkpoint_current_log_post_subsampled_offset_ =
++      current_log_post_subsampled_offset_;
++}
+
+ } // namespace nnet3
+ } // namespace kaldi
+diff --git a/src/nnet3/decodable-online-looped.h b/src/nnet3/decodable-online-looped.h
+index cc79e58fe..aa281fcef 100644
+--- a/src/nnet3/decodable-online-looped.h
++++ b/src/nnet3/decodable-online-looped.h
+@@ -93,6 +93,10 @@ class DecodableNnetLoopedOnlineBase: public DecodableInterface {
+   /// Returns the frame offset value.
+   int32 GetFrameOffset() const { return frame_offset_; }
+
++  void Rollback();
++
++  void Checkpoint();
++
+  protected:
+
+   /// If the neural-network outputs for this frame are not cached, this function
+@@ -120,6 +124,10 @@ class DecodableNnetLoopedOnlineBase: public DecodableInterface {
+   //    (info_.frames_per_chunk_ / info_.opts_.frame_subsampling_factor).
+   int32 current_log_post_subsampled_offset_;
+
++  Matrix<BaseFloat> checkpoint_current_log_post_;
++  int32 checkpoint_num_chunks_computed_;
++  int32 checkpoint_current_log_post_subsampled_offset_;
++
+   const DecodableNnetSimpleLoopedInfo &info_;
+
+   // IsLastFrame(), NumFramesReady() and LogLikelihood() methods take into
+@@ -127,6 +135,9 @@ class DecodableNnetLoopedOnlineBase: public DecodableInterface {
+   // 0 unless SetFrameOffset() method is called.
+   int32 frame_offset_;
+
++  std::unique_ptr<NnetComputer> computer_;
++  std::unique_ptr<NnetComputer> checkpoint_computer_;
++
+  private:
+
+   // This function does the computation for the next chunk.  It will change
+@@ -137,8 +148,6 @@ class DecodableNnetLoopedOnlineBase: public DecodableInterface {
+   OnlineFeatureInterface *input_features_;
+   OnlineFeatureInterface *ivector_features_;
+
+-  NnetComputer computer_;
+-
+   KALDI_DISALLOW_COPY_AND_ASSIGN(DecodableNnetLoopedOnlineBase);
+ };
+
+diff --git a/src/online2/online-ivector-feature.h b/src/online2/online-ivector-feature.h
+index 31870715f..1da4c6a65 100644
+--- a/src/online2/online-ivector-feature.h
++++ b/src/online2/online-ivector-feature.h
+@@ -201,8 +201,6 @@ struct OnlineIvectorExtractionInfo {
+   OnlineIvectorExtractionInfo();
+
+   void Check() const;
+- private:
+-  KALDI_DISALLOW_COPY_AND_ASSIGN(OnlineIvectorExtractionInfo);
+ };
+
+ /// This class stores the adaptation state from the online iVector extractor,
+diff --git a/src/online2/online-nnet2-feature-pipeline.cc b/src/online2/online-nnet2-feature-pipeline.cc
+index 213f5205a..3e422a9cb 100644
+--- a/src/online2/online-nnet2-feature-pipeline.cc
++++ b/src/online2/online-nnet2-feature-pipeline.cc
+@@ -99,7 +99,8 @@ OnlineNnet2FeaturePipeline::OnlineNnet2FeaturePipeline(
+     final_feature_(NULL) {
+
+   if (info_.feature_type == "mfcc") {
+-    base_feature_ = new OnlineMfcc(info_.mfcc_opts);
++    base_mfcc_feature_ = new OnlineMfcc(info_.mfcc_opts);
++    base_feature_ = base_mfcc_feature_;
+   } else if (info_.feature_type == "plp") {
+     base_feature_ = new OnlinePlp(info_.plp_opts);
+   } else if (info_.feature_type == "fbank") {
+@@ -230,6 +231,10 @@ void OnlineNnet2FeaturePipeline::InputFinished() {
+     pitch_->InputFinished();
+ }
+
++void OnlineNnet2FeaturePipeline::RevertInputFinished() {
++  base_mfcc_feature_->RevertInputFinished();
++}
++
+ BaseFloat OnlineNnet2FeaturePipelineInfo::FrameShiftInSeconds() const {
+   if (feature_type == "mfcc") {
+     return mfcc_opts.frame_opts.frame_shift_ms / 1000.0f;
+diff --git a/src/online2/online-nnet2-feature-pipeline.h b/src/online2/online-nnet2-feature-pipeline.h
+index ebc7045c1..46463ef51 100644
+--- a/src/online2/online-nnet2-feature-pipeline.h
++++ b/src/online2/online-nnet2-feature-pipeline.h
+@@ -265,6 +265,8 @@ class OnlineNnet2FeaturePipeline: public OnlineFeatureInterface {
+   /// rescoring the lattices, this may not be much of an issue.
+   void InputFinished();
+
++  void RevertInputFinished();
++
+   /// This function returns the iVector-extracting part of the feature pipeline
+   /// (or NULL if iVectors are not being used); the pointer ownership is retained
+   /// by this object and not transferred to the caller.  This function is used in
+@@ -293,6 +295,7 @@ class OnlineNnet2FeaturePipeline: public OnlineFeatureInterface {
+   const OnlineNnet2FeaturePipelineInfo &info_;
+
+   OnlineBaseFeature *base_feature_;    /// MFCC/PLP/filterbank
++  OnlineMfcc *base_mfcc_feature_;
+
+   OnlinePitchFeature *pitch_;          /// Raw pitch, if used
+   OnlineProcessPitch *pitch_feature_;  /// Processed pitch, if pitch used.
+diff --git a/src/online2/online-nnet3-decoding.cc b/src/online2/online-nnet3-decoding.cc
+index 4af8bc514..0b6c24398 100644
+--- a/src/online2/online-nnet3-decoding.cc
++++ b/src/online2/online-nnet3-decoding.cc
+@@ -37,29 +37,29 @@ SingleUtteranceNnet3DecoderTpl<FST>::SingleUtteranceNnet3DecoderTpl(
+     trans_model_(trans_model),
+     decodable_(trans_model_, info,
+                features->InputFeature(), features->IvectorFeature()),
+-    decoder_(fst, decoder_opts_) {
+-  decoder_.InitDecoding();
++    decoder_(new LatticeFasterOnlineDecoderTpl<FST>(fst, decoder_opts_)) {
++  decoder_->InitDecoding();
+ }
+
+ template <typename FST>
+ void SingleUtteranceNnet3DecoderTpl<FST>::InitDecoding(int32 frame_offset) {
+-  decoder_.InitDecoding();
++  decoder_->InitDecoding();
+   decodable_.SetFrameOffset(frame_offset);
+ }
+
+ template <typename FST>
+ void SingleUtteranceNnet3DecoderTpl<FST>::AdvanceDecoding() {
+-  decoder_.AdvanceDecoding(&decodable_);
++  decoder_->AdvanceDecoding(&decodable_);
+ }
+
+ template <typename FST>
+ void SingleUtteranceNnet3DecoderTpl<FST>::FinalizeDecoding() {
+-  decoder_.FinalizeDecoding();
++  decoder_->FinalizeDecoding();
+ }
+
+ template <typename FST>
+ int32 SingleUtteranceNnet3DecoderTpl<FST>::NumFramesDecoded() const {
+-  return decoder_.NumFramesDecoded();
++  return decoder_->NumFramesDecoded();
+ }
+
+ template <typename FST>
+@@ -68,7 +68,7 @@ void SingleUtteranceNnet3DecoderTpl<FST>::GetLattice(bool end_of_utterance,
+   if (NumFramesDecoded() == 0)
+     KALDI_ERR << "You cannot get a lattice if you decoded no frames.";
+   Lattice raw_lat;
+-  decoder_.GetRawLattice(&raw_lat, end_of_utterance);
++  decoder_->GetRawLattice(&raw_lat, end_of_utterance);
+
+   if (!decoder_opts_.determinize_lattice)
+     KALDI_ERR << "--determinize-lattice=false option is not supported at the moment";
+@@ -81,17 +81,23 @@ void SingleUtteranceNnet3DecoderTpl<FST>::GetLattice(bool end_of_utterance,
+ template <typename FST>
+ void SingleUtteranceNnet3DecoderTpl<FST>::GetBestPath(bool end_of_utterance,
+                                               Lattice *best_path) const {
+-  decoder_.GetBestPath(best_path, end_of_utterance);
++  decoder_->GetBestPath(best_path, end_of_utterance);
+ }
+
+ template <typename FST>
+ bool SingleUtteranceNnet3DecoderTpl<FST>::EndpointDetected(
+     const OnlineEndpointConfig &config) {
+-  BaseFloat output_frame_shift =
+-      input_feature_frame_shift_in_seconds_ *
+-      decodable_.FrameSubsamplingFactor();
+-  return kaldi::EndpointDetected(config, trans_model_,
+-                                 output_frame_shift, decoder_);
++  return false;
++}
++
++template <typename FST> void SingleUtteranceNnet3DecoderTpl<FST>::Checkpoint() {
++  decodable_.Checkpoint();
++  checkpoint_ = std::make_unique<LatticeFasterOnlineDecoderTpl<FST>>(*decoder_);
++}
++
++template <typename FST> void SingleUtteranceNnet3DecoderTpl<FST>::Rollback() {
++  decodable_.Rollback();
++  decoder_ = std::make_unique<LatticeFasterOnlineDecoderTpl<FST>>(*checkpoint_);
+ }
+
+
+diff --git a/src/online2/online-nnet3-decoding.h b/src/online2/online-nnet3-decoding.h
+index 9adf77fcb..dacddd023 100644
+--- a/src/online2/online-nnet3-decoding.h
++++ b/src/online2/online-nnet3-decoding.h
+@@ -96,7 +96,11 @@ class SingleUtteranceNnet3DecoderTpl {
+   /// with the required arguments.
+   bool EndpointDetected(const OnlineEndpointConfig &config);
+
+-  const LatticeFasterOnlineDecoderTpl<FST> &Decoder() const { return decoder_; }
++  void Checkpoint();
++
++  void Rollback();
++
++  const LatticeFasterOnlineDecoderTpl<FST> &Decoder() const { return *decoder_; }
+
+   ~SingleUtteranceNnet3DecoderTpl() { }
+  private:
+@@ -113,7 +117,10 @@ class SingleUtteranceNnet3DecoderTpl {
+
+   nnet3::DecodableAmNnetLoopedOnline decodable_;
+
+-  LatticeFasterOnlineDecoderTpl<FST> decoder_;
++  std::unique_ptr<LatticeFasterOnlineDecoderTpl<FST>> decoder_;
++  std::unique_ptr<LatticeFasterOnlineDecoderTpl<FST>> checkpoint_;
++
++  OnlineNnet2FeaturePipeline *features_;
+
+ };
+

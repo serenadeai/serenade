@@ -1,0 +1,6 @@
+<configuration>
+  <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
+  <root level="error">
+    <appender-ref ref="stdout" />
+  </root>
+</configuration>

@@ -1,0 +1,51 @@
+dict D IH1 K T
+kwargs K EY1 D AH1 B AH L Y UW AA1 R G S
+kwargs K W AA1 R G S
+django JH AE1 NG G OW0
+sys S IH1 S
+isinstance IH1 Z IH1 N S T AH0 N S
+datetime D EY1 T T AY1 M
+tilde T IH1 L D AH0
+func F AH1 NG K
+filename F AY1 L N EY0 M
+dtype D IY1 T AY1 P
+unicode Y UW1 N IY0 K OW2 D
+unittest Y UW1 N AH T T EH1 S T
+env EH1 N V
+bool B UW1 L
+username Y UW1 Z ER0 N EY0 M
+numpy N AH1 M P AY1
+tensor T EH1 N S ER0
+resp R EH1 S P
+pytest P AY1 T EH1 S T
+stdout EH1 S T IY1 D IY1 AW1 T
+getattr G EH1 T AE1 T ER0
+validator V AE1 L AH0 D EY0 T ER0
+addr  AE1 D ER0
+conv K AA1 N V
+plotly P L AA1 T L IY
+col K AA1 L
+req R EH1 K
+dataset D EY1 T AH0 S EH0 T
+const K AA1 N S T
+iter IH1 T ER0
+foreignkey F AO1 R AH0 N K IY1
+attrs AE1 T ER0 S
+kw K EY1 D AH1 B AH0 L Y UW0
+environ  IH0 N V AY1 R AH0 N
+stderr EH1 S T IY1 D IY1 EH1 R
+verbose V ER1 B OW0 S
+hasattr HH AE1 Z AE1 T ER0
+ansible AE1 N S AH0 B AH0 L
+startswith S T AA1 R T S W IH1 DH
+login L AO1 G IH0 N
+dist D IH1 S T
+eval IY0 V AE1 L
+eval IH0 V AE1 L
+excepts IH0 K S EH1 P T S
+urllib ER1 L L IH1 B
+urllib Y UW1 AA1 R EH1 L L IH1 B
+encoder EH0 N K OW1 D ER
+subprocess S AH0 B P R AA1 S EH0 S
+cert S ER1 T
+classmethod K L AE1 S M EH1 TH AH0 D

@@ -1,0 +1,22 @@
+suite: Default
+filename: file.md
+skipAllMappingGeneratorTests: true
+tests:
+  testContractions:
+    transcript: insert make sure i'm is properly capitalized
+    after: Make sure I'm is properly capitalized<>
+  testSlackMessage:
+    transcript: insert here is a message from the new model using slack
+    after: Here is a message from the new model using Slack<>
+  testExplicitStyle:
+    transcript: insert here is a capital message from the new model
+    after: Here is a Message from the new model<>
+  testNumbers:
+    transcript: insert let's reschedule our one on one period
+    after: Let's reschedule our one on one.<>
+  testParens:
+    transcript: insert here is an example with a in parens parenthetical period
+    after: Here is an example with a (parenthetical).<>
+  testTwoSentences:
+    transcript: insert this is a sentence period here is another period
+    after: This is a sentence. Here is another.<>

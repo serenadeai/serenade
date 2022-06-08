@@ -1,0 +1,18 @@
+apply plugin: "application"
+
+mainClassName = "replayer.Replayer"
+distZip.enabled = false
+distTar.enabled = false
+
+dependencies {
+    implementation project(":core")
+    implementation project(":toolbelt")
+
+    implementation rootProject.antlrRuntime
+    implementation rootProject.s3
+
+    implementation rootProject.jettyServer
+    implementation rootProject.jettyWebsocketServer
+    implementation rootProject.websocketApi
+}
+

@@ -1,0 +1,78 @@
+a(spell)        1.0     EY1_I #15
+b(spell)        1.0     B_I IY1_I #15
+c(spell)        1.0     S_I IY1_I #15
+d(spell)        1.0     D_I IY1_I #15
+e(spell)        1.0     IY1_I #15
+f(spell)        1.0     EH1_I F_I #15
+g(spell)        1.0     JH_I IY1_I #15
+h(spell)        1.0     EY1_I CH_I #15
+i(spell)        1.0     AY1_I #15
+j(spell)        1.0     JH_I EY1_I #15
+k(spell)        1.0     K_I EY1_I #15
+l(spell)        1.0     EH1_I L_I #15
+m(spell)        1.0     EH1_I M_I #15
+n(spell)        1.0     EH1_I N_I #15
+o(spell)        1.0     OW1_I #15
+p(spell)        1.0     P_I IY1_I #15
+q(spell)        1.0     K_I Y_I UW1_I #15
+r(spell)        1.0     AA1_I R_I #15
+s(spell)        1.0     EH1_I S_I #15
+t(spell)        1.0     T_I IY1_I #15
+u(spell)        1.0     Y_I UW1_I #15
+v(spell)        1.0     V_I IY1_I #15
+w(spell)        1.0     D_I AH1_I B_I AH0_I L_I Y_I UW0_I #15
+x(spell)        1.0     EH1_I K_I S_I #15
+y(spell)        1.0     W_I AY1_I #15
+z(spell)        1.0     Z_I IY1_I #15
+a(spell)        1.0     EY1_B #15
+b(spell)        1.0     B_B IY1_I #15
+c(spell)        1.0     S_B IY1_I #15
+d(spell)        1.0     D_B IY1_I #15
+e(spell)        1.0     IY1_B #15
+f(spell)        1.0     EH1_B F_I #15
+g(spell)        1.0     JH_B IY1_I #15
+h(spell)        1.0     EY1_B CH_I #15
+i(spell)        1.0     AY1_B #15
+j(spell)        1.0     JH_B EY1_I #15
+k(spell)        1.0     K_B EY1_I #15
+l(spell)        1.0     EH1_B L_I #15
+m(spell)        1.0     EH1_B M_I #15
+n(spell)        1.0     EH1_B N_I #15
+o(spell)        1.0     OW1_B #15
+p(spell)        1.0     P_B IY1_I #15
+q(spell)        1.0     K_B Y_I UW1_I #15
+r(spell)        1.0     AA1_B R_I #15
+s(spell)        1.0     EH1_B S_I #15
+t(spell)        1.0     T_B IY1_I #15
+u(spell)        1.0     Y_B UW1_I #15
+v(spell)        1.0     V_B IY1_I #15
+w(spell)        1.0     D_B AH1_I B_I AH0_I L_I Y_I UW0_I #15
+x(spell)        1.0     EH1_B K_I S_I #15
+y(spell)        1.0     W_B AY1_I #15
+z(spell)        1.0     Z_B IY1_I #15
+a(spell)        1.0     EY1_E #15
+b(spell)        1.0     B_I IY1_E #15
+c(spell)        1.0     S_I IY1_E #15
+d(spell)        1.0     D_I IY1_E #15
+e(spell)        1.0     IY1_E #15
+f(spell)        1.0     EH1_I F_E #15
+g(spell)        1.0     JH_I IY1_E #15
+h(spell)        1.0     EY1_I CH_E #15
+i(spell)        1.0     AY1_E #15
+j(spell)        1.0     JH_I EY1_E #15
+k(spell)        1.0     K_I EY1_E #15
+l(spell)        1.0     EH1_I L_E #15
+m(spell)        1.0     EH1_I M_E #15
+n(spell)        1.0     EH1_I N_E #15
+o(spell)        1.0     OW1_E #15
+p(spell)        1.0     P_I IY1_E #15
+q(spell)        1.0     K_I Y_I UW1_E #15
+r(spell)        1.0     AA1_I R_E #15
+s(spell)        1.0     EH1_I S_E #15
+t(spell)        1.0     T_I IY1_E #15
+u(spell)        1.0     Y_I UW1_E #15
+v(spell)        1.0     V_I IY1_E #15
+w(spell)        1.0     D_I AH1_I B_I AH0_I L_I Y_I UW0_E #15
+x(spell)        1.0     EH1_I K_I S_E #15
+y(spell)        1.0     W_I AY1_E #15
+z(spell)        1.0     Z_I IY1_E #15

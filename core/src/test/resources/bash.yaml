@@ -1,0 +1,254 @@
+suite: Bash
+filename: file.sh
+validate: false
+skipAllMappingGeneratorTests: true
+tests:
+  testAddAssignment:
+    transcript: add message equals string hello world
+    before: |
+      main() {
+      }
+    after: |
+      main() {
+        message="hello world"<>
+      }
+  testAddComment:
+    skipMappingGeneratorTest: true
+    transcript: add comment hello
+    before: |
+      fo<>o;
+    after: |
+      foo;
+      # hello<>
+  testAddFor:
+    transcript: add for item in items
+    before: |
+      main() {
+      }
+    after: |
+      main() {
+        for item in items<> ; do
+        done
+      }
+  testAddArgument:
+    transcript: add argument dash dash verbose equals true
+    before: |
+      echo "hello"
+    after: |
+      echo "hello" --verbose=true<>
+  testAddCommandWithFlags:
+    transcript: add ls dash la
+    after: |
+      ls -la<>
+  testAddElse:
+    transcript: add else echo
+    before: |
+      main() {
+        if [[ true ]]; then
+        fi
+      }
+    after: |
+      main() {
+        if [[ true ]]; then
+        else<>
+          echo
+        fi
+      }
+  testAddElseIf:
+    transcript: add else if
+    before: |
+      main() {
+        if [[ true ]]; then
+        fi
+      }
+    after: |
+      main() {
+        if [[ true ]]; then
+        elif [[ 1<> ]]; then
+        fi
+      }
+  testAddFunction:
+    transcript: add function average
+    before: |
+    after: |
+      average<>() {
+      }
+  testAddIf:
+    transcript: add if
+    before: |
+    after: |
+      if [[ 1<> ]]; then
+      fi
+  testAddIfWithCondition:
+    transcript: add if dash f messages
+    before: |
+    after: |
+      if [[ -f messages<> ]]; then
+      fi
+  testAddElseIfWithCondition:
+    transcript: add else if condition
+    before: |
+      main() {
+        if [[ true ]]; then
+        fi
+      }
+    after: |
+      main() {
+        if [[ true ]]; then
+        elif [[ condition<> ]]; then
+        fi
+      }
+  testAddElseIfWithElse:
+    transcript: add else if false
+    before: |
+      main() {
+        if [[ true ]]; then<>
+        else
+        fi
+      }
+    after: |
+      main() {
+        if [[ true ]]; then
+        elif [[ false<> ]]; then
+        else
+        fi
+      }
+  testAddElseIfElseIf:
+    transcript: add else if
+    before: |
+      main() {
+        if [[ true ]]; then
+        elif [[ 1 ]]; then
+        fi
+      }
+    after: |
+      main() {
+        if [[ true ]]; then
+        elif [[ 1<> ]]; then
+        elif [[ 1 ]]; then
+        fi
+      }
+  testSelectAssignment:
+    object: assignment
+    before: |
+      main(){
+        a=$b
+      }
+    after: |
+      main(){
+        <>a=$b<>
+      }
+  testSelectAssignmentValue:
+    object: assignment value
+    before: |
+      main(){
+        a=$b;
+      }
+    after: |
+      main(){
+        a=<>$b<>;
+      }
+  testSelectAssignmentVariable:
+    object: assignment variable
+    before: |
+      main() {
+        a=$b;
+      }
+    after: |
+      main() {
+        <>a<>=$b;
+      }
+  testSelectArgument:
+    object: argument
+    before: |
+      foo bar baz
+    after: |
+      foo <>bar<> baz
+  testSelectArgumentList:
+    object: argument list
+    before: |
+      foo bar baz
+    after: |
+      foo <>bar baz<>
+  testSelectCondition:
+    object: condition
+    before: |
+      main() {
+        if [[ 1 ]]; then
+        fi
+      }
+    after: |
+      main() {
+        if [[ <>1<> ]]; then
+        fi
+      }
+  testSelectElse:
+    object: else
+    before: |
+      main() {
+        if [[ true ]]; then
+        else
+        fi
+      }
+    after: |
+      main() {
+        if [[ true ]]; then
+        <>else<>
+        fi
+      }
+  testSelectElseIf:
+    object: else if
+    before: |
+      main() {
+        if [[ true ]]; then
+        elif [[ false ]]; then
+        fi
+      }
+    after: |
+      main() {
+        if [[ true ]]; then
+        <>elif [[ false ]]; then<>
+        fi
+      }
+  testSelectFor:
+    object: for
+    before: |
+      main() {
+        for i in $items; do
+        done
+      }
+    after: |
+      main() {
+        <>for i in $items; do
+        done<>
+      }
+  testSelectFunction:
+    object: function
+    before: |
+      f<>oo() {
+      }
+    after: |
+      <>foo() {
+      }<>
+  testSelectIf:
+    object: if
+    before: |
+      {
+        if [[ true ]]; then
+        fi
+      }
+    after: |
+      {
+        <>if [[ true ]]; then
+        fi<>
+      }
+  testSelectString:
+    object: string
+    before: |
+      main() {
+        foo = "foo";
+      }
+    after: |
+      main() {
+        foo = <>"foo"<>;
+      }

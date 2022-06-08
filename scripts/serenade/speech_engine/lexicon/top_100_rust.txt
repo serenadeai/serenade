@@ -1,0 +1,10 @@
+deref  D IH0 R EH1 F
+dyn  D IH1 N
+mut  M AH1 T
+mut  M Y UW1 T
+opcode  OW1 P IY1 K OW1 D
+opcode  AA1 P K OW1 D
+serde  S IH1 R D IY1
+serde  S ER0 D IY1
+serde  S ER0 D EY1
+uint  Y UW1 IH2 N T

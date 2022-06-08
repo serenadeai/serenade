@@ -1,0 +1,33 @@
+diff --git a/src/layers/lsh.cpp b/src/layers/lsh.cpp
+index a91778ed..4ab24cff 100644
+--- a/src/layers/lsh.cpp
++++ b/src/layers/lsh.cpp
+@@ -9,6 +9,8 @@
+ namespace marian {
+ 
+ Expr LSH::apply(Expr input, Expr W, Expr b) {
++  (void) indexHash_;
++  (void) nbits_;
+   auto idx = search(input, W);
+   return affine(idx, input, W, b);
+ }
+diff --git a/src/training/communicator.h b/src/training/communicator.h
+index e051b7f8..fafbee32 100644
+--- a/src/training/communicator.h
++++ b/src/training/communicator.h
+@@ -102,7 +102,6 @@ private:
+       int totalSize = (int)graphs_[0]->params()->vals()->size();
+       int shardSize = (int)ceil(totalSize / (float)graphs_.size());
+ 
+-      int pos = 0;
+       for(auto graph : graphs_) {
+         int __size__ = std::min(shardSize, totalSize);
+ 
+@@ -117,7 +116,6 @@ private:
+         tmpTensors_.push_back(tmp);
+ 
+         // move to next shard
+-        pos += __size__;
+         totalSize -= __size__;
+       }
+     }

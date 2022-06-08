@@ -1,0 +1,1150 @@
+suite: JavaScript
+filename: file.ts
+validate: true
+tests:
+  testAddArgument:
+    transcript: add argument first name plus last name
+    before: |
+      console.log("hello");
+    after: |
+      console.log("hello", firstName + lastName<>);
+  testAddAssignment:
+    transcript: add age equals current age plus one
+    after: |
+      age = currentAge + 1<>;
+  testAddAssignmentWithTag:
+    transcript: add const a equals tag div
+    after: |
+      const a = <div><></div>;
+  testAddCatch:
+    transcript: add catch e
+    before: |
+      try {
+      }<>
+    after: |
+      try {
+      } catch (e<>) {
+      }
+  testAddClass:
+    transcript: add class download manager
+    after: |
+      class DownloadManager<> {
+      }
+  testAddComment:
+    skipMappingGeneratorTest: true
+    transcript: add comment fix later
+    after: |
+      // fix later<>
+  testAddConstructor:
+    skipMappingGeneratorTest: true
+    transcript: add constructor
+    before: |
+      class Foo {
+      }
+    after: |
+      class Foo {
+        constructor() {<>
+        }
+      }
+  testAddDecorator:
+    notSupportedInLanguage: true
+  testAddElement:
+    transcript: add element baz
+    before: |
+      const foo = [foo, bar];
+    after: |
+      const foo = [foo, bar, baz<>];
+  testAddElseIf:
+    transcript: add else if highest score plus one greater than three
+    before: |
+      if (true) {
+      } else {
+      }
+    after: |
+      if (true) {
+      } else if (highestScore + 1 > 3<>) {
+      } else {
+      }
+  testAddElse:
+    transcript: add else return number times factorial of number minus one
+    before: |
+      if (number == 0) {
+        return 1;
+      }
+    after: |
+      if (number == 0) {
+        return 1;
+      } else {
+        return number * factorial(number - 1)<>;
+      }
+  testAddEntry:
+    transcript: add entry items colon empty list
+    before: |
+      foo = {<>
+        foo: 1
+      };
+    after: |
+      foo = {
+        items: []<>,
+        foo: 1
+      };
+  testAddEnum:
+    transcript: add enum category type
+    after: |
+      enum CategoryType<> {
+      }
+  testAddExtends:
+    transcript: add extends animal
+    before: |
+      class Dog {
+      }
+    after: |
+      class Dog extends Animal<> {
+      }
+  testAddFinally:
+    transcript: add finally
+    before: |
+      try {
+        write();
+      } catch (e) {
+      }
+    after: |
+      try {
+        write();
+      } catch (e) {
+      } finally {<>
+      }
+  testAddFor:
+    transcript: add for const e of list
+    after: |
+      for (const e of list<>) {
+      }
+  testAddFunction:
+    transcript: add function compute factorial
+    after: |
+      function computeFactorial<>() {
+      }
+  testAddFunctionWithType:
+    transcript: add async number function average
+    after: |
+      async function average<>(): number {
+      }
+  testAddIf:
+    transcript: add if count equals ten
+    after: |
+      if (count == 10<>) {
+      }
+  testAddImplements:
+    transcript: add implements vehicle
+    before: |
+      class Car {
+      }
+    after: |
+      class Car implements Vehicle<> {
+      }
+  testAddImport:
+    skipMappingGeneratorTest: true
+    transcript: add import use store from react
+    before: |
+      import * as $ from "jquery";<>
+    after: |
+      import * as $ from "jquery";
+      import { useStore } from "react<>";
+  testAddImportStar:
+    skipMappingGeneratorTest: true
+    transcript: add import star as underscore from lodash
+    after: |
+      import * as _ from "lodash<>";
+  testAddImportDefault:
+    skipMappingGeneratorTest: true
+    transcript: add import default capital react from react
+    after: |
+      import React from "react<>";
+  testAddInterface:
+    transcript: add interface vehicle
+    after: |
+      interface Vehicle<> {
+      }
+  testAddLambda:
+    transcript: add bar equals lambda of e
+    before: |
+      function foo() {
+        let x = 1;<>
+      }
+    after: |
+      function foo() {
+        let x = 1;
+        bar = e<> => {
+        };
+      }
+  testAddLambdaArgument:
+    transcript: add argument lambda
+    before: |
+      function foo() {
+        <>generate();
+      }
+    after: |
+      function foo() {
+        generate(() => {<>
+        });
+      }
+  testAddLambdaProperty:
+    transcript: add response dot for each of lambda
+    after: |
+      response.forEach(() => {<>
+      });
+  testAddMethod:
+    transcript: add private async method fly
+    before: |
+      class Bird {
+        chirp() {
+        }
+      }
+    after: |
+      class Bird {
+        private async fly<>() {
+        }
+
+        chirp() {
+        }
+      }
+  testAddMethodToInterface:
+    transcript: add number method wings count
+    before: |
+      interface Bird {
+        fly(): void;
+      }
+    after: |
+      interface Bird {
+        wingsCount<>(): number;
+        fly(): void;
+      }
+  testAddNamespace:
+    notSupportedInLanguage: true
+  testAddParameter:
+    transcript: add parameter max speed
+    before: |
+      function run(distance) {
+      }
+    after: |
+      function run(distance, maxSpeed<>) {
+      }
+  testAddParameterWithDefault:
+    transcript: add parameter foo bar equals one
+    before: |
+      function foo(a) {
+      }
+    after: |
+      function foo(a, fooBar = 1<>) {
+      }
+  testAddParameterWithPrefixedType:
+    transcript: add string parameter name
+    before: |
+      function sayHello(greeting) {
+      }
+    after: |
+      function sayHello(greeting, name<>: string) {
+      }
+  testAddParameterWithExplicitType:
+    transcript: add parameter foo bar colon string
+    before: |
+      function foo(a) {
+      }
+    after: |
+      function foo(a, fooBar: string<>) {
+      }
+  testAddPrint:
+    skipMappingGeneratorTest: true
+    transcript: add print value
+    after: |
+      console.log(value<>);
+  testAddProperty:
+    transcript: add number property players equals four
+    before: |
+      class Game {
+      }
+    after: |
+      class Game {
+        players: number = 4<>;
+      }
+  testAddReturn:
+    transcript: add return null
+    after: |
+      return null<>;
+  testAddReturnValue:
+    transcript: add return value four
+    before: |
+      function random() {
+        return;
+      }
+    after: |
+      function random() {
+        return 4<>;
+      }
+  testAddStruct:
+    notSupportedInLanguage: true
+  testAddThrow:
+    transcript: add throw e
+    after: |
+      throw e<>;
+  testAddToClass:
+    transcript: add foo equals bar
+    before: |
+      class Foo<> {
+      }
+    after: |
+      class Foo {
+        foo = bar<>;
+      }
+  testAddToEnum:
+    transcript: add blue
+    before: |
+      enum Colors {
+        Red,
+        Green<>
+      }
+    after: |
+      enum Colors {
+        Red,
+        Green,
+        Blue<>
+      }
+  testAddToEmptyFile:
+    transcript: add var x equals two
+    after: |
+      var x = 2<>;
+  testAddToImportList:
+    transcript: add bar
+    before: |
+      import { Foo<> } from "./foo";
+    after: |
+      import { Foo, Bar<> } from "./foo";
+  testAddToNamespace:
+    notSupportedInLanguage: true
+  testAddToObjectWithoutSelector:
+    skipMappingGeneratorTest: true
+    transcript: add bar colon one
+    before: |
+      const object = {
+        foo: 3,
+        baz: function() {
+        }<>
+      };
+    after: |
+      const object = {
+        foo: 3,
+        baz: function() {
+        },
+        bar: 1<>
+      };
+  testAddToStruct:
+    notSupportedInLanguage: true
+  testAddTry:
+    transcript: add try write parens
+    after: |
+      try {
+        write()<>;
+      } catch (e) {
+      }
+  testAddFunctionInline:
+    skipMappingGeneratorTest: true
+    transcript: add inline function foo bar
+    before: |
+      function foo() {
+        a = b<>;
+      }
+    after: |
+      function foo() {
+        a = b;
+
+        function fooBar<>() {
+        }
+      }
+  testAddImportToEmptyList:
+    skipMappingGeneratorTest: true
+    transcript: add import foo from foo
+    after: |
+      import { foo } from "foo<>";
+  testAddModifier:
+    transcript: add modifier async
+    before: |
+      class Foo {
+        priva<>te foo() {
+        }
+      }
+    after: |
+      class Foo {
+        private async<> foo() {
+        }
+      }
+  testAddModifiers:
+    skipMappingGeneratorTest: true # We don't support adding multiple elements in ml snippets yet.
+    transcript: add modifiers private async
+    before: |
+      class Foo {
+        fo<>o() {
+        }
+      }
+    after: |
+      class Foo {
+        private async<> foo() {
+        }
+      }
+  testAddObjectFunction:
+    skipMappingGeneratorTest: true
+    transcript: add object function bar
+    before: |
+      const object = {
+        foo: 3<>,
+        baz: function() {
+        }
+      };
+    after: |
+      const object = {
+        foo: 3,
+        bar<>: function() {
+        },
+        baz: function() {
+        }
+      };
+  testAddPropertyToInterface:
+    transcript: add string property name
+    before: |
+      interface User {
+        usage(): number;
+      }
+    after: |
+      interface User {
+        name<>: string;
+        usage(): number;
+      }
+  testAddReturnTag:
+    transcript: add return tag li
+    after: |
+      return <li><></li>;
+  testAddReturnType:
+    transcript: add return type boolean
+    before: |
+      function isPresent() {
+        return;
+      }
+    after: |
+      function isPresent(): boolean<> {
+        return;
+      }
+  testAddReturnWithTag:
+    transcript: add tag a
+    before: |
+      function foo() {
+        return (
+          <div>
+            <h1>hello</h1><>
+          </div>
+        );
+      }
+    after: |
+      function foo() {
+        return (
+          <div>
+            <h1>hello</h1>
+            <a><></a>
+          </div>
+        );
+      }
+  testAddToDestructuredImport:
+    transcript: add baz
+    before: |
+      import { Foo, Bar<> } from "./foo"
+    after: |
+      import { Foo, Bar, Baz<> } from "./foo"
+  testAddToDestructuredRequireImport:
+    allowSecondAlternative: true
+    transcript: add link
+    before: |
+      const { StaticImage<> } = require("gatsby");
+    after: |
+      const { StaticImage, Link<> } = require("gatsby");
+  testAddToLambda:
+    transcript: add a equals b
+    before: |
+      app.get("/", (request, response) => {
+      });
+    after: |
+      app.get("/", (request, response) => {
+        a = b<>;
+      });
+  testAddToLambdaInline:
+    transcript: add a equals b
+    before: |
+      app.get("/", (request, response) => {<>});
+    after: |
+      app.get("/", (request, response) => {
+        a = b<>;
+      });
+  testAddTypeAlias:
+    transcript: add type foo equals number
+    after: |
+      type Foo = number<>;
+  testAddTypeToAssignment:
+    transcript: add type number
+    before: |
+      let a = 1;
+      let b: number = 2;
+    after: |
+      let a: number<> = 1;
+      let b: number = 2;
+  testAddTypeToFunction:
+    transcript: add type string
+    before: |
+      function g<>etName() {
+      }
+    after: |
+      function getName(): string<> {
+      }
+  testAddTypeToParameter:
+    transcript: add type number
+    before: |
+      function setLimit(<>limit) {
+      }
+    after: |
+      function setLimit(limit: number<>) {
+      }
+  testAddWhile:
+    transcript: add while false
+    after: |
+      while (false<>) {
+      }
+  testDeleteArgument:
+    transcript: delete argument
+    before: |
+      foo(a, b);
+      if (!condition<>) {
+      }
+    after: |
+      foo(a<>);
+      if (!condition) {
+      }
+  testSelectAssignment:
+    transcript: delete assignment
+    before: |
+      let x;
+      console.log('hi');<>
+      let a = b;
+    after: |
+      let x;
+      console.log('hi');<>
+  testDeleteExtends:
+    transcript: delete extends
+    before: |
+      class Foo extends Bar {
+      }
+    after: |
+      class Foo <>{
+      }
+  testDeleteMethod:
+    transcript: delete method
+    before: |
+      <>class Bird {
+        chirp() {
+          console.log("chirp");
+        }
+
+        fly() {
+          // TODO
+        }
+      }
+    after: |
+      class Bird {
+        <>fly() {
+          // TODO
+        }
+      }
+  testDeleteKey:
+    transcript: delete key
+    before: |
+      var foo = {
+        <>foo: 1,
+        bar: 2
+      }
+    after: |
+      var foo = {
+        <>: 1,
+        bar: 2
+      }
+  testDeleteValue:
+    transcript: delete value
+    before: |
+      var foo = {
+        <>foo: 1,
+        bar: 2
+      }
+    after: |
+      var foo = {
+        foo: <>,
+        bar: 2
+      }
+  testDeleteObject:
+    transcript: delete object
+    before: |
+      var foo = {
+        <>foo: 1,
+        bar: 2
+      }
+    after: |
+      var foo<>
+  testDeleteImplements:
+    transcript: delete implements
+    before: |
+      class Foo implements Bar {
+      }
+    after: |
+      class Foo <>{
+      }
+  testDeleteParameter:
+    transcript: delete parameter
+    before: |
+      function foo(a, <>b) {
+      }
+    after: |
+      function foo(a<>) {
+      }
+  testSelectAttribute:
+    transcript: select attribute
+    before: |
+      body = <body bgcolor="FFFFFF"></body>
+    after: |
+      body = <body <>bgcolor="FFFFFF"<>></body>
+  testSelectAttributeName:
+    transcript: select attribute name
+    before: |
+      body = <body bgcolor="FFFFFF"></body>
+    after: |
+      body = <body <>bgcolor<>="FFFFFF"></body>
+  testSelectAttributeValue:
+    transcript: select attribute value
+    before: |
+      body = <body bgcolor="FFFFFF"></body>
+    after: |
+      body = <body bgcolor=<>"FFFFFF"<>></body>
+  testSelectArgument:
+    object: argument
+    before: |
+      foo(a);
+    after: |
+      foo(<>a<>);
+  testSelectArgumentList:
+    object: argument list
+    before: |
+      foo(a, b);
+    after: |
+      foo(<>a, b<>);
+  testSelectAssignment:
+    object: assignment
+    before: |
+      let x;
+      console.log('hi');<>
+      let a = b;
+    after: |
+      let x;
+      console.log('hi');
+      <>let a = b<>;
+  testSelectAssignmentValue:
+    object: assignment value
+    before: |
+      b = c;
+    after: |
+      b = <>c<>;
+  testSelectAssignmentVariable:
+    object: assignment variable
+    before: |
+      console.log('hi');
+      b = c;
+    after: |
+      console.log('hi');
+      <>b<> = c;
+  testSelectAssignmentVariableArrayDestructuring:
+    object: assignment variable
+    before: |
+      const [ a, b ] = foo;
+    after: |
+      const <>[ a, b ]<> = foo;
+  testSelectAssignmentVariableObjectDestructuring:
+    object: assignment variable
+    before: |
+      const { a, b } = foo;
+    after: |
+      const <>{ a, b }<> = foo;
+  testSelectBody:
+    object: body
+    before: |
+      function foo() {
+        re<>turn false;
+      }
+    after: |
+      function foo() {
+        <>return false;<>
+      }
+  testSelectCatch:
+    object: catch
+    before: |
+      try {
+      }
+      catch (e) {
+      }
+    after: |
+      try {
+      }
+      <>catch (e) {
+      }<>
+  testSelectClass:
+    object: class
+    before: |
+      a = b;
+      class Foo {
+      }
+    after: |
+      a = b;
+      <>class Foo {
+      }<>
+  testSelectComment:
+    transcript: select comment
+    before: |
+      function check(x) {
+        i<>f (x < 3) {
+          // check if x is less than 3
+          return true;
+        }
+        return false;
+      }
+    after: |
+      function check(x) {
+        if (x < 3) {
+          <>// check if x is less than 3<>
+          return true;
+        }
+        return false;
+      }
+  testSelectCondition:
+    object: condition
+    before: |
+      if (true) {
+      }
+    after: |
+      if (<>true<>) {
+      }
+  testSelectConstructor:
+    object: constructor
+    before: |
+      class Foo {
+        constructor() {
+        }
+      }
+    after: |
+      class Foo {
+        <>constructor() {
+        }<>
+      }
+  testSelectDeclaration:
+    object: declaration
+    before: |
+      let x;
+      console.log('hi');<>
+      let a = b;
+    after: |
+      <>let x<>;
+      console.log('hi');
+      let a = b;
+  testSelectDecorator:
+    notSupportedInLanguage: true
+  testSelectDictionary:
+    object: object
+    before: |
+      var foo = {
+        foo: 1
+      }
+    after: |
+      var foo = <>{
+        foo: 1
+      }<>
+  testSelectElement:
+    object: element
+    before: |
+      const foo = [1, 2, 3];
+    after: |
+      const foo = [<>1<>, 2, 3];
+  testSelectElse:
+    object: else
+    before: |
+      if (true) {
+      }
+      else {
+      }
+    after: |
+      if (true) {
+      }
+      <>else {
+      }<>
+  testSelectElseIf:
+    object: else if
+    before: |
+      if (true) {
+      }
+      else if (false) {
+      }
+    after: |
+      if (true) {
+      }
+      <>else if (false) {
+      }<>
+  testSelectEntry:
+    object: property
+    before: |
+      var foo = {
+        foo: 1,
+        bar: 2
+      }
+    after: |
+      var foo = {
+        <>foo: 1<>,
+        bar: 2
+      }
+  testSelectEnum:
+    object: enum
+    before: |
+      a = b;
+      enum Foo {
+      }
+    after: |
+      a = b;
+      <>enum Foo {
+      }<>
+  testSelectExtends:
+    object: parent
+    before: |
+      class Foo extends Bar {
+      }
+    after: |
+      class Foo extends <>Bar<> {
+      }
+  testSelectFinally:
+    object: finally
+    before: |
+      try {
+      }
+      catch (e) {
+      }
+      finally {
+      }
+    after: |
+      try {
+      }
+      catch (e) {
+      }
+      <>finally {
+      }<>
+  testSelectFor:
+    object: for
+    before: |
+      a = b;
+      for (;;) {
+      }
+    after: |
+      a = b;
+      <>for (;;) {
+      }<>
+  testSelectForEach:
+    object: for
+    before: |
+      a = b;
+      for (const foo of bar) {
+      }
+    after: |
+      a = b;
+      <>for (const foo of bar) {
+      }<>
+  testSelectFunction:
+    object: function
+    before: |
+      a = b;
+      function foo() {
+      }
+    after: |
+      a = b;
+      <>function foo() {
+      }<>
+  testSelectKey:
+    object: key
+    before: |
+      var foo = {
+        foo: 1,
+        bar: 2
+      }
+    after: |
+      var foo = {
+        <>foo<>: 1,
+        bar: 2
+      }
+  testSelectIf:
+    object: if
+    before: |
+      a = b;
+      if (true) {
+      }
+    after: |
+      a = b;
+      <>if (true) {
+      }<>
+  testSelectImplements:
+    object: implements
+    before: |
+      class Foo implements Bar {
+      }
+    after: |
+      class Foo implements <>Bar<> {
+      }
+  testSelectImport:
+    object: import
+    before: |
+      a = b;
+      import { foo } from "foo";
+    after: |
+      a = b;
+      <>import { foo } from "foo"<>;
+  testSelectInterface:
+    object: interface
+    before: |
+      a = b;
+      interface Foo {
+      }
+    after: |
+      a = b;
+      <>interface Foo {
+      }<>
+  testSelectKeyOnlyObject:
+    object: object
+    before: |
+      let foo = { bar };
+    after: |
+      let foo = <>{ bar }<>;
+  testSelectLambda:
+    transcript: select lambda
+    before: |
+      function fo<>o() {
+        let bar = (e) => e * 2;
+      }
+    after: |
+      function foo() {
+        let bar = <>(e) => e * 2<>;
+      }
+  testSelectList:
+    object: list
+    before: |
+      function foo(): Array<number> {
+      }
+      a = [1, 2];
+    after: |
+      function foo(): Array<number> {
+      }
+      a = [<>1, 2<>];
+  testSelectMethod:
+    object: method
+    before: |
+      class Foo {
+        foo() {
+        }
+      }
+    after: |
+      class Foo {
+        <>foo() {
+        }<>
+      }
+  testSelectModifier:
+    object: modifier
+    before: |
+      class Foo {
+        pr<>ivate async foo() {
+        }
+      }
+    after: |
+      class Foo {
+        <>private<> async foo() {
+        }
+      }
+  testSelectNamespace:
+    notSupportedInLanguage: true
+  testSelectParameter:
+    object: parameter
+    before: |
+      function foo(a) {
+      }
+    after: |
+      function foo(<>a<>) {
+      }
+  testSelectParameterWithDefault:
+    object: parameter
+    before: |
+      function foo(a = b) {
+      }
+    after: |
+      function foo(<>a = b<>) {
+      }
+  testSelectParameterList:
+    object: parameter list
+    before: |
+      function foo(a, b, c) {
+      }
+    after: |
+      function foo(<>a, b, c<>) {
+      }
+  testSelectProperty:
+    object: property
+    before: |
+      class Foo {
+        foo = bar;
+      }
+    after: |
+      class Foo {
+        <>foo = bar<>;
+      }
+  testSelectPropertyFromInterface:
+    object: property
+    before: |
+      interface Foo {
+        foo: number;
+      }
+    after: |
+      interface Foo {
+        <>foo: number<>;
+      }
+  testSelectReturn:
+    object: return
+    before: |
+      function foo() {
+        return false;
+      }
+    after: |
+      function foo() {
+        <>return false<>;
+      }
+  testSelectReturnType:
+    object: return type
+    before: |
+      function foo(): boolean {
+      }
+    after: |
+      function foo(): <>boolean<> {
+      }
+  testSelectReturnValue:
+    object: return value
+    before: |
+      return false;
+    after: |
+      return <>false<>;
+  testSelectString:
+    object: string
+    before: |
+      a = "foo";
+    after: |
+      a = <>"foo"<>;
+  testSelectStringText:
+    object: string text
+    before: |
+      a = "foo";
+    after: |
+      a = "<>foo<>";
+  testSelectStruct:
+    notSupportedInLanguage: true
+  testSelectThrow:
+    object: throw
+    before: |
+      a = b;
+      throw e;
+    after: |
+      a = b;
+      <>throw e<>;
+  testSelectTry:
+    object: try
+    before: |
+      a = b;
+      try {
+      }
+      catch (e) {
+      }
+    after: |
+      a = b;
+      <>try {
+      }<>
+      catch (e) {
+      }
+  testSelectTypeFromAssignment:
+    object: type
+    before: |
+      let a: number = 1;
+    after: |
+      let a: <>number<> = 1;
+  testSelectTypeFromFunction:
+    object: type
+    before: |
+      function foo(a): Foo {
+      }
+    after: |
+      function foo(a): <>Foo<> {
+      }
+  testSelectTypeFromParameter:
+    object: type
+    before: |
+      function foo(a: Foo) {
+      }
+    after: |
+      function foo(a: <>Foo<>) {
+      }
+  testSelectTypeArgument:
+    object: type argument
+    before: |
+      const foo: Array<number> = [];
+    after: |
+      const foo: Array<<>number<>> = [];
+  testSelectTypeParameter:
+    object: type parameter
+    before: |
+      function foo<T>() {}
+    after: |
+      function foo<<>T<>>() {}
+  testSelectBuiltInType:
+    object: type
+    before: |
+      b = 'hi';
+      function foo(a: string) {
+      }
+    after: |
+      b = 'hi';
+      function foo(a: <>string<>) {
+      }
+  testSelectWhile:
+    object: while
+    before: |
+      a = b;
+      while (true) {
+      }
+    after: |
+      a = b;
+      <>while (true) {
+      }<>
+  testSelectValue:
+    object: value
+    before: |
+      foo = {
+        "foo": 1,
+        "ba<>r": 2
+      }
+    after: |
+      foo = {
+        "foo": 1,
+        "bar": <>2<>
+      }
+  testStyle:
+    transcript: style file
+    before: |
+      a=50;
+    after: |
+      <>a = 50;

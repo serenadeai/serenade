@@ -1,0 +1,11 @@
+rootProject.name = "serenade"
+
+include ":client"
+include ":code-engine"
+include ":corpusgen"
+include ":grammarflattener"
+include ":speech-engine"
+include ":offline"
+include ":core"
+include ":replayer"
+include ":toolbelt"

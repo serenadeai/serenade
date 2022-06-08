@@ -1,0 +1,29 @@
+#!/bin/bash
+
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$HERE/../"
+
+if [[ $EUID -eq 0 ]]; then
+   echo "Run git commands outside of Docker."
+   exit 1
+fi
+
+if ! command -v prettier &>/dev/null
+then
+    echo "Install prettier via: sudo npm install --global prettier@2.0.5 prettier-plugin-java@1.0.1"
+    exit 1
+fi
+
+changed=$(git diff --cached --name-only --diff-filter=ACMR "*.java" "*.ts" "*.css")
+for f in ${changed[@]} ; do
+    echo "Formatting $f..."
+    prettier --write "$f" &>/dev/null
+    git add "$f"
+done
+
+changed=$(git diff --cached --name-only --diff-filter=ACMR "*.py")
+for f in ${changed[@]} ; do
+    echo "Formatting $f..."
+    black -l 100 "$f" &>/dev/null
+    git add "$f"
+done

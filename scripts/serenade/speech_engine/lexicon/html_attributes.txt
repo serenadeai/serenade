@@ -1,0 +1,41 @@
+href EY1 CH R EH1 F
+charset CH AA1 R S EH1 T
+charset K EH1 R S EH1 T
+accesskey AE1 K S EH0 S K IY1
+autocomplete AO1 T OW0 K AH0 M P L IY1 T
+autofocus AO1 T OW0 F OW1 K AH0 S
+autoplay AO1 T OW0 P L EY1
+bgcolor B IY1 JH IY1 K AH1 L ER0
+cols K AA1 L Z
+colspan K AA1 L S P AE1 N
+contenteditable K AA1 N T EH0 N T EH1 D AH0 T AH0 B AH0 L
+coords K OW0 AO1 R D S
+dirname D ER1 N EY1 M
+dragable D R AE1 G AH0 B AH0 L
+dropzone D R AA1 P Z OW1 N
+enctype EH1 N K T AY1 P
+enctype IY1 EH1 N S IY1 T AY1 P
+formaction F AO1 R M AE1 K SH AH0 N
+hreflang EY1 CH R EH1 F L AE1 NG
+httpequiv EY1 CH T IY1 T IY1 P IY1 IH0 K W IH1 V
+ismap IH1 Z M AE1 P
+maxlength M AE1 K S L EH1 NG K TH
+novalidate N OW1 V AE1 L AH0 D EY0 T
+onabort AA1 N AH B AO1 R T
+onafterprint AA1 N AE1 F T ER0 P R IH1 N T
+onbeforeprint AA1 N B IH F AO1 R P R IH1 N T
+onbeforeunload AA1 N B IH0 F AO1 R AH0 N L OW1 D
+onblur AA1 N B L ER1
+oncanplay AA1 N K AE1 N P L EY1
+oncanplaythrough AA1 N K AE1 N P L EY1 TH R UW1
+onchange AA1 N CH EY1 N JH
+onclick AA1 N K L IH1 K
+oncontextmenu AA1 N K AA1 N T EH0 K S T M EH0 N Y UW1
+oncopy AA1 N K AA1 P IY
+oncuechange AA1 N K Y UW1 CH EY1 N JH
+oncut AA1 N K AH1 T
+ondblclick AA1 N D AH1 B AH0 L K L IH1 K
+ondblclick AA1 N D IY1 B IY1 EH1 L K L IH1 K
+ondrag AA1 N D R AE1 G
+rel R EH1 L
+rowspan R OW1 S P AE1 N

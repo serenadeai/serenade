@@ -1,0 +1,461 @@
+# this suite should be used for language-agnostic add/insert commands. this happens to use
+# python, but shouldn't test anything python-specific.
+suite: Formatting
+skipAllMappingGeneratorTests: true
+tests:
+  testAddNumber:
+    addAndType: f of zero
+    after: f(0)<>
+  testAddNumberWithO:
+    addAndType: f of one o seven
+    after: f(107)<>
+  testAddThousand:
+    addAndType: f of two thousand
+    after: f(2000)<>
+  testAddThousandWithHundred:
+    addAndType: f of three thousand two hundred
+    after: f(3200)<>
+  testAddWordThenNumber:
+    addAndType: python three
+    after: python3<>
+  testAddCapital:
+    addAndType: capital and
+    after: And<>
+  testAddUnderscore:
+    addAndType: underscore foo
+    after: _foo<>
+  testAddAllCaps:
+    addAndType: all caps foo bar
+    after: FOO_BAR<>
+  testAddInBrackets:
+    addAndType: bar in brackets brack
+    after: bar[brack]<>
+  testAddInParens:
+    addAndType: bar in parens brack
+    after: bar(brack)<>
+  testAddInUnderscores:
+    addAndType: in underscores str
+    after: __str__<>
+  testAddInDoubleUnderscores:
+    addAndType: in double underscores str
+    after: __str__<>
+  testAddInTripleQuotes:
+    addAndType: in triple quotes capital this is a good explanation
+    after: '"""This is a good explanation"""<>'
+  testAddPascalCase:
+    addAndType: pascal case bar baz
+    after: BarBaz<>
+  testAddPascalCaseWithNumber:
+    addAndType: pascal case python three compiler
+    after: Python3Compiler<>
+  testAddEscape:
+    # Escaping handled outside of code engine
+    skipMappingGeneratorTest: true
+    addAndType: escape equals
+    after: equals<>
+  testAddPascalCaseEscape:
+    # Escaping handled outside of code engine
+    skipMappingGeneratorTest: true
+    addAndType: pascal case escape and
+    after: And<>
+  testAddOneWord:
+    addAndType: one word foo bar
+    after: foobar<>
+  testAddCapitalOneWord:
+    addAndType: capital one word foo bar
+    after: Foobar<>
+  testAddUnderscores:
+    addAndType: underscores bar baz
+    after: bar_baz<>
+  testAddOpenCloseParen:
+    addAndType: foo open paren close paren
+    after: foo()<>
+  testAddParens:
+    addAndType: foo parens
+    after: foo()<>
+  testCapitalTwice:
+    addAndType: in quotes capital foo capital bar
+    after: |-
+      "Foo Bar"<>
+  testAddNegative:
+    transcript: insert a equals negative b plus c
+    after: a = -b + c<>
+  testAddInPipes:
+    transcript: insert in pipes y
+    before: |
+      a = "<>"
+    after: |
+      a = "|y|<>"
+  testLowerCaseAsOneWord:
+    transcript: add lowercase do something equals true
+    before: |
+      generated = False
+    after: |
+      generated = False
+      dosomething = True<>
+  testTitleCase:
+    addAndType: in quotes title case free software foundation
+    after: |-
+      "Free Software Foundation"<>
+  testDashes:
+    transcript: insert dashes input converter description
+    before: foo = "<>"
+    after: foo = "input-converter-description<>"
+  testAddSemicolon:
+    filename: file.java
+    transcript: type semicolon
+    after: ;<>
+  testAddToSourceWithSlot:
+    transcript: add hello
+    before: |
+      v<>alue = "<%cursor%>"
+    after: |
+      value = "<%cursor%>"
+      hello<>
+  testAddPlusEquals:
+    transcript: add bar plus equals one
+    before: |
+    after: |
+      bar += 1<>
+  testAddVariableWithImplicitType:
+    filename: file.java
+    transcript: add map of string comma string a equals b plus c
+    before: |
+      public void foo() <>{
+      }
+    after: |
+      public void foo() {
+        Map<String, String> a = b + c<>;
+      }
+  testInsertAutoCapital:
+    transcript: insert in single quotes bonjour
+    before: |
+      array = ['Hi', 'Hello',<>]
+    after: |
+      array = ['Hi', 'Hello', 'Bonjour'<>]
+  testInsertAutoCaps:
+    transcript: insert in single quotes bonjour
+    before: |
+      array = ['HI', 'HELLO',<>]
+    after: |
+      array = ['HI', 'HELLO', 'BONJOUR'<>]
+  testAddOfDisambiguatesIndexWithoutContext:
+    allowSecondAlternative: true
+    transcript: add metadata equals alternatives dot get of i dot metadata
+    after: |
+      metadata = alternatives.get(i).metadata<>
+  testAddOfDisambiguatesWithTrailingNumber:
+    transcript: add metadata equals alternatives dot compute of weirdindex plus one dot metadata
+    before: |
+      for weirdindex in range(5):<>
+        pass
+    after: |
+      for weirdindex in range(5):
+        metadata = alternatives.compute(weirdindex + 1).metadata<>
+  testAddInBracketsDisambiguates:
+    transcript: add metadata equals alternatives in brackets i dot metadata
+    before: |
+      for i in range(5):<>
+        pass
+    after: |
+      for i in range(5):
+        metadata = alternatives[i].metadata<>
+  testAddNewLiteral:
+    transcript: add foo dot new builder
+    after: |
+      foo.new_builder<>
+  testAddNewOf:
+    filename: file.java
+    transcript: add list of mapping mappings equals new array list of mapping of
+    before: |
+      package foo;
+
+      import java.util.ArrayList;
+
+      class App {
+        void main() {
+          Mapping mapping;<>
+        }
+      }
+    after: |
+      package foo;
+
+      import java.util.ArrayList;
+
+      class App {
+        void main() {
+          Mapping mapping;
+          List<Mapping> mappings = new ArrayList<Mapping>()<>;
+        }
+      }
+  testAddMatchingStyle:
+    transcript: add qux equals foo bar
+    before: |
+      baz = fooBar<>
+    after: |
+      baz = fooBar
+      qux = fooBar<>
+  testAddMatchingStyleOverride:
+    transcript: add foo equals all caps bar baz
+    before: |
+      barBaz<>
+      barBaz
+      BarBaz
+    after: |
+      barBaz
+      foo = BAR_BAZ<>
+      barBaz
+      BarBaz
+  testAddOneWordToken:
+    transcript: add foo
+    after: "foo<>\n"
+  testAddTwoWords:
+    transcript: add foo bar
+    after: |
+      foo_bar<>
+  testAddEllipsis:
+    filename: test.js # only have trained this model so far.
+    transcript: insert ellipsis
+    before: |
+      a = "<>";
+    after: |
+      a = "...<>";
+  testAddEquals:
+    transcript: add foo equals bar
+    after: |
+      foo = bar<>
+  testAddGreaterThan:
+    transcript: add if foo greater than bar
+    after: |
+      if foo > bar<>:
+          pass
+  testAddEqualsMinus:
+    transcript: add foo equals minus bar
+    after: |
+      foo = -bar<>
+  testAddMinusEquals:
+    transcript: add foo minus equals bar
+    after: |
+      foo -= bar<>
+  testAddBrackets:
+    transcript: add left bracket one comma two right bracket
+    after: |
+      [1, 2]<>
+  testAddMod:
+    transcript: add if a mod b
+    after: |
+      if a % b<>:
+          pass
+  testAddGreaterThanExpression:
+    transcript: add if a plus b greater than or equal to b plus c
+    after: |
+      if a + b >= b + c<>:
+          pass
+  testAddNewline:
+    skipMappingGeneratorTest: true
+    transcript: add newline
+    before: |
+      f<>oo
+      bar
+    after: |
+      foo
+      <>
+      bar
+  testAddPlus:
+    transcript: add x equals x plus one
+    after: |
+      x = x + 1<>
+  testAddShift:
+    transcript: add x equals x right shift one
+    after: |
+      x = x >> 1<>
+  testAddCapitalAfterWord:
+    transcript: type hash foo capital bar baz
+    after: "#foo Bar baz"
+  testInBraces:
+    allowSecondAlternative: true
+    transcript: add s equals in double quotes bar in braces brack
+    after: |
+      s = "bar{brack}"<>
+  testInCurlyBraces:
+    allowSecondAlternative: true
+    transcript: add s equals in double quotes bar in curly braces brack
+    after: |
+      s = "bar{brack}"<>
+  testAddInComparators:
+    transcript: add token equals in double quotes in comparators unknown
+    after: |
+      token = "<unknown>"<>
+  testAddInQuotes:
+    transcript: add output equals in quotes baz
+    after: |
+      output = "baz"<>
+  testAddInQuotesTwoWords:
+    transcript: add output equals in quotes got here
+    after: |
+      output = "got here"<>
+  testAddEqualsNone:
+    transcript: add a equals none
+    after: |
+      a = None<>
+  testAddOpenParenCommaCloseParen:
+    transcript: add foo paren bar comma baz comma qux right paren
+    after: |
+      foo(bar, baz, qux)<>
+  testAddEqualsQuotes:
+    transcript: add app dot secret underscore key equals in double quotes secret
+    after: |
+      app.secret_key = "secret"<>
+  testAddEqualsCall:
+    transcript: add a equals bar of c
+    after: |
+      a = bar(c)<>
+  testAddSumOfCalls:
+    # not deterministic. unclear why it's undersampled so much.
+    skipMappingGeneratorTest: true
+    transcript: add b equals foo parens plus bar parens
+    after: |
+      b = foo() + bar()<>
+  testAddFunctionWithAnd:
+    transcript: add function foo and bar
+    after: |
+      def foo_and_bar<>():
+          pass
+  testAddIfEscape:
+    # Escaping handled outside of code engine
+    skipMappingGeneratorTest: true
+    allowSecondAlternative: true
+    transcript: add if is escape minus symbol
+    after: |
+      if is_minus_symbol<>:
+          pass
+  testAddArgumentToInner:
+    transcript: add argument a
+    before: |
+      foo(thing + <>bar())
+    after: |
+      foo(thing + bar(a<>))
+  testAddArgumentToOuter:
+    transcript: add argument a
+    before: |
+      foo(thi<>ng + bar())
+    after: |
+      foo(thing + bar(), a<>)
+  testAddInferredTypeParameter:
+    filename: file.java
+    transcript: add parameter managed channel channel
+    before: |
+      import io.grpc.ManagedChannel;
+
+      class App {
+        public static void main() {
+        }
+      }
+    after: |
+      import io.grpc.ManagedChannel;
+
+      class App {
+        public static void main(ManagedChannel channel<>) {
+        }
+      }
+  testAddImportStar:
+    filename: file.java
+    transcript: add import java dot util dot star
+    before: |
+      package foo;<>
+
+      class App {}
+    after: |
+      package foo;
+      import java.util.*<>;
+
+      class App {}
+  testAddListComprehension:
+    skipMappingGeneratorTest: true # too much volatility in this test for some reason.
+    transcript: add in brackets lowercase i plus one for i in list
+    after: |
+      [i + 1 for i in list]<>
+  testAddStringWithStringPrefix:
+    filename: file.java
+    transcript: add string message equals string hello
+    before: |
+      import io.grpc.ManagedChannel;
+
+      class App {
+        public static void main() {<>
+        }
+      }
+    after: |
+      import io.grpc.ManagedChannel;
+
+      class App {
+        public static void main() {
+          String message = "hello"<>;
+        }
+      }
+  testAddStringWithInQuotesPostfix:
+    filename: file.java
+    transcript: add string message equals hello in quotes
+    before: |
+      import io.grpc.ManagedChannel;
+
+      class App {
+        public static void main() {<>
+        }
+      }
+    after: |
+      import io.grpc.ManagedChannel;
+
+      class App {
+        public static void main() {
+          String message = "hello"<>;
+        }
+      }
+  testAddStringWithQuotesPrefix:
+    filename: file.java
+    transcript: add string message equals quotes hello
+    before: |
+      import io.grpc.ManagedChannel;
+
+      class App {
+        public static void main() {<>
+        }
+      }
+    after: |
+      import io.grpc.ManagedChannel;
+
+      class App {
+        public static void main() {
+          String message = "hello"<>;
+        }
+      }
+  testAddSymbolsExcludedFromTokens:
+    transcript: add return false
+    before: |
+      def foo():
+          return False
+    after: |
+      def foo():
+          return False<>
+          return False
+  testLocalVariableWithSameNameAsClass:
+    filename: test.dart
+    transcript: add random dot next int parens
+    before: |
+      void main() {
+        var random = new Random()<>;
+      }
+    after: |
+      void main() {
+        var random = new Random();
+        random.nextInt()<>;
+      }
+  testInsertLambda:
+    filename: test.js
+    transcript: insert dot for each of lambda
+    before: |
+      response.data<>
+    after: |
+      response.data.forEach(() => {<>
+      })
+

@@ -1,0 +1,9 @@
+element eh1 l ah0 m eh0 n t
+meta    m eh1 t ah0
+res     r eh1 z
+millis  m ih1 l iy0 s
+proto   p r ow1 t ow0
+decode  d iy0 k ow1 d
+cos     k ow1 s
+sin     s ay1 n
+gnu     g aa0 n uw1

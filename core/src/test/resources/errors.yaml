@@ -1,0 +1,117 @@
+suite: Errors
+tests:
+  testAddToEmptyClass:
+    transcript: add method foo
+    before: |
+      class Bar:<>
+    after: |
+      class Bar:
+          def foo<>(self):
+              pass
+  testAddToEmptyClassWithCursorAtBeginningOfStatement:
+    transcript: add method foo
+    before: |
+      <>class Bar:
+    after: |
+      class Bar:
+          def foo<>(self):
+              pass
+  testAddParentToEmptyClass:
+    transcript: add parent editor
+    before: |
+      class NativeInput:<>
+    after: |
+      class NativeInput(Editor<>):
+  testAddToEmptyFor:
+    transcript: add x equals five
+    before: |
+      for i in range(1):<>
+    after: |
+      for i in range(1):
+          x = 5<>
+  testAddToEmptyForWithCursorAtBeginningOfStatement:
+    transcript: add x equals five
+    before: |
+      <>for i in range(1):
+    after: |
+      for i in range(1):
+      x = 5<>
+  testDeleteEmptyFor:
+    transcript: delete for
+    before: |
+      for i in range(1):<>
+    after: |
+  testAddToEmptyFunction:
+    transcript: add x equals five
+    before: |
+      def foo():<>
+    after: |
+      def foo():
+          x = 5<>
+  testAddToEmptyFunctionWithCursorAtBeginningOfStatement:
+    transcript: add x equals five
+    before: |
+      <>def foo():
+    after: |
+      def foo():
+
+
+      x = 5<>
+  testAddDecoratorToEmptyFunction:
+    transcript: add decorator login required
+    before: |
+      def foo<>():
+    after: |
+      @login_required<>
+      def foo():
+  testRenameEmptyFunction:
+    transcript: rename function to bar
+    before: |
+      def foo():
+    after: |
+      def bar<>():
+  testAddToEmptyIf:
+    transcript: add x equals five
+    before: |
+      if x > 4:<>
+    after: |
+      if x > 4:
+          x = 5<>
+
+  testAddToEmptyIfWithCursorAtBeginningOfStatement:
+    transcript: add x equals five
+    before: |
+      <>if x > 5:
+    after: |
+      if x > 5:
+      x = 5<>
+  testAddElseToEmptyIf:
+    transcript: add else
+    before: |
+      if x > 5:<>
+    after: |
+      if x > 5:
+      else:<>
+          pass
+  testAddElseIfToEmptyIf:
+    transcript: add else if true
+    before: |
+      if x > 5:<>
+    after: |
+      if x > 5:
+      elif True<>:
+          pass
+  testAddToEmptyTry:
+    transcript: add x equals five
+    before: |
+      try:<>
+    after: |
+      try:
+      x = 5<>
+  testAddToEmptyTryWithCursorAtBeginningOfStatement:
+    transcript: add x equals five
+    before: |
+      <>try:
+    after: |
+      try:
+      x = 5<>

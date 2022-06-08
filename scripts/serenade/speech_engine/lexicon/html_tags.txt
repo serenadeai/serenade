@@ -1,0 +1,18 @@
+abbr AE1 B ER0
+basefont B EY1 S F AA1 N T
+blockquote B L AA1 K K W OW1 T
+colgroup K AA1 L G R UW1 P
+datalist D EY1 T AH0 L IH1 S T
+del D EH1 L
+div D IH1 V
+em EH1 M
+fieldset F IY1 L D S EH1 T
+figcaption F IH1 G K AE1 P SH AH0 N
+frameset F R EY1 M S EH1 T
+iframe AY1 F R EY1 M
+ins IH1 N S
+optgroup AA1 P T G R UW1 P
+tbody T IY1 B AA1 D IY
+textarea T EH1 K S T EH1 R IY0 AH0
+tfoot T IY1 F UH1 T
+thead T IY1 HH EH1 D

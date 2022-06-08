@@ -1,0 +1,107 @@
+{
+  "filename": "formatting.js",
+  "steps": [
+    {
+      "title": "Text Formatting",
+      "body": "<p>This tutorial will cover the various mechanisms for formatting text using Serenade. Let's get started!</p>",
+      "textOnly": true,
+      "skipEditorFocus": true
+    },
+    {
+      "title": "Setup",
+      "body": "<p>Serenade will send voice commands to whichever application you have in the foreground. You can see which application Serenade is controlling via the icon at the bottom-right.</p><p>To get started, open VS Code, Atom, or JetBrains, then click next.</p>",
+      "nextWhenEditorFocused": true
+    },
+    {
+      "title": "Setup",
+      "body": "<p>Before we start the tutorial, let's make sure we're using an empty file. In your editor (without using voice), create a new file and save it as <code>serenade.js</code>.</p>",
+      "nextWhenEditorFilename": true
+    },
+    {
+      "title": "Adding code",
+      "body": "<p>The “add” command is the easiest way to write new code. As you'll see, Serenade handles many formatting details for you, so you don't need to dictate them all. Try an add command by saying:</p>",
+      "transcript": "add let value equals five",
+      "resetSource": ""
+    },
+    {
+      "title": "Adding code",
+      "body": "<p>As you can see, Serenade handled putting spaces around the equals sign and ending the statement with a semicolon, so you didn't need to say that. Let's try another one:</p>",
+      "transcript": "add let second value"
+    },
+    {
+      "title": "Inserting code",
+      "body": "<p>That time, Serenade used camel case formatting for your variable, since that's common in JavaScript.</p><p>As you've seen, the “add” command will always create a new statement. If you'd instead like to insert text at the current cursor position, you can use an “insert” command.</p><p>Give it a try:</p>",
+      "transcript": "insert equals value plus one"
+    },
+    {
+      "title": "Enclosures",
+      "body": "<p>Like “add” commands, “insert” commands also handle many formatting details for you.</p><p>You can also surround text with enclosure symbols, like quotes or braces. Try saying:</p>",
+      "transcript": "add let my string equals quotes hello"
+    },
+    {
+      "title": "Enclosures",
+      "body": "<p>Let's try another enclosure. Say:</p>",
+      "transcript": "add let my array equals brackets one comma two"
+    },
+    {
+      "title": "Navigating",
+      "body": "<p>Great! Let's continue. Move your cursor to the next line with:</p>",
+      "transcript": "next line"
+    },
+    {
+      "title": "Formatting",
+      "body": "<p>Serenade will choose the code formatting that it thinks makes the most sense for your code, but you can also specify your own formatting in “add” and “insert” commands. Try saying:</p>",
+      "transcript": "add let snake my second string equals double quotes"
+    },
+    {
+      "title": "Formatting",
+      "body": "<p>Let's try another variable style. Say:</p>",
+      "transcript": "add let pascal my third string"
+    },
+    {
+      "title": "Escaping",
+      "body": "<p>Sometimes, rather than inserting a symbol, you want to insert the literal text of that symbol name. To do so, just say “escape” before the symbol to get that literal text. Here, saying “escape plus” will give you the word “plus” rather than the symbol:</p>",
+      "transcript": "add camel value escape plus equals zero"
+    },
+    {
+      "title": "Adding tags",
+      "body": "<p>Let's try using an “add” command to insert an HTML tag. Say:</p>",
+      "transcript": "add const heading equals tag h1"
+    },
+    {
+      "title": "Adding tags",
+      "body": "<p>Notice that Serenade put your cursor in between the open and close tags. So, to insert text as the content of your tag, you can say:</p>",
+      "transcript": "insert capital welcome to my page"
+    },
+    {
+      "title": "Navigating",
+      "body": "<p>Great! Let's continue. Move your cursor to the next line with:</p>",
+      "transcript": "next line"
+    },
+    {
+      "title": "Adding a lamba",
+      "body": "<p>Similarly, you can create a JavaScript lambda by saying:</p>",
+      "transcript": "add const callback equals lambda of response"
+    },
+    {
+      "title": "Inserting code",
+      "body": "<p>Try combining a few symbols and enclosures into a single command by saying:</p>",
+      "transcript": "add output equals double quotes plus message"
+    },
+    {
+      "title": "New lines",
+      "body": "<p>To create a new line below the current line, you can say:</p>",
+      "transcript": "newline below"
+    },
+    {
+      "title": "Type commands",
+      "body": "<p>Sometimes, you might want to drop down to a lower level and specify all formatting and symbols yourself, rather than having Serenade take care of it for you. To do so, you can use the “type” command. Try it out:</p>",
+      "transcript": "type output space equals space double quote plus message double quote"
+    },
+    {
+      "title": "Try it out!",
+      "body": "<p>That's it for our tutorial!</p><p>Don't hesitate to reach out in the community if you run into any issues.</p>",
+      "skipEditorFocus": true
+    }
+  ]
+}

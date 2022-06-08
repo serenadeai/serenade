@@ -1,0 +1,1107 @@
+suite: Ruby
+filename: file.rb
+validate: true
+tests:
+  testAddArgument:
+    transcript: add argument first name plus last name
+    before: |
+      print("hello")
+    after: |
+      print("hello", first_name + last_name<>)
+  testAddAssignment:
+    transcript: add age equals current age plus one
+    after: |
+      age = current_age + 1<>
+  testAddCatch:
+    transcript: add rescue argument error
+    before: |
+      begin
+        foo()
+      end
+    after: |
+      begin
+        foo()
+      rescue ArgumentError<>
+      end
+  testAddClass:
+    transcript: add class download manager
+    after: |
+      class DownloadManager<>
+      end
+  testAddComment:
+    skipMappingGeneratorTest: true
+    transcript: add comment fix later
+    after: |
+      # fix later<>
+  testAddElement:
+    transcript: add element baz
+    before: |
+      o = [foo, 3, bar]
+    after: |
+      o = [foo, 3, bar, baz<>]
+  testAddElseIf:
+    transcript: add else if highest score plus one less than three
+    before: |
+      if true
+        nil
+      else
+        nil
+      end
+    after: |
+      if true
+        nil
+      elsif highest_score + 1 < 3<>
+      else
+        nil
+      end
+  testAddElse:
+    transcript: add else return false
+    before: |
+      if true
+        nil
+      end
+    after: |
+      if true
+        nil
+      else
+        return false<>
+      end
+  testAddElseToBeginRescue:
+    transcript: add else
+    before: |
+      begin
+        nil
+      rescu<>e
+        nil
+      ensure
+        nil
+      end
+    after: |
+      begin
+        nil
+      rescue
+        nil
+      else<>
+      ensure
+        nil
+      end
+  testAddEntry:
+    transcript: add entry string bar colon two
+    before: |
+      foo = {<>
+        'foo' => 1
+      }
+    after: |
+      foo = {
+        'bar' => 2<>,
+        'foo' => 1
+      }
+  testAddEnsure:
+    transcript: add ensure
+    before: |
+      begin
+        nil
+      rescue
+        nil
+      else
+        nil
+      end
+    after: |
+      begin
+        nil
+      rescue
+        nil
+      else
+        nil
+      ensure<>
+      end
+  testAddEnum:
+    notSupportedInLanguage: true
+  testAddExtends:
+    transcript: add parent animal
+    before: |
+      class Dog
+        nil
+      end
+    after: |
+      class Dog < Animal<>
+        nil
+      end
+  testAddFinally:
+    transcript: add ensure
+    before: |
+      begin
+        foo()
+      rescue Error
+        bar()
+      end
+    after: |
+      begin
+        foo()
+      rescue Error
+        bar()
+      ensure<>
+      end
+  testAddFor:
+    transcript: add for i in zero dot dot five
+    after: |
+      for i in 0..5<>
+      end
+  testAddFunction:
+    transcript: add function compute cumulative sum
+    after: |
+      def compute_cumulative_sum<>
+      end
+  testAddIf:
+    transcript: add if count equals ten
+    after: |
+      if count == 10<>
+      end
+  testAddImplements:
+    notSupportedInLanguage: true
+  testAddImport:
+    transcript: add require string format
+    after: |
+      require 'format'<>
+  testAddInterface:
+    notSupportedInLanguage: true
+  testAddLambda:
+    transcript: add f equals lambda of x
+    after: |
+      f = ->(x<>) {
+      }
+  testAddMethod:
+    transcript: add method players
+    before: |
+      class Game
+        def score (points)
+          return points
+        end
+      end
+    after: |
+      class Game
+        def players<>
+        end
+
+        def score (points)
+          return points
+        end
+      end
+  testAddNamespace:
+    transcript: add module foo
+    after: |
+      module Foo<>
+      end
+  testAddParameter:
+    transcript: add parameter max speed
+    before: |
+      def run (distance)
+        nil
+      end
+    after: |
+      def run (distance, max_speed<>)
+        nil
+      end
+  testAddParameterToEmptyList:
+    transcript: add parameter max speed
+    before: |
+      def run
+        nil
+      end
+    after: |
+      def run(max_speed<>)
+        nil
+      end
+  testAddPrint:
+    skipMappingGeneratorTest: true
+    transcript: add print value
+    after: |
+      print value<>
+  testAddPuts:
+    skipMappingGeneratorTest: true
+    transcript: add puts value
+    after: |
+      puts value<>
+  testAddP:
+    skipMappingGeneratorTest: true
+    transcript: add p value
+    after: |
+      p value<>
+  testAddProperty:
+    skipMappingGeneratorTest: true
+    transcript: add property at players equals four
+    before: |
+      class Game
+      end
+    after: |
+      class Game
+        @players = 4<>
+      end
+  testAddRescue:
+    transcript: add rescue
+    before: |
+      begin
+        nil
+      rescue<>
+        nil
+      else
+        nil
+      end
+    after: |
+      begin
+        nil
+      rescue
+        nil
+      rescue<>
+      else
+        nil
+      end
+  testAddRescueWithExpression:
+    transcript: add rescue value error
+    before: |
+      begin
+        nil
+      rescue<>
+        nil
+      end
+    after: |
+      begin
+        nil
+      rescue
+        nil
+      rescue ValueError<>
+      end
+  testAddReturn:
+    transcript: add return random dot random
+    before: |
+      def get_random
+      end
+    after: |
+      def get_random
+        return random.random<>
+      end
+  testAddReturnValue:
+    transcript: add return value four
+    before: |
+      def get_random
+        return
+      end
+    after: |
+      def get_random
+        return 4<>
+      end
+  testAddStruct:
+    notSupportedInLanguage: true
+  testAddThrow:
+    skipMappingGeneratorTest: true
+    transcript: add raise error
+    after: |
+      raise error<>
+  testAddTry:
+    transcript: add begin write parens
+    after: |
+      begin
+         write()<>
+      end
+  testAddUntil:
+    transcript: add until i less than three
+    after: |
+      until i < 3<>
+      end
+  testAddWhile:
+    transcript: add while i less than three
+    after: |
+      while i < 3<>
+      end
+  testAddConstructor:
+    skipMappingGeneratorTest: true
+    transcript: add constructor
+    before: |
+      class Foo
+      end
+    after: |
+      class Foo
+        def initialize<>
+        end
+      end
+  testAddDecorator:
+    notSupportedInLanguage: true
+  testAddMethodToEmptyClass:
+    transcript: add method fly
+    before: |
+      class Bird
+      end
+    after: |
+      class Bird
+        def fly<>
+        end
+      end
+  testAddModifier:
+    notSupportedInLanguage: true
+  testAddStatementAtEndOfFile:
+    transcript: add a equals b
+    before: |-
+      class Foo
+      end
+
+      <>
+    after: |
+      class Foo
+      end
+
+      a = b<>
+  testAddToClass:
+    transcript: add attr accessor foo
+    before: |
+      class Foo<>
+      end
+    after: |
+      class Foo
+        attr_accessor :foo<>
+      end
+  testAddToEmptyFile:
+    transcript: add answer equals forty two
+    after: |
+      answer = 42<>
+  testAddToEnum:
+    notSupportedInLanguage: true
+  testAddToNamespace:
+    notSupportedInLanguage: true
+  testAddToStruct:
+    notSupportedInLanguage: true
+  testDeleteArgument:
+    transcript: delete argument
+    before: |
+      class Foo
+         def foo
+            foo(a)
+         end
+      end
+    after: |
+      class Foo
+         def foo
+            foo(<>)
+         end
+      end
+  testDeleteBody:
+    transcript: delete body
+    before: |
+      class Foo
+         def foo
+            foo()<>
+         end
+      end
+    after: |
+      class Foo
+         def foo
+      <>   end
+      end
+  testDeleteComment:
+    transcript: delete comment
+    before: |
+      # this is a comment
+      class Foo
+      end
+    after: |
+      <>class Foo
+      end
+  testDeleteElement:
+    transcript: delete second element
+    before: |
+      o = [foo, 3, bar]
+    after: |
+      o = [foo, <>bar]
+  testDeleteExtends:
+    transcript: delete extends
+    before: |
+      class Foo < Bar
+      end
+    after: |
+      class Foo<>
+      end
+  testDeleteMethod:
+    transcript: delete method
+    before: |
+      class Bird
+         def chirp
+            print "chirp"
+         end
+
+         def fly
+            # TODO
+         end
+      end
+    after: |
+      class Bird
+         <>def fly
+            # TODO
+         end
+      end
+  testDeleteParameter:
+    transcript: delete parameter
+    before: |
+      def foo(a)
+      end
+    after: |
+      def foo<>
+      end
+  testSelectArgument:
+    object: argument
+    before: |
+      class Foo
+         def foo
+            x = 5
+            if f < b
+               bar(x)
+            end
+         end
+      end
+    after: |
+      class Foo
+         def foo
+            x = 5
+            if f < b
+               bar(<>x<>)
+            end
+         end
+      end
+  testSelectArgumentList:
+    object: argument list
+    before: |
+      x = 5
+      call(x, y, z)
+    after: |
+      x = 5
+      call(<>x, y, z<>)
+  testSelectAssignment:
+    object: assignment
+    before: |
+      class Foo
+         def foo
+            x = 5
+            p x == 5
+            if f < b
+               bar(x)
+            end
+         end
+      end
+    after: |
+      class Foo
+         def foo
+            <>x = 5<>
+            p x == 5
+            if f < b
+               bar(x)
+            end
+         end
+      end
+  testSelectAssignmentValue:
+    object: assignment value
+    before: |
+      class Foo
+         def foo
+            x = 5
+            p x == 5
+            if f < b
+               bar(x)
+            end
+         end
+      end
+    after: |
+      class Foo
+         def foo
+            x = <>5<>
+            p x == 5
+            if f < b
+               bar(x)
+            end
+         end
+      end
+  testSelectAssignmentVariable:
+    object: assignment variable
+    before: |
+      class Foo
+         def foo
+            x = 5
+            p x == 5
+            if f < b
+               bar(x)
+            end
+         end
+      end
+    after: |
+      class Foo
+         def foo
+            <>x<> = 5
+            p x == 5
+            if f < b
+               bar(x)
+            end
+         end
+      end
+  testSelectBody:
+    object: body
+    before: |
+      class Foo
+         def fo<>o
+            x = 5
+            p x == 5
+            if f < b
+               bar(x)
+            end
+         end
+      end
+    after: |
+      class Foo
+         def foo
+            <>x = 5
+            p x == 5
+            if f < b
+               bar(x)
+            end<>
+         end
+      end
+  testSelectCatch:
+    object: rescue
+    before: |
+      begin
+         nil
+      rescue
+         nil
+      else
+         nil
+      end
+    after: |
+      begin
+         nil
+      <>rescue
+         nil<>
+      else
+         nil
+      end
+  testSelectClass:
+    object: class
+    before: |
+      class Foo
+         def fo<>o
+            x = 5
+            p x == 5
+            if f < b
+               bar(x)
+            end
+         end
+      end
+
+      x = 1
+    after: |
+      <>class Foo
+         def foo
+            x = 5
+            p x == 5
+            if f < b
+               bar(x)
+            end
+         end
+      end<>
+
+      x = 1
+  testSelectComment:
+    object: comment
+    before: |
+      def func
+         # comment line
+      end
+    after: |
+      def func
+         <># comment line<>
+      end
+  testSelectBlockComment:
+    object: comment
+    before: |
+      def func
+      end
+
+      =begin
+      This is a multiline comment
+      =end
+    after: |
+      def func
+      end
+
+      <>=begin
+      This is a multiline comment
+      =end<>
+  testSelectCondition:
+    object: condition
+    before: |
+      if x > 4
+         print x + 1
+      elsif x < 4
+         print x + 10
+      else
+         print x + 100
+      end
+    after: |
+      if <>x > 4<>
+         print x + 1
+      elsif x < 4
+         print x + 10
+      else
+         print x + 100
+      end
+  testSelectConstructor:
+    object: constructor
+    before: |
+      class Foo
+        def initialize
+        end
+      end
+    after: |
+      class Foo
+        <>def initialize
+        end<>
+      end
+  testSelectDecorator:
+    notSupportedInLanguage: true
+  testSelectDictionary:
+    object: dictionary
+    before: |
+      string = 'foobar'
+      l = [1, 2, 3]
+      d = {"a" => 1, "b" => 2}
+    after: |
+      string = 'foobar'
+      l = [1, 2, 3]
+      d = <>{"a" => 1, "b" => 2}<>
+  testSelectElement:
+    object: element
+    before: |
+      foo = [1, 2, 3]
+    after: |
+      foo = [<>1<>, 2, 3]
+  testSelectElse:
+    object: else
+    before: |
+      if x > 4
+         print x + 1
+      elsif x < 4
+         print x + 10
+      else
+         print x + 100
+      end
+    after: |
+      if <>x > 4<>
+         print x + 1
+      elsif x < 4
+         print x + 10
+      <>else
+         print x + 100<>
+      end
+  testSelectElseFromBeginRescue:
+    object: else
+    before: |
+      begin
+          nil
+      rescue
+          nil
+      else
+        print x + 1
+      ensure
+        nil
+      end
+    after: |
+      begin
+          nil
+      rescue
+          nil
+      <>else
+        print x + 1<>
+      ensure
+        nil
+      end
+  testSelectElseIf:
+    object: else if
+    before: |
+      if x > 4
+         print x + 1
+      elsif x < 4
+         print x + 10
+      else
+         print x + 100
+      end
+    after: |
+      if <>x > 4<>
+         print x + 1
+      <>elsif x < 4
+         print x + 10<>
+      else
+         print x + 100
+      end
+  testSelectEnum:
+    notSupportedInLanguage: true
+  testSelectEntry:
+    object: entry
+    before: |
+      foo = {
+        <>'foo' => 1,<>
+        'bar' => 2,
+      }
+    after: |
+      foo = {
+        'foo' => 1,
+        'bar' => 2,
+      }
+  testSelectExtends:
+    object: parent
+    before: |
+      class Dog < Animal
+         nil
+      end
+    after: |
+      class Dog < <>Animal<>
+         nil
+      end
+  testSelectFinally:
+    object: ensure
+    before: |
+      begin
+         nil
+      rescue
+         nil
+      else
+         nil
+      ensure
+        print x + 1
+      end
+    after: |
+      begin
+         nil
+      rescue
+         nil
+      else
+         nil
+      <>ensure
+        print x + 1<>
+      end
+  testSelectFor:
+    object: for
+    before: |
+      def foo
+         for i in 0..5
+            print i + 1
+         end
+      end
+
+      if x > 1
+         print x - 1
+      end
+    after: |
+      def foo
+         <>for i in 0..5
+            print i + 1
+         end<>
+      end
+
+      if x > 1
+         print x - 1
+      end
+  testSelectForEach:
+    notSupportedInLanguage: true
+  testSelectFunction:
+    object: function
+    before: |
+      x = 3
+      def foo
+      end
+      y = 4
+    after: |
+      x = 3
+      <>def foo
+      end<>
+      y = 4
+  testSelectIf:
+    transcript: select if
+    before: |
+      if x > 4
+         print x + 1
+      elsif x < 4
+         print x + 10
+      else
+         print x + 100
+      end
+    after: |
+      <>if x > 4
+         print x + 1<>
+      elsif x < 4
+         print x + 10
+      else
+         print x + 100
+      end
+  testSelectImplements:
+    notSupportedInLanguage: true
+  testSelectImport:
+    object: require
+    before: |
+      require 'format'
+      x = 4
+    after: |
+      <>require 'format'<>
+      x = 4
+  testSelectInterface:
+    notSupportedInLanguage: true
+  testSelectLambda:
+    object: lambda
+    before: |
+      string = 'foobar'
+      l = [1, 2, 3]
+      d = {'a': 1, 'b': 2}
+      f = -> (x) {}
+    after: |
+      string = 'foobar'
+      l = [1, 2, 3]
+      d = {'a': 1, 'b': 2}
+      f = <>-> (x) {}<>
+  testSelectList:
+    object: list
+    before: |
+      string = 'foobar'
+      l = [1, 2, 3]
+      d = {'a': 1, 'b': 2}
+      f = -> (x) {}
+    after: |
+      string = 'foobar'
+      l = <>[1, 2, 3]<>
+      d = {'a': 1, 'b': 2}
+      f = -> (x) {}
+  testSelectMethod:
+    object: method
+    before: |
+      class Game
+         def players
+         end
+
+         def score (points)
+            return points
+         end
+      end
+    after: |
+      class Game
+         <>def players
+         end<>
+
+         def score (points)
+            return points
+         end
+      end
+  testSelectModifier:
+    notSupportedInLanguage: true
+  testSelectNamespace:
+    object: module
+    before: |
+      x = 3
+      module Foo
+      end
+    after: |
+      x = 3
+      <>module Foo
+      end<>
+  testSelectParameter:
+    object: parameter
+    before: |
+      class Game
+         def players
+         end
+
+         def score (points)
+            return points
+         end
+      end
+    after: |
+      class Game
+         def players
+         end
+
+         def score (<>points<>)
+            return points
+         end
+      end
+  testSelectParameterList:
+    object: parameter list
+    before: |
+      class Game
+         def players
+         end
+
+         def score (fouls, points)
+            return points
+         end
+      end
+    after: |
+      class Game
+         def players
+         end
+
+         def score (<>fouls, points<>)
+            return points
+         end
+      end
+  testSelectProperty:
+    object: property
+    before: |
+      class Game
+         players = 4
+
+         def initialize
+         end
+      end
+    after: |
+      class Game
+         <>players = 4<>
+
+         def initialize
+         end
+      end
+  testSelectReturn:
+    object: return
+    before: |
+      class Game
+         players = 4
+
+         def foo
+            return 1
+         end
+      end
+    after: |
+      class Game
+         players = 4
+
+         def foo
+            <>return 1<>
+         end
+      end
+  testSelectReturnType:
+    notSupportedInLanguage: true
+  testSelectReturnValue:
+    object: return value
+    before: |
+      class Game
+         players = 4
+
+         def foo
+            return 1
+         end
+      end
+    after: |
+      class Game
+         players = 4
+
+         def foo
+            return <>1<>
+         end
+      end
+  testSelectString:
+    object: string
+    before: |
+      l = [1, 2, 3]
+      string = "foobar"
+    after: |
+      l = [1, 2, 3]
+      string = <>"foobar"<>
+  testSelectStringText:
+    object: string text
+    before: |
+      l = [1, 2, 3]
+      string = "foobar"
+    after: |
+      l = [1, 2, 3]
+      string = "<>foobar<>"
+  testSelectStruct:
+    notSupportedInLanguage: true
+  testSelectThrow:
+    object: throw
+    before: |
+      x = 3
+      throw e
+    after: |
+      x = 3
+      <>throw e<>
+  testSelectTry:
+    object: begin
+    before: |
+      <>begin
+         nil<>
+      rescue
+         nil
+      else
+         nil
+      end
+    after: |
+      begin
+         nil
+      rescue
+         nil
+      else
+         nil
+      end
+  testSelectTypeArgument:
+    notSupportedInLanguage: true
+  testSelectTypeFromAssignment:
+    notSupportedInLanguage: true
+  testSelectTypeFromFunction:
+    notSupportedInLanguage: true
+  testSelectTypeFromParameter:
+    notSupportedInLanguage: true
+  testSelectTypeParameter:
+    notSupportedInLanguage: true
+  testSelectUntil:
+    object: until
+    before: |
+      begin
+         nil
+      rescue
+         nil
+      else
+         nil
+      end
+
+      until i < 3
+         print i + 1
+      end
+    after: |
+      begin
+         nil
+      rescue
+         nil
+      else
+         nil
+      end
+
+      <>until i < 3
+         print i + 1
+      end<>
+  testSelectWhile:
+    object: while
+    before: |
+      begin
+         nil
+      rescue
+         nil
+      else
+         nil
+      end
+
+      while i < 3
+         print i + 1
+      end
+    after: |
+      begin
+         nil
+      rescue
+         nil
+      else
+         nil
+      end
+
+      <>while i < 3
+         print i + 1
+      end<>

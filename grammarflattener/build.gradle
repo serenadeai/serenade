@@ -1,0 +1,9 @@
+apply plugin: "application"
+
+mainClassName = "grammarflattener.GrammarFlattener"
+distZip.enabled = false
+distTar.enabled = false
+
+dependencies {
+    implementation project(":toolbelt")
+}
