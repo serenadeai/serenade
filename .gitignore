@@ -39,3 +39,4 @@ core/src/main/resources/grammars
 
 !client/build/*
 !core/src/main/java/core/gen/antlr/antlr4/LexerAdaptor.java
+!core/src/dist/bin/run-pro

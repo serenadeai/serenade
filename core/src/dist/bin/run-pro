@@ -1,0 +1,8 @@
+#!/bin/bash
+
+trap 'kill $(jobs -p) > /dev/null 2>&1' EXIT
+
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$HERE"
+
+SPEECH_ENGINE_HOST="localhost" SPEECH_ENGINE_PORT="17202" ENV="local" IN_MEMORY="1" JAVA_HOME="$HERE/../../jdk" JAVA_OPTS="-Djava.net.preferIPv4Stack=true" JAVA_TREE_SITTER="$HERE/../lib/libjava-tree-sitter" CORE_HOST="localhost" CORE_PORT="17200" CODE_ENGINE_HOST="localhost" CODE_ENGINE_PORT=17203 ./serenade-core
