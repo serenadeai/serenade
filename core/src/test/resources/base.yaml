@@ -840,6 +840,14 @@ tests:
           pass
       <>def bar_baz():
           pass<>
+  testSelectElement:
+    object: third element
+    before: |
+      a = [1, 2, 3]
+      b = [4<>, 5, 6]
+    after: |
+      a = [1, 2, 3]
+      b = [4, 5, <>6<>]
   testSelectEntry:
     object: entry
     before: |
