@@ -352,7 +352,9 @@ public abstract class SelectorMap implements LanguageSpecific {
     m.put(ObjectType.DO_WHILE, instanceMatch(Ast.DoWhile.class));
     m.put(
       ObjectType.ELEMENT,
-      predicateMatch(node -> node instanceof Ast.ListElement || node instanceof Ast.MarkupElement)
+      filterByParent(
+        predicateMatch(node -> node instanceof Ast.ListElement || node instanceof Ast.MarkupElement)
+      )
     );
     m.put(ObjectType.ELSE, instanceMatch(Ast.ElseClause.class));
     m.put(ObjectType.ELSE_IF, instanceMatch(Ast.ElseIfClause.class));
