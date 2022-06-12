@@ -11,6 +11,7 @@ export type Plugin = {
   lastActive: number;
   websocket: WebSocket;
   match?: string;
+  icon?: string;
 };
 
 export default class PluginManager {
@@ -35,10 +36,16 @@ export default class PluginManager {
     this.plugins = result;
   }
 
-  private updatePlugin(websocket: WebSocket, id: string, app: string, match?: string) {
+  private updatePlugin(websocket: WebSocket, id: string, app: string, match?: string, icon?: string) {
     const plugin = this.fromId(id);
     if (plugin) {
       plugin.websocket = websocket;
+
+      // only update the icon if it has a value. an empty string clears the
+      // custom icon.
+      if (icon != undefined) {
+        plugin.icon = icon;
+      }
     } else {
       if (app == "intellij") {
         app = "jetbrains";
@@ -49,6 +56,7 @@ export default class PluginManager {
         app,
         websocket,
         match,
+        icon,
         lastActive: Date.now(),
         lastHeartbeat: Date.now(),
       });
@@ -148,8 +156,8 @@ export default class PluginManager {
     });
   }
 
-  updateActive(websocket: WebSocket, id: string, app: string, match?: string) {
-    this.updatePlugin(websocket, id, app, match);
+  updateActive(websocket: WebSocket, id: string, app: string, match?: string, icon?: string) {
+    this.updatePlugin(websocket, id, app, match, icon);
     this.fromId(id)!.lastActive = Date.now();
   }
 

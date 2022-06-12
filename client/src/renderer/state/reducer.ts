@@ -23,6 +23,7 @@ const initialState = {
   executeSilenceThreshold: 1,
   filename: "",
   highlighted: [],
+  icon: "",
   language: core.Language.LANGUAGE_DEFAULT,
   languageSwitcherLanguage: core.Language.LANGUAGE_NONE,
   latency: 1,

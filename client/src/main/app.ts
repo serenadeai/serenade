@@ -167,7 +167,8 @@ export default class App {
       mainWindow,
       miniModeWindow,
       pluginManager,
-      stream
+      stream,
+      log
     );
 
     await custom.start();

@@ -18,6 +18,7 @@ export default class Active {
   private suggestion: string = "";
 
   app: string = "";
+  icon?: string;
   customCommands: any[] = [];
   customHints: any[] = [];
   customWords: any[] = [];
@@ -384,14 +385,18 @@ export default class Active {
         ? this.languageSwitcherLanguage
         : filenameToLanguage(filename);
 
+    const icon = plugin?.icon;
+
     const send =
       force ||
       app != this.app ||
+      icon != this.icon ||
       filename != this.filename ||
       language != this.language ||
       sourceAvailable != this.sourceAvailable;
 
     this.app = app;
+    this.icon = icon;
     this.filename = filename;
     this.language = language;
     this.sourceAvailable = sourceAvailable;
@@ -401,6 +406,7 @@ export default class Active {
       this.bridge.setState(
         {
           app: this.app,
+          icon: this.icon,
           dictateMode: this.dictateMode,
           filename: this.filename,
           firstPartyPluginAvailable: this.firstPartyPluginAvailable(),

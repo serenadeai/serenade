@@ -7,6 +7,9 @@ import PluginManager from "./plugin-manager";
 import RendererBridge from "../bridge";
 import Stream from "../stream/stream";
 import { core } from "../../gen/core";
+import Log from "../log";
+
+const iconMaxLen = 20000;
 
 export default class IPCServer {
   private server: WebSocket.Server;
@@ -18,7 +21,8 @@ export default class IPCServer {
     private mainWindow: MainWindow,
     private miniModeWindow: MiniModeWindow,
     private pluginManager: PluginManager,
-    private stream: Stream
+    private stream: Stream,
+    private log: Log
   ) {
     this.server = new WebSocket.Server({ host: "localhost", port: 17373 });
     this.server.on("connection", (websocket) => {
@@ -31,7 +35,8 @@ export default class IPCServer {
             websocket,
             request.data.id,
             request.data.app,
-            request.data.match
+            request.data.match,
+            this.checkIcon(request.data.icon)
           );
         } else if (request.message == "callback") {
           this.pluginManager.resolve(request.data.callback, request.data.data);
@@ -130,5 +135,26 @@ export default class IPCServer {
 
   stop() {
     this.server.close();
+  }
+
+  private checkIcon(icon: any): string | undefined {
+    if (icon != undefined) {
+      if (typeof icon != "string") {
+        this.log.logVerbose("Received active message with non-string icon; using default/existing icon");
+        return undefined;
+      }
+
+      if (!icon.startsWith("data:")) {
+        this.log.logVerbose("Received icon string that was not in a data URL format; using default/existing icon");
+        return undefined;
+      }
+
+      if (icon.length > iconMaxLen) {
+        this.log.logVerbose(`Icon received from plugin too long (${icon.length} > ${iconMaxLen}); using default/existing icon`);
+        return undefined;
+      }
+    }
+
+    return icon;
   }
 }
