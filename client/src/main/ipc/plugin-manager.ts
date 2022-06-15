@@ -42,7 +42,7 @@ export default class PluginManager {
       plugin.websocket = websocket;
 
       // only update the icon if it has a value. an empty string clears the
-      // custom icon.
+      // custom icon
       if (icon != undefined) {
         plugin.icon = icon;
       }

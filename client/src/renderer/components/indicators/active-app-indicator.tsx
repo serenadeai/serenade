@@ -44,8 +44,8 @@ const apps: { [key: string]: { name: string; icon: string } } = {
 const ActiveAppIndicatorComponent: React.FC<{
   app: string;
   pluginInstalled: boolean;
-  icon: string;
-}> = ({ app, pluginInstalled, icon }) => {
+  customIcon?: string;
+}> = ({ app, pluginInstalled, customIcon }) => {
   let name = app;
   if (Object.keys(apps).includes(app)) {
     name = apps[app].name;
@@ -53,12 +53,12 @@ const ActiveAppIndicatorComponent: React.FC<{
     name = "Other";
   }
 
-  const iconSrc = icon || (Object.keys(apps).includes(app) ? apps[app].icon : windowIcon);
+  const icon = customIcon || (Object.keys(apps).includes(app) ? apps[app].icon : windowIcon);
   return (
     <div className="block text-xs drop-shadow-sm px-1.5 py-0.5 ">
       <img
         className="w-4 h-4 inline-block mr-1"
-        src={iconSrc}
+        src={icon}
         alt={name}
         style={{ marginTop: "-2px" }}
       />{" "}
@@ -70,5 +70,5 @@ const ActiveAppIndicatorComponent: React.FC<{
 export const ActiveAppIndicator = connect((state: any) => ({
   app: state.app,
   pluginInstalled: state.pluginInstalled,
-  icon: state.icon,
+  customIcon: state.icon,
 }))(ActiveAppIndicatorComponent);
