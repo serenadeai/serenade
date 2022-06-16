@@ -25,6 +25,21 @@ export const Content = () => (
         a <code>match</code> of <code>atom</code>, so it will match any process with{" "}
         <code>atom</code> in its name.
       </li>
+      <li>
+        <code>icon</code> The application icon to show in the main Serenade window when the
+        application is active. Must be encoded as a{" "}
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URLs"
+          className="text-purple-500 hover:text-purple-600 transition-colors cursor-pointer"
+          target="_blank"
+          aria-label="Data URLs - HTTP | MDN"
+          title="Data URLs - HTTP | MDN"
+        >data URL</a>
+        {" "}string and cannot be more than 20,000 characters long; ideally use a small (less than
+        48x48 pixels) version of the application icon. This field is only needed in the first
+        <code>active</code> message or whenever the icon changes (e.g. to show custom status
+        icons), and may be left out entirely if an icon isn't requred.
+      </li>
     </ul>
     <Subsubheading title="heartbeat" />
     <p>Sent by a plugin to keep the connection alive with the Serenade app.</p>

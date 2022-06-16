@@ -7,6 +7,9 @@ import PluginManager from "./plugin-manager";
 import RendererBridge from "../bridge";
 import Stream from "../stream/stream";
 import { core } from "../../gen/core";
+import Log from "../log";
+
+const maximumIconLength = 20000;
 
 export default class IPCServer {
   private server: WebSocket.Server;
@@ -18,7 +21,8 @@ export default class IPCServer {
     private mainWindow: MainWindow,
     private miniModeWindow: MiniModeWindow,
     private pluginManager: PluginManager,
-    private stream: Stream
+    private stream: Stream,
+    private log: Log
   ) {
     this.server = new WebSocket.Server({ host: "localhost", port: 17373 });
     this.server.on("connection", (websocket) => {
@@ -27,11 +31,24 @@ export default class IPCServer {
 
         // protocol messages from plugins
         if (request.message == "active") {
+          let icon = request.data.icon;
+
+          const iconValid = (
+            icon == undefined ||
+            (typeof icon == 'string' && icon.startsWith('data:') && icon.length <= maximumIconLength)
+          );
+
+          if (!iconValid) {
+            this.log.logVerbose('Plugin provided an app icon that does not adhere to requirements');
+            icon = undefined;
+          }
+
           this.pluginManager.updateActive(
             websocket,
             request.data.id,
             request.data.app,
-            request.data.match
+            request.data.match,
+            icon,
           );
         } else if (request.message == "callback") {
           this.pluginManager.resolve(request.data.callback, request.data.data);
