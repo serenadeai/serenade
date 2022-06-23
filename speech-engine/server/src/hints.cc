@@ -1,3 +1,5 @@
+#include "hints.h"
+
 #include <algorithm>
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_generators.hpp>
@@ -9,7 +11,6 @@
 #include "decoder/grammar-fst.h"
 #include "fst/symbol-table.h"
 #include "fstext/kaldi-fst-io.h"
-#include "hints.h"
 #include "hmm/hmm-utils.h"
 #include "io.h"
 #include "util/simple-io-funcs.h"
@@ -46,13 +47,15 @@ HintGraphCreator::HintGraphCreator(
     const kaldi::TransitionModel &transition_model,
     const kaldi::ContextDependency &context_dependency,
     const std::vector<int32> disambig_syms, const int hint_start,
-    const int nonterm_phones_offset, std::string lexicon_path,
-    std::string phones_path, std::string left_context_phones_path)
+    const float hint_weight, const int nonterm_phones_offset,
+    std::string lexicon_path, std::string phones_path,
+    std::string left_context_phones_path)
     : phoneme_converter_(phoneme_converter),
       transition_model_(transition_model),
       context_dependency_(context_dependency),
       disambig_syms_(disambig_syms),
       hint_start_(hint_start),
+      hint_weight_(hint_weight),
       nonterm_phones_offset_(nonterm_phones_offset),
       nonterminal_begin_(hint_start - 3),
       nonterminal_end_(hint_start - 2),
@@ -244,8 +247,8 @@ std::shared_ptr<const fst::ConstFst<fst::StdArc>> HintGraphCreator::Create(
   grammar_fst.AddArc(2, fst::StdArc(nonterminal_end_, /* <eps> */ 0, 0.0, 3));
   for (int i = 0; i < hints.size(); i++) {
     if (skipped.find(hints[i]) == skipped.end()) {
-      grammar_fst.AddArc(1,
-                         fst::StdArc(i + hint_start_, i + hint_start_, 6.9, 2));
+      grammar_fst.AddArc(
+          1, fst::StdArc(i + hint_start_, i + hint_start_, hint_weight_, 2));
     }
   }
   fst::ArcSort(&grammar_fst, fst::ILabelCompare<fst::StdArc>());

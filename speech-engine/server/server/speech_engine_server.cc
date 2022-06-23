@@ -297,6 +297,8 @@ int main(int argc, char* argv[]) {
       it.Next();
     }
     int32 hint_word_start = word_symbols->NumSymbols();
+    int32 hint_placeholder = word_symbols->Find("#nonterm:hint");
+    float hint_weight = 6.9;
 
     // setup language model rescoring
     ConstArpaLm chunk_const_arpa;
@@ -304,8 +306,10 @@ int main(int argc, char* argv[]) {
     ReadKaldiObjectFile(include + "/export/lang/const_arpa", &chunk_const_arpa);
     ReadKaldiObjectFile(include + "/export/lang/final_const_arpa",
                         &final_const_arpa);
-    Rescorer chunk_rescorer{chunk_const_arpa};
-    Rescorer final_rescorer{final_const_arpa};
+    Rescorer chunk_rescorer{chunk_const_arpa, hint_word_start,
+                            hint_placeholder, hint_weight};
+    Rescorer final_rescorer{final_const_arpa, hint_word_start,
+                            hint_placeholder, hint_weight};
 
     RecognizerConfig recognizer_config{
         feature_info,
@@ -333,6 +337,7 @@ int main(int argc, char* argv[]) {
         context_dependency,
         disambig_syms,
         hint_word_start,
+        hint_weight,
         nonterm_phones_offset,
         include + "/export/lang/lexicon.txt",
         include + "/export/lang/phones.txt",

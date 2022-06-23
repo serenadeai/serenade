@@ -17,6 +17,7 @@ class HintGraphCreator {
   const kaldi::ContextDependency &context_dependency_;
   const std::vector<int32> disambig_syms_;
   int32 hint_start_;
+  float hint_weight_;
   int32 nonterm_phones_offset_;
   int32 nonterminal_begin_;
   int32 nonterminal_end_;
@@ -28,8 +29,8 @@ class HintGraphCreator {
                    const kaldi::TransitionModel &transition_model,
                    const kaldi::ContextDependency &context_dependency,
                    const std::vector<int32> disambig_syms, int hint_start,
-                   const int nonterm_phones_offset, std::string lexicon_path,
-                   std::string phones_path,
+                   const float hint_weight, const int nonterm_phones_offset,
+                   std::string lexicon_path, std::string phones_path,
                    std::string left_context_phones_path);
   std::shared_ptr<const fst::ConstFst<fst::StdArc>> Create(
       const std::vector<std::string> &hints) const;

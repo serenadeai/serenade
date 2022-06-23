@@ -1,9 +1,9 @@
+#include "phoneme_converter.h"
+
 #include <include/PhonetisaurusScript.h>
 #include <include/util.h>
 
 #include <sstream>
-
-#include "phoneme_converter.h"
 
 std::vector<std::string> tokenize_utf8_string(std::string* utf8_string,
                                               std::string* delimiter) {

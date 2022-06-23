@@ -11,9 +11,13 @@ namespace speech_engine {
 class Rescorer {
  private:
   const kaldi::ConstArpaLm &const_arpa_;
+  int32 hint_word_start_;
+  int32 hint_placeholder_;
+  float hint_weight_;
 
  public:
-  Rescorer(const kaldi::ConstArpaLm &const_arpa);
+  Rescorer(const kaldi::ConstArpaLm &const_arpa, int32 hint_word_start,
+           int32 hint_placeholder, float hint_weight);
 
   std::optional<kaldi::Lattice> ScaleLanguageModelScore(
       kaldi::Lattice lat, kaldi::BaseFloat lm_scale);

@@ -1,9 +1,10 @@
+#include "recognizer.h"
+
 #include "base/kaldi-common.h"
 #include "decoder/grammar-fst.h"
 #include "fst/fstlib.h"
 #include "fstext/kaldi-fst-io.h"
 #include "fstext/table-matcher.h"
-#include "recognizer.h"
 #include "util/common-utils.h"
 
 using namespace kaldi;
