@@ -84,7 +84,11 @@ public class CallbackEvaluator {
     if (e instanceof SafeToDisplayException) {
       message = e.getMessage();
     } else {
-      Logs.logError(logger, e.getMessage() != null ? e.getMessage() : "CallbackEvaluator error", e);
+      Logs.logError(
+        logger,
+        e.getMessage() != null ? e.getMessage() : "CallbackEvaluator error",
+        e
+      );
     }
 
     return Optional.of(
@@ -96,7 +100,12 @@ public class CallbackEvaluator {
             createAlternative(
               message,
               message,
-              Arrays.asList(Command.newBuilder().setType(CommandType.COMMAND_TYPE_INVALID).build())
+              Arrays.asList(
+                Command
+                  .newBuilder()
+                  .setType(CommandType.COMMAND_TYPE_INVALID)
+                  .build()
+              )
             )
           )
         )
@@ -145,12 +154,18 @@ public class CallbackEvaluator {
       .build();
   }
 
-  private CommandsResponse paste(EditorStateWithMetadata state, String directionName) {
-    NewlineNormalizer.Normalization normalization = newlineNormalizer.normalize(state);
+  private CommandsResponse paste(
+    EditorStateWithMetadata state,
+    String directionName
+  ) {
+    NewlineNormalizer.Normalization normalization = newlineNormalizer.normalize(
+      state
+    );
     state = normalization.state;
 
     String text = state.getClipboard();
-    String description = "paste" + (directionName.equals("") ? "" : " " + directionName);
+    String description =
+      "paste" + (directionName.equals("") ? "" : " " + directionName);
     String source = state.getSource();
     int cursor = state.getCursor();
     InsertDirection direction;
@@ -172,14 +187,14 @@ public class CallbackEvaluator {
       .setTextResponse(true)
       .setExecute(
         normalization.revert(
-          createAlternative(description, description, Arrays.asList(diff.toCommand()))
+          createAlternative(
+            description,
+            description,
+            Arrays.asList(diff.toCommand())
+          )
         )
       )
       .build();
-  }
-
-  private void addToHistory(String token, String transcript) {
-    history.add(token, transcript);
   }
 
   public Optional<CommandsResponse> evaluate(
@@ -193,7 +208,12 @@ public class CallbackEvaluator {
             .newBuilder(
               transcriptEvaluator.evaluate(
                 transcriptParser.parse(
-                  Arrays.asList(Alternative.newBuilder().setTranscript(request.getText()).build()),
+                  Arrays.asList(
+                    Alternative
+                      .newBuilder()
+                      .setTranscript(request.getText())
+                      .build()
+                  ),
                   state,
                   true
                 ),
@@ -209,8 +229,15 @@ public class CallbackEvaluator {
         return Optional.of(openFile(state));
       } else if (request.getType() == CallbackType.CALLBACK_TYPE_PASTE) {
         return Optional.of(paste(state, request.getText()));
-      } else if (request.getType() == CallbackType.CALLBACK_TYPE_ADD_TO_HISTORY) {
-        addToHistory(state.getToken(), request.getText());
+      } else if (
+        request.getType() == CallbackType.CALLBACK_TYPE_ADD_TO_HISTORY
+      ) {
+        history.add(state.getToken(), request.getText());
+        return Optional.empty();
+      } else if (
+        request.getType() == CallbackType.CALLBACK_TYPE_CLEAR_HISTORY
+      ) {
+        history.clear(state.getToken());
         return Optional.empty();
       }
     } catch (Exception e) {

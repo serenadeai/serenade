@@ -10,6 +10,7 @@ enum CallbackType {
     CALLBACK_TYPE_OPEN_FILE = 2;
     CALLBACK_TYPE_PASTE = 3;
     CALLBACK_TYPE_ADD_TO_HISTORY = 4;
+    CALLBACK_TYPE_CLEAR_HISTORY = 5;
 }
 
 enum CommandType {

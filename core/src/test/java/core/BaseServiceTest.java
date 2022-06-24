@@ -9,26 +9,16 @@ import com.google.protobuf.ByteString;
 import core.gen.rpc.Command;
 import core.gen.rpc.CommandType;
 import core.gen.rpc.CommandsResponse;
-import core.gen.rpc.CommandsResponseAlternative;
 import core.gen.rpc.EditorState;
 import core.gen.rpc.EvaluateRequest;
-import core.gen.rpc.EvaluateResponse;
 import core.gen.rpc.EvaluateTextRequest;
 import core.gen.rpc.InitializeRequest;
 import core.gen.rpc.Language;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,7 +26,7 @@ import toolbelt.client.CoreClient;
 
 public class BaseServiceTest extends BaseTest {
 
-  private CoreClient client;
+  protected CoreClient client;
 
   @BeforeEach
   public void baseServiceBefore() {
