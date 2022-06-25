@@ -84,9 +84,8 @@ class TypeText implements Operation {
   ) {}
 
   async execute() {
-    const text = this.insertHistory.normalize(this.text, this.active.app);
-    this.insertHistory.add(text, this.active.app);
-    await this.system.typeText(text, this.active.app);
+    this.insertHistory.add(this.text, this.active.app);
+    await this.system.typeText(this.text, this.active.app);
   }
 
   keystrokesCount(): number {

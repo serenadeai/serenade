@@ -22,13 +22,4 @@ export default class InsertHistory {
 
     return value.text;
   }
-
-  normalize(text: string, app: string) {
-    const value = this.latest(app);
-    if (value && text.startsWith(value)) {
-      text = text.substring(value.length);
-    }
-
-    return text;
-  }
 }
