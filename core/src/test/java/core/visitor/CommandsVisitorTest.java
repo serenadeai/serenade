@@ -31,10 +31,7 @@ public class CommandsVisitorTest extends BaseServiceTest {
       EvaluateRequest
         .newBuilder()
         .setCallbackRequest(
-          CallbackRequest
-            .newBuilder()
-            .setType(CallbackType.CALLBACK_TYPE_CLEAR_HISTORY)
-            .build()
+          CallbackRequest.newBuilder().setType(CallbackType.CALLBACK_TYPE_CLEAR_HISTORY).build()
         )
         .build()
     );
@@ -93,42 +90,27 @@ public class CommandsVisitorTest extends BaseServiceTest {
   public void testArrowKeyDirection() {
     assertEquals(
       CommandType.COMMAND_TYPE_PRESS,
-      makeRequest("", 0, "up", language)
-        .getAlternatives(0)
-        .getCommands(1)
-        .getType()
+      makeRequest("", 0, "up", language).getAlternatives(0).getCommands(1).getType()
     );
 
     assertEquals(
       CommandType.COMMAND_TYPE_PRESS,
-      makeRequest("", 0, "down", language)
-        .getAlternatives(0)
-        .getCommands(1)
-        .getType()
+      makeRequest("", 0, "down", language).getAlternatives(0).getCommands(1).getType()
     );
 
     assertEquals(
       CommandType.COMMAND_TYPE_PRESS,
-      makeRequest("", 0, "left", language)
-        .getAlternatives(0)
-        .getCommands(1)
-        .getType()
+      makeRequest("", 0, "left", language).getAlternatives(0).getCommands(1).getType()
     );
 
     assertEquals(
       CommandType.COMMAND_TYPE_PRESS,
-      makeRequest("", 0, "right", language)
-        .getAlternatives(0)
-        .getCommands(1)
-        .getType()
+      makeRequest("", 0, "right", language).getAlternatives(0).getCommands(1).getType()
     );
 
     assertEquals(
       2,
-      makeRequest("", 0, "up two", language)
-        .getAlternatives(0)
-        .getCommands(1)
-        .getIndex()
+      makeRequest("", 0, "up two", language).getAlternatives(0).getCommands(1).getIndex()
     );
   }
 
@@ -136,9 +118,7 @@ public class CommandsVisitorTest extends BaseServiceTest {
   public void testBrokenChain() {
     assertEquals(
       "line one",
-      makeRequest("", 0, "previous tab line one", language)
-        .getExecute()
-        .getRemaining()
+      makeRequest("", 0, "previous tab line one", language).getExecute().getRemaining()
     );
   }
 
@@ -154,20 +134,12 @@ public class CommandsVisitorTest extends BaseServiceTest {
         .build(),
       Arrays.asList("go to google dot com")
     );
-    assertEquals(
-      CommandType.COMMAND_TYPE_PRESS,
-      r.getAlternatives(0).getCommands(0).getType()
-    );
+    assertEquals(CommandType.COMMAND_TYPE_PRESS, r.getAlternatives(0).getCommands(0).getType());
   }
 
   @Test
   public void testChain() {
-    List<Command> r1 = makeRequest(
-      "foo\nbar\n",
-      0,
-      "next line delete line",
-      language
-    )
+    List<Command> r1 = makeRequest("foo\nbar\n", 0, "next line delete line", language)
       .getAlternatives(0)
       .getCommandsList();
 
@@ -205,13 +177,7 @@ public class CommandsVisitorTest extends BaseServiceTest {
 
   @Test
   public void testCopy() {
-    assertCommandType(
-      "def foo():",
-      4,
-      "copy",
-      language,
-      CommandType.COMMAND_TYPE_PRESS
-    );
+    assertCommandType("def foo():", 4, "copy", language, CommandType.COMMAND_TYPE_PRESS);
 
     Command c1 = assertCommandType(
       "def foo():",
@@ -279,23 +245,14 @@ public class CommandsVisitorTest extends BaseServiceTest {
 
   @Test
   public void testCut() {
-    assertCommandType(
-      "def foo():",
-      4,
-      "cut",
-      language,
-      CommandType.COMMAND_TYPE_PRESS
-    );
+    assertCommandType("def foo():", 4, "cut", language, CommandType.COMMAND_TYPE_PRESS);
 
     List<Command> c1 = assertCommandTypes(
       "foo bar\n",
       0,
       "cut word",
       language,
-      Arrays.asList(
-        CommandType.COMMAND_TYPE_COPY,
-        CommandType.COMMAND_TYPE_DIFF
-      )
+      Arrays.asList(CommandType.COMMAND_TYPE_COPY, CommandType.COMMAND_TYPE_DIFF)
     );
 
     assertEquals("foo", c1.get(0).getText());
@@ -304,20 +261,8 @@ public class CommandsVisitorTest extends BaseServiceTest {
 
   @Test
   public void testDictateMode() {
-    assertCommandType(
-      "",
-      0,
-      "dictate mode",
-      language,
-      CommandType.COMMAND_TYPE_START_DICTATE
-    );
-    assertCommandType(
-      "",
-      0,
-      "stop dictating",
-      language,
-      CommandType.COMMAND_TYPE_STOP_DICTATE
-    );
+    assertCommandType("", 0, "dictate mode", language, CommandType.COMMAND_TYPE_START_DICTATE);
+    assertCommandType("", 0, "stop dictating", language, CommandType.COMMAND_TYPE_STOP_DICTATE);
     EditorState nonPluginState = EditorState
       .newBuilder()
       .setApplication("")
@@ -361,10 +306,7 @@ public class CommandsVisitorTest extends BaseServiceTest {
   @Test
   public void testFocus() {
     CommandsResponse r = makeRequest("", 0, "focus atom", language);
-    assertEquals(
-      CommandType.COMMAND_TYPE_FOCUS,
-      r.getAlternatives(0).getCommands(0).getType()
-    );
+    assertEquals(CommandType.COMMAND_TYPE_FOCUS, r.getAlternatives(0).getCommands(0).getType());
     assertEquals("atom", r.getAlternatives(0).getCommands(0).getText());
   }
 
@@ -372,24 +314,13 @@ public class CommandsVisitorTest extends BaseServiceTest {
   public void testForwardDelete() {
     CommandsResponse r = makeRequest("", 0, "forward delete", language);
     assertEquals(1, r.getAlternatives(0).getCommandsList().size());
-    assertEquals(
-      "forwarddelete",
-      r.getAlternatives(0).getCommands(0).getText()
-    );
-    assertEquals(
-      CommandType.COMMAND_TYPE_PRESS,
-      r.getAlternatives(0).getCommands(0).getType()
-    );
+    assertEquals("forwarddelete", r.getAlternatives(0).getCommands(0).getText());
+    assertEquals(CommandType.COMMAND_TYPE_PRESS, r.getAlternatives(0).getCommands(0).getType());
   }
 
   @Test
   public void testGoToWordChain() {
-    CommandsResponse r = makeRequest(
-      "foo bar baz",
-      0,
-      "next word paste",
-      language
-    );
+    CommandsResponse r = makeRequest("foo bar baz", 0, "next word paste", language);
     assertEquals(2, r.getAlternatives(0).getCommandsList().size());
   }
 
@@ -400,10 +331,7 @@ public class CommandsVisitorTest extends BaseServiceTest {
       Arrays.asList("system hello world")
     );
 
-    assertEquals(
-      CommandType.COMMAND_TYPE_INSERT,
-      r.getAlternatives(0).getCommands(0).getType()
-    );
+    assertEquals(CommandType.COMMAND_TYPE_INSERT, r.getAlternatives(0).getCommands(0).getType());
     assertEquals("hello world", r.getAlternatives(0).getCommands(0).getText());
   }
 
@@ -449,50 +377,17 @@ public class CommandsVisitorTest extends BaseServiceTest {
       CommandType.COMMAND_TYPE_LANGUAGE_MODE
     );
 
-    assertCommandType(
-      "",
-      0,
-      "language python",
-      language,
-      CommandType.COMMAND_TYPE_LANGUAGE_MODE
-    );
-    assertCommandType(
-      "",
-      0,
-      "python mode",
-      language,
-      CommandType.COMMAND_TYPE_LANGUAGE_MODE
-    );
-    assertCommandType(
-      "",
-      0,
-      "rust mode",
-      language,
-      CommandType.COMMAND_TYPE_LANGUAGE_MODE
-    );
-    assertCommandType(
-      "",
-      0,
-      "c sharp mode",
-      language,
-      CommandType.COMMAND_TYPE_LANGUAGE_MODE
-    );
-    assertCommandType(
-      "",
-      0,
-      "go mode",
-      language,
-      CommandType.COMMAND_TYPE_LANGUAGE_MODE
-    );
+    assertCommandType("", 0, "language python", language, CommandType.COMMAND_TYPE_LANGUAGE_MODE);
+    assertCommandType("", 0, "python mode", language, CommandType.COMMAND_TYPE_LANGUAGE_MODE);
+    assertCommandType("", 0, "rust mode", language, CommandType.COMMAND_TYPE_LANGUAGE_MODE);
+    assertCommandType("", 0, "c sharp mode", language, CommandType.COMMAND_TYPE_LANGUAGE_MODE);
+    assertCommandType("", 0, "go mode", language, CommandType.COMMAND_TYPE_LANGUAGE_MODE);
   }
 
   @Test
   public void testLaunch() {
     CommandsResponse r = makeRequest("", 0, "launch atom", language);
-    assertEquals(
-      CommandType.COMMAND_TYPE_LAUNCH,
-      r.getAlternatives(0).getCommands(0).getType()
-    );
+    assertEquals(CommandType.COMMAND_TYPE_LAUNCH, r.getAlternatives(0).getCommands(0).getType());
     assertEquals("atom", r.getAlternatives(0).getCommands(0).getText());
   }
 
@@ -510,10 +405,7 @@ public class CommandsVisitorTest extends BaseServiceTest {
       0,
       "inspect parameter",
       language,
-      Arrays.asList(
-        CommandType.COMMAND_TYPE_DIFF,
-        CommandType.COMMAND_TYPE_DEBUGGER_SHOW_HOVER
-      )
+      Arrays.asList(CommandType.COMMAND_TYPE_DIFF, CommandType.COMMAND_TYPE_DEBUGGER_SHOW_HOVER)
     );
 
     assertEquals(8, c.get(0).getCursor());
@@ -524,10 +416,7 @@ public class CommandsVisitorTest extends BaseServiceTest {
         0,
         "show value of a",
         language,
-        Arrays.asList(
-          CommandType.COMMAND_TYPE_DIFF,
-          CommandType.COMMAND_TYPE_DEBUGGER_SHOW_HOVER
-        )
+        Arrays.asList(CommandType.COMMAND_TYPE_DIFF, CommandType.COMMAND_TYPE_DEBUGGER_SHOW_HOVER)
       );
 
     assertEquals(8, c.get(0).getCursor());
@@ -535,34 +424,14 @@ public class CommandsVisitorTest extends BaseServiceTest {
 
   @Test
   public void testNativeDiff() {
-    CommandsResponse r1 = makeRequest(
-      "",
-      0,
-      Arrays.asList("type hello"),
-      language
-    );
-    assertEquals(
-      1,
-      r1.getAlternatives(0).getCommands(0).getChangesList().size()
-    );
-    assertEquals(
-      CommandType.COMMAND_TYPE_DIFF,
-      r1.getAlternatives(0).getCommands(0).getType()
-    );
+    CommandsResponse r1 = makeRequest("", 0, Arrays.asList("type hello"), language);
+    assertEquals(1, r1.getAlternatives(0).getCommands(0).getChangesList().size());
+    assertEquals(CommandType.COMMAND_TYPE_DIFF, r1.getAlternatives(0).getCommands(0).getType());
     assertEquals(5, r1.getAlternatives(0).getCommands(0).getCursor());
     assertEquals("hello", r1.getAlternatives(0).getCommands(0).getSource());
-    assertEquals(
-      "hello",
-      r1.getAlternatives(0).getCommands(0).getChanges(0).getSubstitution()
-    );
-    assertEquals(
-      0,
-      r1.getAlternatives(0).getCommands(0).getChanges(0).getStart()
-    );
-    assertEquals(
-      0,
-      r1.getAlternatives(0).getCommands(0).getChanges(0).getStop()
-    );
+    assertEquals("hello", r1.getAlternatives(0).getCommands(0).getChanges(0).getSubstitution());
+    assertEquals(0, r1.getAlternatives(0).getCommands(0).getChanges(0).getStart());
+    assertEquals(0, r1.getAlternatives(0).getCommands(0).getChanges(0).getStop());
 
     CommandsResponse r2 = makeRequest(
       "today is is tuesday",
@@ -571,27 +440,12 @@ public class CommandsVisitorTest extends BaseServiceTest {
       language
     );
 
-    assertEquals(
-      CommandType.COMMAND_TYPE_DIFF,
-      r2.getAlternatives(0).getCommands(0).getType()
-    );
+    assertEquals(CommandType.COMMAND_TYPE_DIFF, r2.getAlternatives(0).getCommands(0).getType());
     assertEquals(6, r2.getAlternatives(0).getCommands(0).getCursor());
-    assertEquals(
-      "today is tuesday",
-      r2.getAlternatives(0).getCommands(0).getSource()
-    );
-    assertEquals(
-      "",
-      r2.getAlternatives(0).getCommands(0).getChanges(0).getSubstitution()
-    );
-    assertEquals(
-      6,
-      r2.getAlternatives(0).getCommands(0).getChanges(0).getStart()
-    );
-    assertEquals(
-      9,
-      r2.getAlternatives(0).getCommands(0).getChanges(0).getStop()
-    );
+    assertEquals("today is tuesday", r2.getAlternatives(0).getCommands(0).getSource());
+    assertEquals("", r2.getAlternatives(0).getCommands(0).getChanges(0).getSubstitution());
+    assertEquals(6, r2.getAlternatives(0).getCommands(0).getChanges(0).getStart());
+    assertEquals(9, r2.getAlternatives(0).getCommands(0).getChanges(0).getStop());
 
     CommandsResponse r3 = makeRequest(
       "one\ntwo\nthree",
@@ -600,10 +454,7 @@ public class CommandsVisitorTest extends BaseServiceTest {
       language
     );
 
-    assertEquals(
-      CommandType.COMMAND_TYPE_DIFF,
-      r3.getAlternatives(0).getCommands(0).getType()
-    );
+    assertEquals(CommandType.COMMAND_TYPE_DIFF, r3.getAlternatives(0).getCommands(0).getType());
     assertEquals(7, r3.getAlternatives(0).getCommands(0).getCursor());
   }
 
@@ -652,10 +503,7 @@ public class CommandsVisitorTest extends BaseServiceTest {
     );
 
     assertEquals(2, r.getAlternativesList().size());
-    assertEquals(
-      CommandType.COMMAND_TYPE_PRESS,
-      r.getAlternatives(0).getCommands(0).getType()
-    );
+    assertEquals(CommandType.COMMAND_TYPE_PRESS, r.getAlternatives(0).getCommands(0).getType());
   }
 
   @Test
@@ -686,30 +534,19 @@ public class CommandsVisitorTest extends BaseServiceTest {
       Arrays.asList("paste")
     );
 
-    assertEquals(
-      CommandType.COMMAND_TYPE_PRESS,
-      r.getAlternatives(0).getCommands(0).getType()
-    );
+    assertEquals(CommandType.COMMAND_TYPE_PRESS, r.getAlternatives(0).getCommands(0).getType());
   }
 
   @Test
   public void testPressQuantifier() {
     CommandsResponse r2 = makeRequest("", 0, "press up two times", language);
     assertEquals(2, r2.getAlternatives(0).getCommandsList().size());
-    assertEquals(
-      CommandType.COMMAND_TYPE_PRESS,
-      r2.getAlternatives(0).getCommands(0).getType()
-    );
+    assertEquals(CommandType.COMMAND_TYPE_PRESS, r2.getAlternatives(0).getCommands(0).getType());
   }
 
   @Test
   public void testQuantifier() {
-    CommandsResponse response = makeRequest(
-      "foo\nbar",
-      0,
-      "delete line two times",
-      language
-    );
+    CommandsResponse response = makeRequest("foo\nbar", 0, "delete line two times", language);
     assertEquals(
       CommandType.COMMAND_TYPE_DIFF,
       response.getAlternatives(0).getCommands(0).getType()
@@ -725,45 +562,15 @@ public class CommandsVisitorTest extends BaseServiceTest {
   public void testRepeat() {
     clearHistory();
     addToHistory("new tab");
-    assertCommandType(
-      "",
-      0,
-      "repeat",
-      language,
-      CommandType.COMMAND_TYPE_CREATE_TAB
-    );
+    assertCommandType("", 0, "repeat", language, CommandType.COMMAND_TYPE_CREATE_TAB);
 
     clearHistory();
     addToHistory("new tab");
     addToHistory("close tab");
-    assertCommandType(
-      "",
-      0,
-      "repeat",
-      language,
-      CommandType.COMMAND_TYPE_CLOSE_TAB
-    );
-    assertCommandType(
-      "",
-      0,
-      "repeat new",
-      language,
-      CommandType.COMMAND_TYPE_CREATE_TAB
-    );
-    assertCommandType(
-      "",
-      0,
-      "repeat close",
-      language,
-      CommandType.COMMAND_TYPE_CLOSE_TAB
-    );
-    assertCommandType(
-      "",
-      0,
-      "repeat",
-      language,
-      CommandType.COMMAND_TYPE_CLOSE_TAB
-    );
+    assertCommandType("", 0, "repeat", language, CommandType.COMMAND_TYPE_CLOSE_TAB);
+    assertCommandType("", 0, "repeat new", language, CommandType.COMMAND_TYPE_CREATE_TAB);
+    assertCommandType("", 0, "repeat close", language, CommandType.COMMAND_TYPE_CLOSE_TAB);
+    assertCommandType("", 0, "repeat", language, CommandType.COMMAND_TYPE_CLOSE_TAB);
 
     // test we don't loop infinitely.
     clearHistory();
@@ -774,10 +581,7 @@ public class CommandsVisitorTest extends BaseServiceTest {
       1,
       "end of line repeat change",
       language,
-      Arrays.asList(
-        CommandType.COMMAND_TYPE_DIFF,
-        CommandType.COMMAND_TYPE_DIFF
-      )
+      Arrays.asList(CommandType.COMMAND_TYPE_DIFF, CommandType.COMMAND_TYPE_DIFF)
     );
   }
 
@@ -791,10 +595,7 @@ public class CommandsVisitorTest extends BaseServiceTest {
       3,
       "repeat twice",
       language,
-      Arrays.asList(
-        CommandType.COMMAND_TYPE_DIFF,
-        CommandType.COMMAND_TYPE_DIFF
-      )
+      Arrays.asList(CommandType.COMMAND_TYPE_DIFF, CommandType.COMMAND_TYPE_DIFF)
     );
 
     assertCommandTypes(
@@ -802,10 +603,7 @@ public class CommandsVisitorTest extends BaseServiceTest {
       3,
       "repeat delete twice",
       language,
-      Arrays.asList(
-        CommandType.COMMAND_TYPE_DIFF,
-        CommandType.COMMAND_TYPE_DIFF
-      )
+      Arrays.asList(CommandType.COMMAND_TYPE_DIFF, CommandType.COMMAND_TYPE_DIFF)
     );
 
     assertCommandTypes(
@@ -859,17 +657,11 @@ public class CommandsVisitorTest extends BaseServiceTest {
   public void testSwitchWindow() {
     assertEquals(
       CommandType.COMMAND_TYPE_PRESS,
-      makeRequest("", 0, "switch windows", language)
-        .getAlternatives(0)
-        .getCommands(0)
-        .getType()
+      makeRequest("", 0, "switch windows", language).getAlternatives(0).getCommands(0).getType()
     );
     assertEquals(
       CommandType.COMMAND_TYPE_PRESS,
-      makeRequest("", 0, "switch window", language)
-        .getAlternatives(0)
-        .getCommands(0)
-        .getType()
+      makeRequest("", 0, "switch window", language).getAlternatives(0).getCommands(0).getType()
     );
   }
 
@@ -893,13 +685,7 @@ public class CommandsVisitorTest extends BaseServiceTest {
     );
     assertEquals(4, c2.getIndex());
 
-    Command c3 = assertCommandType(
-      "",
-      0,
-      "Tab 3",
-      language,
-      CommandType.COMMAND_TYPE_SWITCH_TAB
-    );
+    Command c3 = assertCommandType("", 0, "Tab 3", language, CommandType.COMMAND_TYPE_SWITCH_TAB);
     assertEquals(3, c3.getIndex());
   }
 
@@ -955,19 +741,13 @@ public class CommandsVisitorTest extends BaseServiceTest {
     // use two
     assertEquals(
       CommandType.COMMAND_TYPE_INVALID,
-      response
-        .getAlternatives(response.getAlternativesList().size() - 2)
-        .getCommands(0)
-        .getType()
+      response.getAlternatives(response.getAlternativesList().size() - 2).getCommands(0).getType()
     );
 
     // type hello
     assertNotEquals(
       CommandType.COMMAND_TYPE_INVALID,
-      response
-        .getAlternatives(response.getAlternativesList().size() - 1)
-        .getCommands(0)
-        .getType()
+      response.getAlternatives(response.getAlternativesList().size() - 1).getCommands(0).getType()
     );
   }
 }
