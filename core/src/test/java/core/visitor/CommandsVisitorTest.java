@@ -5,11 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import com.google.protobuf.ByteString;
 import core.BaseServiceTest;
+import core.gen.rpc.CallbackRequest;
+import core.gen.rpc.CallbackType;
 import core.gen.rpc.Command;
 import core.gen.rpc.CommandType;
 import core.gen.rpc.CommandsResponse;
-import core.gen.rpc.CommandsResponseAlternative;
 import core.gen.rpc.EditorState;
+import core.gen.rpc.EvaluateRequest;
 import core.gen.rpc.EvaluateTextRequest;
 import core.gen.rpc.Language;
 import java.util.Arrays;
@@ -17,13 +19,38 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
-import toolbelt.state.History;
 
 // test commands that exist in every language but can't be captured in YAML tests
 // we happen to use Python here, but none of this is Python-specific.
 public class CommandsVisitorTest extends BaseServiceTest {
 
   private Language language = Language.LANGUAGE_PYTHON;
+
+  private void clearHistory() {
+    client.send(
+      EvaluateRequest
+        .newBuilder()
+        .setCallbackRequest(
+          CallbackRequest.newBuilder().setType(CallbackType.CALLBACK_TYPE_CLEAR_HISTORY).build()
+        )
+        .build()
+    );
+  }
+
+  private void addToHistory(String command) {
+    client.send(
+      EvaluateRequest
+        .newBuilder()
+        .setCallbackRequest(
+          CallbackRequest
+            .newBuilder()
+            .setType(CallbackType.CALLBACK_TYPE_ADD_TO_HISTORY)
+            .setText(command)
+            .build()
+        )
+        .build()
+    );
+  }
 
   @Test
   public void testAlternatives() {
@@ -533,30 +560,22 @@ public class CommandsVisitorTest extends BaseServiceTest {
 
   @Test
   public void testRepeat() {
-    // local environments use the in-memory data store, but the test process and the core
-    // process don't share memory, so this test won't work
-    if (System.getenv("IN_MEMORY") != null && System.getenv("IN_MEMORY").equals("1")) {
-      return;
-    }
-
-    History history = component.history();
-
-    history.clear(token);
-    history.add(token, "new tab");
+    clearHistory();
+    addToHistory("new tab");
     assertCommandType("", 0, "repeat", language, CommandType.COMMAND_TYPE_CREATE_TAB);
 
-    history.clear(token);
-    history.add(token, "new tab");
-    history.add(token, "close tab");
+    clearHistory();
+    addToHistory("new tab");
+    addToHistory("close tab");
     assertCommandType("", 0, "repeat", language, CommandType.COMMAND_TYPE_CLOSE_TAB);
     assertCommandType("", 0, "repeat new", language, CommandType.COMMAND_TYPE_CREATE_TAB);
     assertCommandType("", 0, "repeat close", language, CommandType.COMMAND_TYPE_CLOSE_TAB);
     assertCommandType("", 0, "repeat", language, CommandType.COMMAND_TYPE_CLOSE_TAB);
 
     // test we don't loop infinitely.
-    history.clear(token);
-    history.add(token, "change word to bar");
-    history.add(token, "end of line repeat change");
+    clearHistory();
+    addToHistory("change word to bar");
+    addToHistory("end of line repeat change");
     assertCommandTypes(
       "foo\n",
       1,
@@ -568,14 +587,8 @@ public class CommandsVisitorTest extends BaseServiceTest {
 
   @Test
   public void testRepeatQuantifier() {
-    // see testRepeat
-    if (System.getenv("IN_MEMORY") != null && System.getenv("IN_MEMORY").equals("1")) {
-      return;
-    }
-
-    History history = component.history();
-    history.clear(token);
-    history.add(token, "delete character");
+    clearHistory();
+    addToHistory("delete character");
 
     assertCommandTypes(
       "abcdefghijklmn\n",

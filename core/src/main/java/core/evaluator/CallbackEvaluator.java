@@ -178,10 +178,6 @@ public class CallbackEvaluator {
       .build();
   }
 
-  private void addToHistory(String token, String transcript) {
-    history.add(token, transcript);
-  }
-
   public Optional<CommandsResponse> evaluate(
     CallbackRequest request,
     EditorStateWithMetadata state
@@ -210,7 +206,10 @@ public class CallbackEvaluator {
       } else if (request.getType() == CallbackType.CALLBACK_TYPE_PASTE) {
         return Optional.of(paste(state, request.getText()));
       } else if (request.getType() == CallbackType.CALLBACK_TYPE_ADD_TO_HISTORY) {
-        addToHistory(state.getToken(), request.getText());
+        history.add(state.getToken(), request.getText());
+        return Optional.empty();
+      } else if (request.getType() == CallbackType.CALLBACK_TYPE_CLEAR_HISTORY) {
+        history.clear(state.getToken());
         return Optional.empty();
       }
     } catch (Exception e) {
