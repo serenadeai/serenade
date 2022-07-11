@@ -202,6 +202,7 @@ export default class Active {
 
     let url = reportedState.url || "";
     let result: core.IEditorState = {
+      token: this.settings.getToken(),
       application: this.revisionBoxWindow.shown() ? "revision-box" : this.app,
       pluginInstalled: this.pluginInstalled() || this.revisionBoxWindow.shown(),
       clientIdentifier: this.metadata.identifier(this.app, this.language),

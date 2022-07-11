@@ -69,6 +69,7 @@ public class StreamManager {
   private TranscriptEvaluator transcriptEvaluator;
   private TranscriptParser transcriptParser;
   private Optional<Session> websocket = Optional.empty();
+  private Optional<String> token = Optional.empty();
 
   @AssistedInject
   public StreamManager(
@@ -203,6 +204,15 @@ public class StreamManager {
   }
 
   private void updateEditorState(EditorState newEditorState) {
+    // Generates a token for version 2.0.1 of the client.
+    if (newEditorState.getToken().equals("")) {
+      if (token.isEmpty()) {
+        token = Optional.of("temporary-" + UUID.randomUUID().toString());
+      }
+      newEditorState =
+        EditorState.newBuilder(newEditorState).setToken(token.get()).build();
+    }
+
     // if LANGUAGE_NONE is sent (e.g., from a test that forgot to set the language)
     // then use DEFAULT instead
     if (newEditorState.getLanguage().equals(Language.LANGUAGE_NONE)) {
