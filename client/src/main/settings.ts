@@ -360,7 +360,7 @@ export default class Settings {
     return this.get(
       "user",
       "use_accessibility_api",
-      os.platform() == "darwin" ? ["slack", "discord", "textedit"] : []
+      os.platform() == "darwin" ? ["slack", "textedit"] : []
     );
   }
 
