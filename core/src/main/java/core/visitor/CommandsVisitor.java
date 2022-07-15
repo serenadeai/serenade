@@ -706,21 +706,6 @@ public class CommandsVisitor
         .build()
     );
 
-    // in a plugin-supported editor, we can make undo + use commands work with system presses by
-    // prefixing the response with the current editor state so that the previous source + cursor
-    // is restored when one of these commands is selected
-    if (context.state.getPluginInstalled()) {
-      commands.add(
-        0,
-        Command
-          .newBuilder()
-          .setType(CommandType.COMMAND_TYPE_DIFF)
-          .setSource(context.state.getSource())
-          .setCursor(context.state.getCursor())
-          .build()
-      );
-    }
-
     return wrap(context, commands);
   }
 
