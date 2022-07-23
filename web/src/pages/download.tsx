@@ -6,7 +6,7 @@ import { Hero } from "../components/hero";
 import { Main } from "../components/pages";
 import { FullWidthFeature, TwoColumnFeature } from "../components/features";
 
-const currentVersion = "2.0.1";
+const currentVersion = "2.0.2";
 const legacyVersion = "";
 const betaVersion = "";
 
