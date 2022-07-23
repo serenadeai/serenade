@@ -25,9 +25,9 @@ export const Installation: React.FC = () => (
     </p>
     <p>
       Serenade can be configured to use cloud-based speech recognition or local speech recognition.
-      To change this setting, just head to Settings > Server. Regardless of your setting, you can
-      also opt into sharing your data with Serenade in order to help improve Serenade's
-      speech-to-code machine learning models.
+      To change this setting, just head to Settings > Server. If you're using Windows, the local server requires
+      WSL with Ubuntu. Regardless of your setting, you can also opt into sharing your data with Serenade 
+      in order to help improve Serenade's speech-to-code machine learning models. 
     </p>
   </>
 );

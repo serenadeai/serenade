@@ -33,13 +33,14 @@ export default class IPCServer {
         if (request.message == "active") {
           let icon = request.data.icon;
 
-          const iconValid = (
+          const iconValid =
             icon == undefined ||
-            (typeof icon == 'string' && icon.startsWith('data:') && icon.length <= maximumIconLength)
-          );
+            (typeof icon == "string" &&
+              icon.startsWith("data:") &&
+              icon.length <= maximumIconLength);
 
           if (!iconValid) {
-            this.log.logVerbose('Plugin provided an app icon that does not adhere to requirements');
+            this.log.logVerbose("Plugin provided an app icon that does not adhere to requirements");
             icon = undefined;
           }
 
@@ -48,7 +49,7 @@ export default class IPCServer {
             request.data.id,
             request.data.app,
             request.data.match,
-            icon,
+            icon
           );
         } else if (request.message == "callback") {
           this.pluginManager.resolve(request.data.callback, request.data.data);
@@ -59,6 +60,15 @@ export default class IPCServer {
         }
         // custom commands messages from custom commands servers
         if (request.message == "customCommands") {
+          this.log.logVerbose(
+            "Received " +
+              request.data.commands.length +
+              " commands, " +
+              request.data.hints.length +
+              " hints, " +
+              request.data.words.length +
+              " words"
+          );
           this.active.customCommands = request.data.commands;
           this.active.customHints = request.data.hints;
           this.active.customWords = request.data.words;

@@ -127,8 +127,13 @@ export default class Local {
     this.started = true;
     this.killAll();
     this.pollUntilRunning();
+
     let speechEngineModels = path.join(__dirname, "..", "static", "local", "speech-engine-models");
+    this.log.logVerbose("Initial speech engine model path: " + speechEngineModels);
+
     let codeEngineModels = path.join(__dirname, "..", "static", "local", "code-engine-models");
+    this.log.logVerbose("Initial code engine model path: " + codeEngineModels);
+
     if (os.platform() == "win32") {
       speechEngineModels =
         "/" +
@@ -140,6 +145,8 @@ export default class Local {
           ])
           .stdout.toString()
           .trim();
+      this.log.logVerbose("WSL speech engine path: " + speechEngineModels);
+
       codeEngineModels =
         "/" +
         child_process
@@ -150,6 +157,7 @@ export default class Local {
           ])
           .stdout.toString()
           .trim();
+      this.log.logVerbose("WSL code engine path: " + codeEngineModels);
     }
 
     // here and below: WSL doesn't deal well with paths, so set the cwd to be the same as the binary
