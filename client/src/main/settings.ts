@@ -357,11 +357,7 @@ export default class Settings {
   }
 
   getUseAccessibilityApi(): string[] {
-    return this.get(
-      "user",
-      "use_accessibility_api",
-      os.platform() == "darwin" ? ["slack", "textedit"] : []
-    );
+    return this.get("user", "use_accessibility_api", []);
   }
 
   getUseMiniModeHideTimeout(): boolean {
