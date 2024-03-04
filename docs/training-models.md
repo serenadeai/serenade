@@ -4,7 +4,7 @@ This document explains how to train the models that are used by Serenade. If you
 
 ## Setup
 
-Make sure all of the dependencies for training models are installed and built. You can do so by following the instructions in [Building](building.md)—make sure you do *not* use the `--minimal` flag or `serenade-minimal` Docker image (which are used only for running Serenade).
+Make sure all of the dependencies for training models are installed and built. You can do so by following the instructions in [Building](building-client.md)—make sure you do *not* use the `--minimal` flag or `serenade-minimal` Docker image (which are used only for running Serenade).
 
 Ensure that you have plenty of disk space. The language model for the speech engine is trained on all of the source code data available in all programming languages supported by Serenade, totaling to about 50 GB.
 

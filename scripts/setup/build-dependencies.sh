@@ -188,3 +188,4 @@ if [[ "$minimal" == "true" ]] ; then
   find kaldi -type f -name "*.so*" -delete
   find kaldi -type f -name "*.o" -delete
 fi
+
